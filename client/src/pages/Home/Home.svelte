@@ -1,6 +1,6 @@
 <script>
     import Hero from "./page-components/Hero/Hero.svelte";
-    import AboutMe from "./page-components/AboutME/AboutMe.svelte";
+    import AboutMe from "./page-components/AboutMe/AboutMe.svelte";
     import LineSymbolsBg from "@components/UI/LineSymbolsBG.svelte";
     import HrDivider from "@components/UI/HrDivider.svelte";
 </script>
