@@ -1,0 +1,260 @@
+<script>
+    import Router from 'svelte-spa-router';
+    import { routes } from './routes';
+    import NotificationsPopup from '@components/Popups/NotificationsPopup.svelte';
+    import Navbar from '@components/Navbar/Navbar.svelte';
+
+
+</script>
+
+<svelte:head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=La+Belle+Aurore&family=Permanent+Marker&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet">
+</svelte:head>
+<div id="libery-website-wrapper">
+    <Navbar />
+    <!-- <NotificationsPopup /> -->
+    <div id="router-wrapper">
+        <Router {routes}/>
+    </div>
+</div>
+
+<style global>
+    :root {
+        /* Color palette */
+            /* Main */
+            --main: hsla(30, 100%, 50%,1);
+            --main-9: hsla(29, 100%, 12.5%, 1);
+            --main-8: hsla(30, 100%, 24.9%, 1);
+            --main-7: hsla(30, 100%, 37.5%, 1);
+            --main-6: hsla(30, 100%, 49.8%, 1);
+            --main-5: hsla(33, 100%, 60%, 1);
+            --main-4: hsla(29, 100%, 70%, 1);
+            --main-3: hsla(29, 100%, 70%, 1);
+            --main-2: hsla(36, 100%, 80%, 1);
+            --main-1: hsla(26, 100%, 88.6%, 1);
+            /* Dark */
+            --main-dark: hsla(19, 100%, 49%, 1);
+            --main-dark-color-9: hsla(19, 100%, 12.4%, 1);
+            --main-dark-color-8: hsla(20, 100%, 24.5%, 1);
+            --main-dark-color-7: hsla(19, 100%, 36.9%, 1);
+            --main-dark-color-6: hsla(23, 100%, 49.8%, 1);
+            --main-dark-color-5: hsla(26, 100%, 50%, 1);
+            --main-dark-color-4: hsla(26, 100%, 60%, 1);
+            --main-dark-color-3: hsla(23, 98.7%, 69.8%, 1);
+            --main-dark-color-2: hsla(20, 96.2%, 79.6%, 1);
+            --main-dark-color-1: hsla(4, 85.5%, 89.2%, 1);
+            /* Accent */
+            --accent: hsla(211, 100%, 52.5%, 1);
+            --accent-9: hsla(212, 88.2%, 3.3%, 1);
+            --accent-8: hsla(210, 91%, 13.1%, 1);
+            --accent-7: hsla(211, 90.1%, 19.8%, 1);
+            --accent-6: hsla(211, 89.6%, 26.5%, 1);
+            --accent-5: hsla(211, 90.7%, 29.4%, 1);
+            --accent-4: hsla(211, 90%, 39.4%, 1);
+            --accent-3: hsla(211, 58.7%, 51.6%, 1);
+            --accent-2: hsla(211, 100%, 71.6%, 1);
+            --accent-1: hsla(211, 100%, 81%, 1);
+            /* Grey */
+            --grey: hsla(0, 0%, 5.9%, 1);
+            --grey-9: hsla(0, 0%, 7.5%, 1);
+            --grey-8: hsla(0, 0%, 13.7%, 1);
+            --grey-7: hsla(0, 0%, 14.9%, 1);
+            --grey-6: hsla(0, 0%, 22.4%, 1);
+            --grey-5: hsla(0, 0%, 20%, 1);
+            --grey-4: hsla(0, 0%, 27.5%, 1);
+            --grey-3: hsla(0, 0%, 54.9%, 1);
+            --grey-2: hsla(0, 0%, 72.9%, 1);
+            --grey-1: hsla(0, 0%, 91%, 1);
+            /* Success */
+            --success: hsla(81, 100%, 51.2%, 1);
+            --success-9: hsla(91, 100%, 12.5%, 1);
+            --success-8: hsla(91, 100%, 25.1%, 1);
+            --success-7: hsla(98, 100%, 37.5%, 1);
+            --success-6: hsla(104, 100%, 50%, 1);
+            --success-5: hsla(107, 100%, 60%, 1);
+            --success-4: hsla(107, 100%, 60%, 1);
+            --success-3: hsla(120, 100%, 70%, 1);
+            --success-2: hsla(132, 100%, 80%, 1);
+            --success-1: hsla(80, 100%, 80.4%, 1);
+            /* Warning */
+            --warning: hsla(49, 100%, 49.6%, 1);
+            --warning-9: hsla(52, 100%, 2.9%, 1);
+            --warning-8: hsla(50, 100%, 9.2%, 1);
+            --warning-7: hsla(49, 100%, 12.4%, 1);
+            --warning-6: hsla(49, 100%, 24.9%, 1);
+            --warning-5: hsla(49, 100%, 27.8%, 1);
+            --warning-4: hsla(49, 100%, 37.1%, 1);
+            --warning-3: hsla(49, 59.7%, 49.6%, 1);
+            --warning-2: hsla(49, 59.4%, 62.4%, 1);
+            --warning-1: hsla(49, 98.1%, 79.8%, 1);
+            /* Danger */
+            --danger: hsla(3, 100%, 44.9%, 1);
+            --danger-9: hsla(3, 100%, 11.2%, 1);
+            --danger-8: hsla(4, 100%, 22.9%, 1);
+            --danger-7: hsla(3, 100%, 34.5%, 1);
+            --danger-6: hsla(10, 100%, 49.6%, 1);
+            --danger-5: hsla(10, 99%, 59.8%, 1);
+            --danger-4: hsla(10, 98.7%, 69.8%, 1);
+            --danger-3: hsla(7, 94.3%, 79.4%, 1);
+            --danger-2: hsla(4, 85.5%, 89.2%, 1);
+            --danger-1: hsla(4, 85.5%, 89.2%, 1);
+        /* Spacing */
+            --vspacing-base:8px;
+            --vspacing-scale: 1;
+
+            --vspacing-1: calc(var(--vspacing-base) * var(--vspacing-scale));
+            --vspacing-2: calc(var(--vspacing-1) * 2);
+            --vspacing-3: calc(var(--vspacing-2) * 2);
+            --vspacing-4: calc(var(--vspacing-3) * 2);
+            --vspacing-5: calc(var(--vspacing-4) * 2);
+            --vspacing-6: calc(var(--vspacing-5) * 2);
+            --vspacing-7: calc(var(--vspacing-6) * 2);
+            --vspacing-8: calc(var(--vspacing-7) * 2);
+            --vspacing-9: calc(var(--vspacing-8) * 2);
+
+            --hspacing-1: 4.79%;
+            --hspacing-2: 36px;
+
+        /* Fonts */
+            --font-size-1: 16px;
+            --font-size-2: 19px;
+            --font-size-3: 21px;
+            --font-size-4: 23px;
+
+            --font-size-p: var(--font-size-3);
+
+            --font-size-h1: 112px;
+            --font-size-h2: 56px;
+            --font-size-h3: 32px;
+
+            --font-size-CTA-1: 36px;
+
+            --font-titles: 'Permanent Marker';
+            --font-read: 'Raleway';
+            --font-decorative: 'La Belle Aurore';
+
+            font-size: var(--font-size-1);
+
+        /* Misc */
+
+            --navbar-height: 124px;
+            --border-radius: 4px;
+            --page-content-width: 90.41%;
+    }
+
+
+/*=============================================
+=            Normalize            =
+=============================================*/
+
+    :global(*) {
+        box-sizing: border-box;
+    }
+
+    :global(body) {
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-read);
+        font-size: var(--font-size-1);
+        color: var(--grey-1);
+        background: var(--grey);
+    }
+
+    :global(h1, h2, h3, h4, h5, h6) {
+        font-family: var(--font-titles);
+        color: var(--grey-1);
+        margin: 0;
+    }
+
+    :global(p) {
+        margin: 0;
+        font-size: var(--font-size-p);
+    }
+
+
+/*=============================================
+=            Layout            =
+=============================================*/
+
+    #libery-website-wrapper {
+        border-top: .1px solid var(--grey);
+    }
+
+    :global(.section-content-layout) {
+        display: grid;
+        width: var(--page-content-width);
+        grid-template-columns: repeat(12, 1fr);
+        column-gap: var(--hspacing-2);
+        padding-top: var(--vspacing-4);
+    } 
+
+    #router-wrapper {
+        margin-top: var(--navbar-height);
+    }
+
+
+/*=============================================
+=            Text Styles            =
+=============================================*/
+
+    :global(.highlight-text) {
+        font-family: var(--font-titles);
+        font-size: var(--font-size-2);
+    }
+
+    :global(.highlight-text--CTA) {
+        font-family: var(--font-titles);
+        font-size: var(--font-size-CTA-1);
+    }
+
+    :global(.sub-headline) {
+        font-family: var(--font-read);
+        color: var(--main-5);
+        font-size: var(--font-size-4);
+    }
+
+    :global(.html-tag) {
+        color: var(--grey-8);
+        font-family: var(--font-decorative);
+        font-size: var(--font-size-4);
+        line-height: .6;
+    }
+
+    :global(.html-tag > span) {
+        color: var(--grey-4);
+    }
+
+/*=============================================
+=            Buttons            =
+=============================================*/
+    :global(button) {
+        border-radius: var(--border-radius);
+    }
+    
+    :global(.button-1-wrapper) {
+        width: max-content;
+        clip-path: polygon(0 0,0 0,100% 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,15px 100%,0 100%);
+        background: var(--success-1);
+        padding: 1px;
+        border-radius: var(--border-radius);
+    }
+
+    :global(.button-1) {
+        border: none;
+        font-family: var(--font-read);
+        background: var(--grey);
+        font-size: var(--font-size-1);
+        color: var(--success-1);
+        padding: 12px 32px;
+        clip-path: polygon(0 0,0 0,100% 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,15px 100%,0 100%);
+    }
+
+
+
+
+
+
+</style>
+

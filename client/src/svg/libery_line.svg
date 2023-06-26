@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg class="libery-blue-line" data-name="libery-blue-line" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 901.11 2">
+  <defs>
+    <style>
+      .libery-line-cls-1 {
+        fill: none;
+        stroke: #0d82ff;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 2px;
+      }
+    </style>
+  </defs>
+  <g id="libery-blue-line-group" data-name="libery-blue-line-group">
+    <line class="libery-line-cls-1" x1="1" y1="1" x2="900.11" y2="1"/>
+  </g>
+</svg>

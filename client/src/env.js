@@ -1,0 +1,1 @@
+export const whatsapp_redirection = WHATSAPP_REDIRECTION
