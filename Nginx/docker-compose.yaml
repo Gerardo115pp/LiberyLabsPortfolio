@@ -1,0 +1,25 @@
+version: "3.4"
+
+# Part - 1 of the nginx course
+# services:
+#   keystone:
+#     image: nginx-course:part-1
+#     ports:
+#       - "80:80"
+#     volumes:
+#       - /home/el_maligno/SoftwareProjects/work/KeystoneBuild/BetterCode/keystone_src/build:/var/www/keystone
+#       - /home/el_maligno/SoftwareProjects/work/meliScrapper/mvp_webapp/build:/var/www/meli
+#     restart: unless-stopped
+
+    
+services:
+  development:
+    image: libery-portfolio-dev:v1
+    volumes:
+      - ./sites-available:/etc/nginx/sites-available
+      - ./sites-enabled:/etc/nginx/sites-enabled
+    restart: unless-stopped
+    network_mode: "host"
+    command: /websites/nginx-startup.sh
+
+    
