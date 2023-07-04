@@ -5,7 +5,7 @@
     
 </script>
 
-<article id="hero-content" class="section-content-layout">
+<article id="hero-content" class="section-content-layout" style:padding-top="var(--vspacing-4)">
     <div id="libery-hero-info">
         <div id="lhi-top">
             <div id="lhi-headline-wrapper">

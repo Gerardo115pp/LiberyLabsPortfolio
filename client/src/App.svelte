@@ -47,7 +47,7 @@
             --main-dark-color-1: hsla(4, 85.5%, 89.2%, 1);
             /* Accent */
             --accent: hsla(211, 100%, 52.5%, 1);
-            --accent-9: rgb(2, 15, 31);
+            --accent-9: hsla(212, 88%, 3%, 1);
             --accent-8: hsla(210, 91%, 13.1%, 1);
             --accent-7: hsla(211, 90.1%, 19.8%, 1);
             --accent-6: hsla(211, 89.6%, 26.5%, 1);
@@ -187,7 +187,6 @@
         width: var(--page-content-width);
         grid-template-columns: repeat(12, 1fr);
         column-gap: var(--hspacing-2);
-        padding-top: var(--vspacing-4);
     } 
 
     #router-wrapper {
@@ -250,6 +249,37 @@
         padding: 12px 32px;
         clip-path: polygon(0 0,0 0,100% 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,15px 100%,0 100%);
     }
+
+
+/*=============================================
+=            Debug            =
+=============================================*/
+
+    :global(.debug) {
+        border: 1px solid red;
+    }
+
+    :global(.debug > *) {
+        border: 1px solid red;
+    }
+
+    :global(.dtwo) {
+        border: 1px solid blue !important;
+    }
+
+    :global(.dthree) {
+        border: 1px solid green !important;
+    }
+
+    :global(.dfour) {
+        border: 1px solid yellow !important;
+    }
+
+
+
+/*=====  End of Debug  ======*/
+
+
 
 
 

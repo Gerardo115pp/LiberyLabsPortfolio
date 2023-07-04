@@ -3,6 +3,7 @@
     import AboutMe from "./page-components/AboutMe/AboutMe.svelte";
     import LineSymbolsBg from "@components/UI/LineSymbolsBG.svelte";
     import HrDivider from "@components/UI/HrDivider.svelte";
+    import MyServices from "./page-components/MyServices/MyServices.svelte";
 </script>
 
 <main id="home-page">
@@ -14,8 +15,13 @@
         <HrDivider />
     </section>
     <section id="about-me-section" class="page-section">
-        <div class="section-content">
+        <div class="section-content" >
             <AboutMe />
+        </div>
+    </section>
+    <section id="tech-stack-section" class="page-section">
+        <div class="section-content">
+            <MyServices />
         </div>
     </section>
 </main>

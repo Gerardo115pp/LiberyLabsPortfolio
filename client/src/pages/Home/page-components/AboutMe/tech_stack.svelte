@@ -47,16 +47,18 @@
     <div class="section-headline-wrapper-reverse">
         <LiberyHeadline headline_text="My Arsenal" headline_color="var(--main)" text_transform="capitalize"/>
     </div>
-    <div class="bracket-wrapper">
-        <Bracket/>
-    </div>
-    <ul id="teck-stack-container">
-        {#each teck_stack as ti}
-            <li class="teck-stack-item">{ti}</li>
-        {/each}
-    </ul>
-    <div class="bracket-wrapper">
-        <Bracket/>
+    <div id="tsc-bottom-content">
+        <div class="bracket-wrapper">
+            <Bracket/>
+        </div>
+        <ul id="teck-stack-container">
+            {#each teck_stack as ti}
+                <li class="teck-stack-item">{ti}</li>
+            {/each}
+        </ul>
+        <div class="bracket-wrapper">
+            <Bracket/>
+        </div>
     </div>
 </article>
 
@@ -67,8 +69,8 @@
     } */
 
     #tech-stack-content {
+        column-gap: none;
         row-gap: var(--vspacing-4);
-        border-top: 1px solid transparent; /* margin collapse fix*/
     }
 
     .section-headline-wrapper-reverse {
@@ -77,32 +79,49 @@
         justify-content: flex-end;
     }
 
+    #tsc-bottom-content {
+        grid-column: 1 / span 12;
+        display: flex;
+        justify-content: center;
+    }
+
     .bracket-wrapper {
+        grid-column: 1 / span 2;
         height: 100%;
     }
 
     .bracket-wrapper:last-of-type {
+        grid-column: 11 / span 2;
         transform: rotate(180deg);
     }
 
+    :global(.bracket-wrapper svg) {
+        fill: var(--accent-4);
+        opacity: 0.1;
+    }
+
     #teck-stack-container {
-        grid-column: 2 / span 10;
+        width: min(80%, 1348px);
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(218px, 1fr));
+        grid-template-columns: repeat(6, minmax(160px, 1fr));
         row-gap: var(--vspacing-2);
-        column-gap: var(--vspacing-2);
+        /* column-gap: var(--hspacing-2); */
+        align-content: start;
         list-style: none;
         margin: 0;
         padding: 0;
+        outline: none;
+        /* padding-inline-start: 0 !important; */
     }
 
     .teck-stack-item {
+        white-space: nowrap;
         font-family: var(--font-titles);
-        color: var(--accent-7);
+        color: var(--accent-8);
         font-size: var(--font-size-h3);
         text-transform: capitalize;
-        line-height: 45.9px;
-        font-weight: 400;
+        line-height: 1;
+        font-weight: lighter;
         text-align: center;
     }
 
