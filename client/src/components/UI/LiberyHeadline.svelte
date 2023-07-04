@@ -8,6 +8,13 @@
     export let headline_color;
     export let vspacing = "var(--vspacing-1)";
     
+    
+    /*----------  Style  ----------*/
+
+    export let text_transform = "uppercase";
+    
+    
+    
     const headline_settings = {
         h1: {
             font_size: "var(--font-size-h1)",
@@ -26,7 +33,11 @@
 
 <TaggedText {vspacing} tag_name={headline_tag} {extra_props}>
     <div class="headline-wrapper">
-        <h1 class="libery-headline" style:color="{headline_color}" style:font-size={headline_font_size}>
+        <h1 class="libery-headline" 
+            style:color="{headline_color}" 
+            style:font-size={headline_font_size} 
+            style:text-transform={text_transform}
+        >
             {headline_text}
         </h1>
         {#if headline_tag === "h1"}
@@ -50,8 +61,7 @@
 
     h1.libery-headline {
         font-size: 112px;
-        font-weight: 700;
-        text-transform: uppercase;
+        font-weight: 400;
         letter-spacing: -3.36px;
         line-height: .75;
         margin: 0;

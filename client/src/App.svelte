@@ -47,7 +47,7 @@
             --main-dark-color-1: hsla(4, 85.5%, 89.2%, 1);
             /* Accent */
             --accent: hsla(211, 100%, 52.5%, 1);
-            --accent-9: hsla(212, 88.2%, 3.3%, 1);
+            --accent-9: rgb(2, 15, 31);
             --accent-8: hsla(210, 91%, 13.1%, 1);
             --accent-7: hsla(211, 90.1%, 19.8%, 1);
             --accent-6: hsla(211, 89.6%, 26.5%, 1);

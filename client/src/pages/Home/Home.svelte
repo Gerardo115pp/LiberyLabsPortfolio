@@ -14,7 +14,9 @@
         <HrDivider />
     </section>
     <section id="about-me-section" class="page-section">
-        <AboutMe />
+        <div class="section-content">
+            <AboutMe />
+        </div>
     </section>
 </main>
 

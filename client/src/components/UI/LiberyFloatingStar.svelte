@@ -104,11 +104,4 @@
         left: 0;
         transform: translateX(calc(var(--line-offset) * 1.2)) rotate(calc(var(--limit-lines-rotation) * 1));
     }
-
-    #lsw-line-one, #lsw-line-three {
-        
-        /* transform-origin: top left; */
-        
-    }
-
 </style>
