@@ -45,6 +45,7 @@
             --main-dark-color-3: hsla(23, 98.7%, 69.8%, 1);
             --main-dark-color-2: hsla(20, 96.2%, 79.6%, 1);
             --main-dark-color-1: hsla(4, 85.5%, 89.2%, 1);
+            --main-dark-transparent: hsla(19, 100%, 49%, .3);
             /* Accent */
             --accent: hsla(211, 100%, 52.5%, 1);
             --accent-9: hsla(212, 88%, 3%, 1);
@@ -135,42 +136,53 @@
             --font-read: 'Raleway';
             --font-decorative: 'La Belle Aurore';
 
-            font-size: var(--font-size-1);
+            font-size: var(--font-size-1) !important;
 
         /* Z-INDEX */
 
             /* Use these -b- suffix for background elements */
-            -z-index-b-1: -1; /* B stands for bottom, not base */
-            -z-index-b-2: -2;
-            -z-index-b-3: -3;
-            -z-index-b-4: -4;
-            -z-index-b-5: -5;
-            -z-index-b-6: -6;
-            -z-index-b-7: -7;
-            -z-index-b-8: -8;
-            -z-index-b-9: -9;
+            --z-index-b-1: -1; /* B stands for bottom, not base */
+            --z-index-b-2: -2;
+            --z-index-b-3: -3;
+            --z-index-b-4: -4;
+            --z-index-b-5: -5;
+            --z-index-b-6: -6;
+            --z-index-b-7: -7;
+            --z-index-b-8: -8;
+            --z-index-b-9: -9;
 
             /* Regular elements */
-            -z-index-1: 1;
-            -z-index-2: 2;
-            -z-index-3: 3;
-            -z-index-4: 4;
-            -z-index-5: 5;
-            -z-index-6: 6;
-            -z-index-7: 7;
-            -z-index-8: 8;
-            -z-index-9: 9;
+            --z-index-1: 1;
+            --z-index-2: 2;
+            --z-index-3: 3;
+            --z-index-4: 4;
+            --z-index-5: 5;
+            --z-index-6: 6;
+            --z-index-7: 7;
+            --z-index-8: 8;
+            --z-index-9: 9;
 
             /* Use these -t- suffix for top elements like modals */
-            -z-index-t-1: 11; /* T stands for top */
-            -z-index-t-2: 12;
-            -z-index-t-3: 13;
-            -z-index-t-4: 14;
-            -z-index-t-5: 15;
-            -z-index-t-6: 16;
-            -z-index-t-7: 17;
-            -z-index-t-8: 18;
-            -z-index-t-9: 19;
+            --z-index-t-1: 11; /* T stands for top */
+            --z-index-t-2: 12;
+            --z-index-t-3: 13;
+            --z-index-t-4: 14;
+            --z-index-t-5: 15;
+            --z-index-t-6: 16;
+            --z-index-t-7: 17;
+            --z-index-t-8: 18;
+            --z-index-t-9: 19;
+
+
+        /* Layout */
+
+            --desktop-grid: 12;
+            --tablet-grid: 8;
+            --mobile-grid: 4;
+
+            --default-grid: var(--desktop-grid);
+            --full-width: 1 / -1;
+
 
 
         /* Misc */
