@@ -219,6 +219,7 @@
         font-family: var(--font-decorative);
         font-size: var(--font-size-4);
         line-height: .6;
+        user-select: none;
     }
 
     :global(.html-tag > span) {
