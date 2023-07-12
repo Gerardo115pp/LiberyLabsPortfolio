@@ -137,6 +137,42 @@
 
             font-size: var(--font-size-1);
 
+        /* Z-INDEX */
+
+            /* Use these -b- suffix for background elements */
+            -z-index-b-1: -1; /* B stands for bottom, not base */
+            -z-index-b-2: -2;
+            -z-index-b-3: -3;
+            -z-index-b-4: -4;
+            -z-index-b-5: -5;
+            -z-index-b-6: -6;
+            -z-index-b-7: -7;
+            -z-index-b-8: -8;
+            -z-index-b-9: -9;
+
+            /* Regular elements */
+            -z-index-1: 1;
+            -z-index-2: 2;
+            -z-index-3: 3;
+            -z-index-4: 4;
+            -z-index-5: 5;
+            -z-index-6: 6;
+            -z-index-7: 7;
+            -z-index-8: 8;
+            -z-index-9: 9;
+
+            /* Use these -t- suffix for top elements like modals */
+            -z-index-t-1: 11; /* T stands for top */
+            -z-index-t-2: 12;
+            -z-index-t-3: 13;
+            -z-index-t-4: 14;
+            -z-index-t-5: 15;
+            -z-index-t-6: 16;
+            -z-index-t-7: 17;
+            -z-index-t-8: 18;
+            -z-index-t-9: 19;
+
+
         /* Misc */
 
             --navbar-height: 124px;
