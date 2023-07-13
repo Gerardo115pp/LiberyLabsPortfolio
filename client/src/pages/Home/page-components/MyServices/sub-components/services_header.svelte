@@ -4,17 +4,6 @@
     import { fade, fly } from "svelte/transition";
     import { bounceIn } from "svelte/easing";
 
-    const getLines = () => {
-        const lines = [];
-        const num_lines = 200;
-
-        for (let i = 0; i < num_lines; i++) {
-            let p = i*19.2;
-            lines.push(p);
-        }
-
-        return lines;
-    }
 </script>
 
 <header class="services-header">

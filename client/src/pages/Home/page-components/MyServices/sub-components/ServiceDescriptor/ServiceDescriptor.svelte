@@ -1,12 +1,13 @@
 <script>
     import ServicePointer from "./ServicePointer.svelte";
 
-    export let service_description = "We conceptualize and design the blueprint of your software solution, establishing the foundational structure that ensures growth and scalability. This involves creating wireframes, defining user flows, and setting up the perfect software architecture."
+    export let service_description;
+    export let point_direction;
 
 </script>
 
 <div id="service-descriptor-wrapper" style:position="relative">
-    <ServicePointer/>
+    <ServicePointer {point_direction} />
     <div id="service-description-wrapper">
         <p aria-label="service description" id="service-description" style:position="relative">
             {service_description}
