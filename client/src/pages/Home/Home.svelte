@@ -24,6 +24,11 @@
             <MyServices />
         </div>
     </section>
+    <section id="tech-stack-section" class="page-section">
+        <div class="section-content">
+            popo
+        </div>
+    </section>
 </main>
 
 <style>

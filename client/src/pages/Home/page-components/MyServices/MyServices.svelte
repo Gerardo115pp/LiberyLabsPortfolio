@@ -101,7 +101,6 @@
         if (user_interaction) return;
 
         service_selected_index = (service_selected_index + 1) % services.length;
-        console.log(`rotating services: ${service_selected_index}`);
     }
 
     
@@ -115,6 +114,6 @@
 
 <style>
     #my-services-section {
-        row-gap: var(--vspacing-3);
+        row-gap: calc(var(--vspacing-3) * 1.5);
     }
 </style>

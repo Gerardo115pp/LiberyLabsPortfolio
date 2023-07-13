@@ -77,8 +77,9 @@
         display: grid;
         grid-column: 1 / -1;
         grid-template-columns: repeat(var(--default-grid), 1fr);
-        height: 500px;
         justify-items: center;
+        row-gap: var(--vspacing-2);
+        padding: var(--vspacing-2) 0 calc(var(--vspacing-3)) 0;
     }
 
     #dot-grid-wrapper {
