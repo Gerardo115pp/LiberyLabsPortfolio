@@ -4,6 +4,7 @@
     import LineSymbolsBg from "@components/UI/LineSymbolsBG.svelte";
     import HrDivider from "@components/UI/HrDivider.svelte";
     import MyServices from "./page-components/MyServices/MyServices.svelte";
+    import NoBoundaries from "./page-components/NoBoundaries/NoBoundaries.svelte";
 </script>
 
 <main id="home-page">
@@ -24,9 +25,9 @@
             <MyServices />
         </div>
     </section>
-    <section id="tech-stack-section" class="page-section">
+    <section id="broke-text-section" class="page-section">
         <div class="section-content">
-            popo
+            <NoBoundaries />
         </div>
     </section>
 </main>
