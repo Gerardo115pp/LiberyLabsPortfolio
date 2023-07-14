@@ -8,20 +8,20 @@
 </script>
 
 <div id="libery-star-wrapper">
-    <div class="svg-container" id="lsw-star" style:top="{star_y_offset}px" style:left="{star_x_offset}px">
+    <div class="svg-container anim-shake-v" style:animation-duration="5s" id="lsw-star" style:top="{star_y_offset}px" style:left="{star_x_offset}px">
         {@html star}
     </div>
-    <div class="svg-container" id="lsw-blue-bg" style:top="{star_y_offset - 37}px" style:left="{star_x_offset - 32}px">
+    <div class="svg-container anim-shake-v" style:animation-delay=".05s" style:animation-duration="5s" id="lsw-blue-bg" style:top="{star_y_offset - 37}px" style:left="{star_x_offset - 32}px">
         {@html blue_star}
     </div>
     <div id="lsw-lines">
-        <div id="lsw-line-one" class="line-wrapper svg-container">
+        <div id="lsw-line-one" class="line-wrapper svg-container anim-shake-h" style:animation-duration="1s" style:animation-delay=".5s">
             {@html libery_line}
         </div>
-        <div id="lsw-line-two" class="line-wrapper svg-container">
+        <div id="lsw-line-two" class="line-wrapper svg-container anim-shake-h" style:animation-duration=".8s" >
             {@html libery_line}
         </div>
-        <div id="lsw-line-three" class="line-wrapper svg-container">
+        <div id="lsw-line-three" class="line-wrapper svg-container anim-shake-h" style:animation-delay=".5s" style:animation-duration="1s">
             {@html libery_line}
         </div>
     </div>
@@ -89,8 +89,13 @@
         position: absolute;
         top: 101px;
         left: 0;
+    }
+    
+    :global(#lsw-line-one svg) {
         transform: translateX(calc(var(--line-offset) * 1.2)) rotate(calc(var(--limit-lines-rotation) * -1));
     }
+
+
 
     #lsw-line-two {
         position: absolute;
@@ -102,6 +107,10 @@
         position: absolute;
         bottom: 101px;
         left: 0;
+        transform: translateX(calc(var(--line-offset) * 1.2)) rotate(calc(var(--limit-lines-rotation) * 1));
+    }
+
+    :global(#lsw-line-three svg) {
         transform: translateX(calc(var(--line-offset) * 1.2)) rotate(calc(var(--limit-lines-rotation) * 1));
     }
 </style>

@@ -5,6 +5,7 @@
     import HrDivider from "@components/UI/HrDivider.svelte";
     import MyServices from "./page-components/MyServices/MyServices.svelte";
     import NoBoundaries from "./page-components/NoBoundaries/NoBoundaries.svelte";
+    import MyWork from "./page-components/MyWork/MyWork.svelte";
 </script>
 
 <main id="home-page">
@@ -28,6 +29,11 @@
     <section id="broke-text-section" class="page-section">
         <div class="section-content">
             <NoBoundaries />
+        </div>
+    </section>
+    <section id="broke-text-section" class="page-section">
+        <div class="section-content">
+            <MyWork />
         </div>
     </section>
 </main>

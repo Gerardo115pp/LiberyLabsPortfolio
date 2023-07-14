@@ -343,6 +343,62 @@
         animation: floating 3s ease-in-out infinite;
     }
 
+    @keyframes shake-horizontal {
+        0%,
+        100% {
+            transform: translateX(0);
+        }
+        10%,
+        30%,
+        50%,
+        70% {
+            transform: translateX(-10px);
+        }
+        20%,
+        40%,
+        60% {
+            transform: translateX(10px);
+        }
+        80% {
+            transform: translateX(8px);
+        }
+        90% {
+            transform: translateX(-8px);
+        }
+    }
+
+    :global(.anim-shake-h) {
+        animation: shake-horizontal 1s ease-in-out infinite;
+    }
+
+    @keyframes shake-vertical {
+        0%,
+        100% {
+            transform: translateY(0);
+        }
+        10%,
+        30%,
+        50%,
+        70% {
+            transform: translateY(-8px);
+        }
+        20%,
+        40%,
+        60% {
+            transform: translateY(8px);
+        }
+        80% {
+            transform: translateY(6.4px);
+        }
+        90% {
+            transform: translateY(-6.4px);
+        }
+    }
+
+    :global(.anim-shake-v) {
+        animation: shake-vertical 1s ease-in-out infinite;
+    }
+
 /*=====  End of Animations  ======*/
 
 

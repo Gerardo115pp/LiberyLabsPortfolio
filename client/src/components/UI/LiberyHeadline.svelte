@@ -63,6 +63,7 @@
         font-size: 112px;
         font-weight: 400;
         letter-spacing: -3.36px;
+        white-space: nowrap;
         line-height: .75;
         margin: 0;
         padding: 0;
