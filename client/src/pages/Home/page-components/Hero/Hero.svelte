@@ -2,10 +2,20 @@
     import libery_labs_textlogo from "@svg/main_icon_1.svg";
     import TaggedText from "@components/Wrappers/TaggedText.svelte";
     import LiberyFloatingStar from "@components/UI/LiberyFloatingStar.svelte";
+    import LineSymbolsBg from "@components/UI/LineSymbolsBG.svelte";
     
 </script>
 
-<article id="hero-content" class="section-content-layout" style:padding-top="var(--vspacing-4)">
+<article id="hero-content" class="section-content-layout"  style:position="relative" style:padding-top="var(--vspacing-4)">
+    <div class="background-wrapper full-vw">
+        <LineSymbolsBg
+            line_count={8}
+            step={0.026}
+            x_base={1400}
+            y_base={310}
+            svg_width={innerWidth + 120}
+        />
+    </div>
     <div id="libery-hero-info">
         <div id="lhi-top">
             <div id="lhi-headline-wrapper">
