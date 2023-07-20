@@ -1,9 +1,10 @@
 <script>
     export let stroke_color = "var(--grey-2)";
-    export let fill_color = "var(--grey)";    
+    export let fill_color = "var(--grey)";  
+    export let stroke_width = ".9px";  
 </script>
 
-<svg viewBox="0 0 220 202" preserveAspectRatio="xMidYMax meet" style:stroke={stroke_color} style:fill={fill_color}>
+<svg viewBox="0 0 220 202" preserveAspectRatio="xMidYMax meet" style:stroke={stroke_color} style:fill={fill_color} style:stroke-width={stroke_width}>
     <path class="selement" d="M142.006 131.806L112.513 100.004L138.526 59.6104L142.006 131.806Z"/>
     <path class="selement" d="M111.665 100.559L141.95 133.216L113.85 128.423L113.822 128.419L113.794 128.417L110.342 128.223L110.265 128.218L110.191 128.237L81.2126 135.589L109.611 100.559H111.665Z"/>
     <path class="selement" d="M108.758 100.023L80.4349 134.961L81.4109 110.292L81.4111 110.292L81.4112 110.28L82.2321 58.2026L108.758 100.023Z"/>

@@ -10,11 +10,9 @@
 
 <main id="home-page">
     <section id="hero-section" class="page-section">
-        <div class="section-content" style:position="relative">
+        <div class="section-content">
             <Hero />
-            <LineSymbolsBg />
         </div>
-        <HrDivider />
     </section>
     <section id="about-me-section" class="page-section">
         <div class="section-content" >
@@ -31,7 +29,7 @@
             <NoBoundaries />
         </div>
     </section>
-    <section id="broke-text-section" class="page-section">
+    <section id="recent-work-section" class="page-section">
         <div class="section-content">
             <MyWork />
         </div>
