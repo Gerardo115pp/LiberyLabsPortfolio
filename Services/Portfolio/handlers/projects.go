@@ -153,6 +153,8 @@ func getAllPortfoliosHandler(response http.ResponseWriter, request *http.Request
 		clean_data["id"] = project.ID
 		clean_data["name"] = project.Name
 		clean_data["tech_stack"] = project.TechStack
+		clean_data["relevance"] = project.Relevance
+		clean_data["type"] = project.Type
 
 		projects_clean_data[i] = clean_data
 	}
