@@ -115,7 +115,7 @@ func getPortfolioHandler(response http.ResponseWriter, request *http.Request) {
 		getPortfolioByIDHandler(response, request)
 		return
 	} else {
-		getAllPortfoliosHandler(response, request)
+		getAllPortfolios(response, request)
 		return
 	}
 }
@@ -139,7 +139,7 @@ func getPortfolioByIDHandler(response http.ResponseWriter, request *http.Request
 	response.WriteHeader(200)
 }
 
-func getAllPortfoliosHandler(response http.ResponseWriter, request *http.Request) {
+func getAllPortfolios(response http.ResponseWriter, request *http.Request) {
 	portfolios, err := repository.GetProjects(request.Context())
 	if err != nil {
 		echo.Echo(echo.RedFG, fmt.Sprintf("Error while getting Portfolios: %s", err.Error()))
