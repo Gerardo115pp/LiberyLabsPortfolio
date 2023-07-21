@@ -9,6 +9,7 @@ type Project struct {
 	Name        string   `json:"name"`
 	TechStack   []string `json:"tech_stack"`
 	Relevance   int      `json:"relevance"`
+	Type        string   `json:"type"`
 	Description string   `json:"description"`
 	Url         string   `json:"url"`
 	Github      string   `json:"github"`
@@ -44,6 +45,10 @@ func (p *Project) Create(project_data map[string]any) error {
 	}
 
 	p.Relevance = project_data["relevance"].(int)
+
+	if project_data["type"] == nil || project_data["type"].(string) == "" {
+		return fmt.Errorf("Type cannot be empty")
+	}
 
 	if project_data["description"] == nil {
 		return fmt.Errorf("Description cannot be empty")
@@ -85,6 +90,10 @@ func (p *Project) Update(new_data map[string]any) error {
 
 	if new_data["relevance"] != nil {
 		p.Relevance = int(new_data["relevance"].(float64))
+	}
+
+	if new_data["type"] != nil && new_data["type"].(string) != "" {
+		p.Type = new_data["type"].(string)
 	}
 
 	if new_data["description"] != nil {
