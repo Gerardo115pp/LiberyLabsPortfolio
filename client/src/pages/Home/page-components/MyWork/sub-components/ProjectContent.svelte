@@ -29,10 +29,10 @@
     <div id="bottom-content-wrapper">
         <div id="bcw-teck-stack-wrapper">
             <TaggedText tag_name="stack">
-                <ul id="tech-stack">
-                    <div class="tech-stack-item">Svelte</div>
-                    <div class="tech-stack-item">Nginx</div>
-                    <div class="tech-stack-item">CSS</div>
+                <ul id="tech-stack" class:debug={false}>
+                    {#each project.tech_stack as technology, h}
+                        <div class="tech-stack-item">{technology + (h+1 === project.tech_stack.length ? '' : ',')}</div>
+                    {/each}
                 </ul>
             </TaggedText>
         </div>
@@ -63,12 +63,13 @@
 
     #tech-stack {
         display: flex;
+        width: calc(var(--vspacing-6) * 1.1);
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: flex-start;
         align-items: center;
-        row-gap: var(--vspacing-2);
-        column-gap: var(--vspacing-2);
+        
+        column-gap: var(--vspacing-1);
         list-style: none;
         padding: 0;
         margin: 0;
@@ -78,5 +79,6 @@
         font-family: var(--font-decorative);
         color: var(--main);
         font-size: var(--font-size-4);
+        text-transform: capitalize;
     }
 </style>

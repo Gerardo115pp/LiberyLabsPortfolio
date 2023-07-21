@@ -5,7 +5,7 @@
 
     onMount(() => {
         if (projects.length > 0) {
-            selectProject(1);
+            selectProject(0);
         }
     })
 
@@ -16,11 +16,21 @@
     let selected_project;
     const selected_project_dispatcher = createEventDispatcher();
 
+    const disableSelectionMark = () => {
+        const selected_project_element = document.querySelector('.selected-project');
+
+        if (selected_project_element !== null) {
+            selected_project_element.classList.remove('selected-project');
+        }
+    }
+
     const emitSelectedProject = project => {
         selected_project_dispatcher('selectedProject', { project });
     }
 
     const markSelectedProject = index => {
+        disableSelectionMark();
+
         const project_element = document.getElementById(`pcw-pc-project-${index}`);
 
         if (project_element !== null) {
@@ -41,7 +51,7 @@
 <div id="projects-carousel-wrapper">
     <div id="pcw-projects-container" class:debug={false} style:justify-content={projects.length > 7 ? 'flex-start' : 'center'}>
         {#each projects as project, h}
-            <div id="pcw-pc-project-{h}" class="pcw-project-item" style:position="relative">
+            <div id="pcw-pc-project-{h}" on:click={() => selectProject(h)} class="pcw-project-item" style:position="relative">
                 <span class="pcw-pi-name">{project.name}</span>
                 <svg viewBox="0 0 100 86" class="pcw-pi-corners" fill="none" preserveAspectRatio="xMidYMax meet">
                     <path d="M1 10V0H10" />
@@ -85,6 +95,17 @@
         height: 100%;
         width: var(--project-item-width);
         flex-shrink: 0;
+    }
+
+    .pcw-pi-name {
+        cursor: default;
+        transition: all .6s ease-in-out;
+    }
+
+    @media(pointer: fine) {
+        .pcw-project-item:not(.selected-project):hover .pcw-pi-name{
+            transform: scale(1.1);
+        }
     }
 
     :global(.selected-project) {
