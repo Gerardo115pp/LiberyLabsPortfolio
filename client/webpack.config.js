@@ -84,20 +84,12 @@ const config = {
 module.exports = (env, argv) => {
 	const isProd = argv.mode === 'production';
 	const build_config = {
-		AUTH_SERVER: process.env.AUTH_SERVER,
-		USERS_SERVER: process.env.USERS_SERVER,
-		PAYMENTS_SERVER: process.env.PAYMENTS_SERVER,
-		JD_SERVER: process.env.JD_SERVER,
-		WHATSAPP_REDIRECTION: process.env.WHATSAPP_REDIRECTION,
+		PORTFOLIO_SERVICE: process.env.PORTFOLIO_SERVICE,
 	}
 
 	config.plugins.push(
 		new webpack.DefinePlugin({
-			"AUTH_SERVER": JSON.stringify(build_config.AUTH_SERVER),
-			"USERS_SERVER": JSON.stringify(build_config.USERS_SERVER),
-			"PAYMENTS_SERVER": JSON.stringify(build_config.PAYMENTS_SERVER),
-			"JD_SERVER": JSON.stringify(build_config.JD_SERVER),
-			"WHATSAPP_REDIRECTION": JSON.stringify(build_config.WHATSAPP_REDIRECTION),
+			"PORTFOLIO_SERVICE": JSON.stringify(build_config.PORTFOLIO_SERVICE)
 		})
 	);
 

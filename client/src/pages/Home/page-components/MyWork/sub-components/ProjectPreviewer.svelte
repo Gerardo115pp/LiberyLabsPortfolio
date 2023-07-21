@@ -1,13 +1,16 @@
 <script>
     import LiberyBorderStar from "@components/UI/LiberyBorderStar.svelte";
-import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
-import LineSymbolsBg from "@components/UI/LineSymbolsBG.svelte";
+    import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
+    import LineSymbolsBg from "@components/UI/LineSymbolsBG.svelte";
     import TaggedText from "@components/Wrappers/TaggedText.svelte";
     import ProjectContent from "./ProjectContent.svelte";
     import ProjectScreenshots from "./ProjectScreenshots.svelte";
+    import { Project } from "@models/Project";
 
-    export let project_name = "Keystone Builds";
-    export let project_description = "Keystone Builds is a construction company based in the US. They specialize in building custom homes and commercial buildings. They also offer remodeling services. And they are a family-owned business.";
+    /** 
+     * @type {Project}
+    */
+    export let project;
 </script>
 
 <section id="libery-project-preview" class="" class:debug={false} style:position="relative">
@@ -21,10 +24,10 @@ import LineSymbolsBg from "@components/UI/LineSymbolsBG.svelte";
     </div>
     <div id="lpp-project-content" class="section-content-layout" class:debug={false}>
         <div id="llp-pc-left">
-            <ProjectContent {project_name} {project_description}/>
+            <ProjectContent {project}/>
         </div>
         <div id="llp-pc-right">
-            <ProjectScreenshots />
+            <ProjectScreenshots {project} />
         </div>
     </div>
 </section>

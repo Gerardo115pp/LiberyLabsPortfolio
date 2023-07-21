@@ -2,16 +2,19 @@
     import LiberyBorderStar from "@components/UI/LiberyBorderStar.svelte";
     import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
     import TaggedText from "@components/Wrappers/TaggedText.svelte";
+    import { Project } from "@models/Project";
 
-    export let project_name;
-    export let project_description;
+    /** 
+     * @type {Project}
+    */
+    export let project;
 
 </script>
 
 
 <!-- HTMl -->
     <header id="project-name-wrapper" style:position="relative">
-        <LiberyHeadline headline_color="var(--grey-1)" headline_text="{project_name}" text_transform="capitalize" headline_tag="h2"/>
+        <LiberyHeadline headline_color="var(--grey-1)" headline_text="{project.name}" text_transform="capitalize" headline_tag="h2"/>
         <div class="pnw-libery-star-wrapper background-wrapper">
             <LiberyBorderStar stroke_color="var(--danger-9)" fill_color="none" stroke_width="2px"/>
         </div>
@@ -19,7 +22,7 @@
     <div id="project-description-wrapper">
         <TaggedText tag_name="p">
             <p class="project-description">
-                {project_description}
+                {project.description}
             </p>
         </TaggedText>
     </div>

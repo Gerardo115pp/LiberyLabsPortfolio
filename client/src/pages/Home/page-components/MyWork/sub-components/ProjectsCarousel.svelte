@@ -1,29 +1,48 @@
 <script>
     import { onMount } from "svelte";
+    import { ProjectListItem } from "@models/Project";
+    import { createEventDispatcher } from "svelte";
 
     onMount(() => {
-        const a = document.querySelector('.test_b')
-        console.log(a)
+        if (projects.length > 0) {
+            selectProject(1);
+        }
     })
 
-    export let projects = [
-        "test_a0",
-        "test_a",
-        "test_a",
-        "test_a",
-        "test_a",
-        "test_a",
-        "test_a",
-        "test_a",
-        "test_b"
-    ]
+    /**
+     * @type {ProjectListItem[]}
+     */
+    export let projects = [];
+    let selected_project;
+    const selected_project_dispatcher = createEventDispatcher();
+
+    const emitSelectedProject = project => {
+        selected_project_dispatcher('selectedProject', { project });
+    }
+
+    const markSelectedProject = index => {
+        const project_element = document.getElementById(`pcw-pc-project-${index}`);
+
+        if (project_element !== null) {
+            project_element.classList.add('selected-project');
+        }
+    }
+
+    const selectProject = project_index => {
+        if (selected_project === projects[project_index]) return;
+
+        selected_project = projects[project_index];
+
+        emitSelectedProject(selected_project);
+        markSelectedProject(project_index);
+    }
 </script>
 
 <div id="projects-carousel-wrapper">
     <div id="pcw-projects-container" class:debug={false} style:justify-content={projects.length > 7 ? 'flex-start' : 'center'}>
-        {#each projects as project}
-            <div class="pcw-project-item" style:position="relative">
-                <span class="pcw-pi-name">{project}</span>
+        {#each projects as project, h}
+            <div id="pcw-pc-project-{h}" class="pcw-project-item" style:position="relative">
+                <span class="pcw-pi-name">{project.name}</span>
                 <svg viewBox="0 0 100 86" class="pcw-pi-corners" fill="none" preserveAspectRatio="xMidYMax meet">
                     <path d="M1 10V0H10" />
                     <path d="M89.2 0h10v10" />
@@ -66,6 +85,11 @@
         height: 100%;
         width: var(--project-item-width);
         flex-shrink: 0;
+    }
+
+    :global(.selected-project) {
+        color: var(--main-dark);
+        font-size: var(--font-size-4);
     }
 
     svg.pcw-pi-corners {
