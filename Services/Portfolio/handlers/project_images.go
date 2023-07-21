@@ -3,10 +3,12 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"libery_labs_portfolio/repository"
+	"io/ioutil"
 	"libery_labs_portfolio/server"
 	"libery_labs_portfolio/workflows"
 	"net/http"
+	"strconv"
+	"strings"
 
 	"github.com/Gerardo115pp/patriots_lib/echo"
 )
@@ -54,7 +56,7 @@ func postProjectImagesHandler(response http.ResponseWriter, request *http.Reques
 
 func getProjectImagesHandler(response http.ResponseWriter, request *http.Request) {
 
-	if request.URL.Query().Get("name") != "" {
+	if request.URL.Query().Get("name") != "" && request.URL.Query().Get("project_id") != "" {
 		getProjectImageByName(response, request)
 		return
 	} else if request.URL.Query().Get("project_id") != "" {
@@ -64,22 +66,48 @@ func getProjectImagesHandler(response http.ResponseWriter, request *http.Request
 }
 
 func getProjectImageByName(response http.ResponseWriter, request *http.Request) {
-	var portfolio_id string = request.URL.Query().Get("id")
-	if portfolio_id == "" {
-		response.WriteHeader(400)
-		return
-	}
+	image_name := request.URL.Query().Get("name")
+	project_id := request.URL.Query().Get("project_id")
 
-	portfolio, err := repository.GetProjectByID(request.Context(), portfolio_id)
+	file_descriptor, err := workflows.GetProjectImage(project_id, image_name)
 	if err != nil {
-		echo.Echo(echo.RedFG, fmt.Sprintf("Error while getting Portfolio by id: %s", err.Error()))
+		echo.Echo(echo.RedFG, fmt.Sprintf("Error while getting project image: %s", err.Error()))
 		response.WriteHeader(404)
 		return
 	}
 
-	response.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(response).Encode(portfolio)
+	defer file_descriptor.Close()
+	file_header := make([]byte, 512)
+	file_descriptor.Read(file_header)
+
+	content_type := http.DetectContentType(file_header)
+
+	file_stat, err := file_descriptor.Stat()
+	if err != nil {
+		echo.Echo(echo.RedFG, fmt.Sprintf("Error while getting project image: %s", err.Error()))
+		response.WriteHeader(500)
+		return
+	}
+
+	var file_size string = strconv.FormatInt(file_stat.Size(), 10)
+
+	response.Header().Set("Content-Type", content_type)
+	response.Header().Set("Content-Length", file_size)
+	response.Header().Set("Content-Disposition", "attachment; filename="+strings.Replace(image_name, " ", "_", -1))
+
+	file_descriptor.Seek(0, 0)
+
+	var file_data []byte
+	file_data, err = ioutil.ReadAll(file_descriptor)
+
+	if err != nil {
+		echo.Echo(echo.RedFG, fmt.Sprintf("Error while getting project image: %s", err.Error()))
+		response.WriteHeader(500)
+		return
+	}
+
 	response.WriteHeader(200)
+	response.Write(file_data)
 }
 
 func getAllProjectImages(response http.ResponseWriter, request *http.Request) {

@@ -1,6 +1,12 @@
 package workflows
 
-import "strings"
+import (
+	"fmt"
+	app_config "libery_labs_portfolio/Config"
+	"libery_labs_portfolio/helpers"
+	"os"
+	"strings"
+)
 
 func GetProjectImages(project_id string) (map[string][]string, error) {
 	project_files, err := getProjectFiles(project_id)
@@ -21,4 +27,13 @@ func GetProjectImages(project_id string) (map[string][]string, error) {
 	}
 
 	return project_images, nil
+}
+
+func GetProjectImage(project_id string, image_name string) (*os.File, error) {
+	var image_path string = fmt.Sprintf("%s/%s/%s", app_config.PROJECTS_DATA_PATH, project_id, image_name)
+	if !helpers.FileExists(image_path) {
+		return nil, fmt.Errorf("Image not found")
+	}
+
+	return os.Open(image_path)
 }
