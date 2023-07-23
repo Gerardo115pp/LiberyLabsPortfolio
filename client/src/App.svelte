@@ -189,6 +189,7 @@
 
             --navbar-height: 124px;
             --border-radius: 4px;
+            --border-radius-2: 19px;
             --page-content-width: 90.41%;
             --page-lateral-spacing: calc(calc(100vw - var(--page-content-width)) / 2);
     }
@@ -311,7 +312,8 @@
         }
 
         :global(.button-1-wrapper:hover) {
-            background: var(--success-6);
+            background: var(--success-6) ;
+            filter: brightness(1.3) saturate(1.5) hue-rotate(2deg);
         }
     }
 

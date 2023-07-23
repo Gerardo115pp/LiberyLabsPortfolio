@@ -1,12 +1,10 @@
 <script>
     import Hero from "./page-components/Hero/Hero.svelte";
     import AboutMe from "./page-components/AboutMe/AboutMe.svelte";
-    import LineSymbolsBg from "@components/UI/LineSymbolsBG.svelte";
-    import HrDivider from "@components/UI/HrDivider.svelte";
     import MyServices from "./page-components/MyServices/MyServices.svelte";
     import NoBoundaries from "./page-components/NoBoundaries/NoBoundaries.svelte";
     import MyWork from "./page-components/MyWork/MyWork.svelte";
-    import ContactMe from "./page-components/ContactMe/ContactMe.svelte";
+    import BottomContent from "./page-components/BottomContent/BottomContent.svelte";
 </script>
 
 <main id="home-page">
@@ -35,11 +33,7 @@
             <MyWork />
         </div>
     </section>
-    <section id="contact-me-section" class="page-section">
-        <div class="section-content">
-            <ContactMe />
-        </div>
-    </section>
+    <BottomContent /> <!-- Contact, Chat section and Footer -->
 </main>
 
 <style>
@@ -69,4 +63,6 @@
         width: 100%;
         justify-content: center;
     }
+
+
 </style>
