@@ -155,7 +155,7 @@
 
     @media (pointer: fine) {
         .action-btn {
-            fill: var(--main-dark-color-4);
+            fill: var(--main-5);
             transform-box: fill-box;
             transform-origin: center;
             transition: all .2s ease-in-out;

@@ -300,17 +300,27 @@
     :global(.button-1-wrapper) {
         width: max-content;
         clip-path: polygon(0 0,0 0,100% 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,15px 100%,0 100%);
-        background: var(--success-1);
+        background: var(--success-3);
         padding: 1px;
         border-radius: var(--border-radius);
     }
 
+    @media(pointer: fine) {
+        :global(.button-1-wrapper) {
+            transition: all .4s cubic-bezier(0.075, 0.82, 0.165, 1);
+        }
+
+        :global(.button-1-wrapper:hover) {
+            background: var(--success-6);
+        }
+    }
+
     :global(.button-1) {
         border: none;
-        font-family: var(--font-read);
-        background: var(--grey);
+        font-family: var(--font-titles);
+        background: transparent;
         font-size: var(--font-size-1);
-        color: var(--success-1);
+        color: var(--grey-7);
         padding: 12px 32px;
         clip-path: polygon(0 0,0 0,100% 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,15px 100%,0 100%);
     }

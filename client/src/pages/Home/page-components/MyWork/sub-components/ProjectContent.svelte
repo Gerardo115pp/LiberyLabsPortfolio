@@ -36,8 +36,26 @@
                 </ul>
             </TaggedText>
         </div>
-        <div id="bcw-cta">
-            <div class="button-1-wrapper">
+        <div id="previewer-controls">
+            {#if project.github !== ''}
+                <div class="button-1-wrapper redirect">
+                    <a href="{project.github}" target="_blank" rel="noopener noreferrer">
+                        <button class="button-1">
+                            GITHUB
+                        </button>
+                    </a>
+                </div>
+            {/if}
+            {#if project.url !== ''}
+                <div class="button-1-wrapper redirect">
+                    <a href="{project.url}"  target="_blank" rel="noopener noreferrer">
+                        <button class="button-1">
+                            See for yourself!
+                        </button>
+                    </a>
+                </div>
+            {/if}
+            <div id="bcw-cta" class="button-1-wrapper">
                 <button class="button-1">Contact me!</button>
             </div>
         </div>
@@ -81,4 +99,32 @@
         font-size: var(--font-size-4);
         text-transform: capitalize;
     }
+
+    #previewer-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        column-gap: var(--vspacing-1);
+    }
+
+    /* #previewer-controls button {
+    } */
+    
+    .button-1-wrapper.redirect {
+        background: var(--grey-7);
+    }
+    
+    .button-1-wrapper.redirect button.button-1 {
+        font-family: var(--font-titles);
+        font-size: calc(var(--font-size-1) * .8) !important;
+        background: transparent;
+        color: var(--grey-1);
+    }
+
+    @media(pointer: fine) {
+        .button-1-wrapper.redirect:hover {
+            background: var(--grey-5);
+        }
+    }
+
 </style>
