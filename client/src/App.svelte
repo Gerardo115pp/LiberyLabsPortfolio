@@ -203,6 +203,15 @@
         box-sizing: border-box;
     }
 
+    :global(body::-webkit-scrollbar) {
+        display: none;
+    }
+
+    :global(body) {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+
     :global(body) {
         margin: 0;
         padding: 0;
