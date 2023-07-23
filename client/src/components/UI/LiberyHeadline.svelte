@@ -7,6 +7,7 @@
     export let extra_props;
     export let headline_color;
     export let vspacing = "var(--vspacing-1)";
+    export let forced_font_size;
     
     
     /*----------  Style  ----------*/
@@ -35,7 +36,7 @@
     <div class="headline-wrapper">
         <h1 class="libery-headline" 
             style:color="{headline_color}" 
-            style:font-size={headline_font_size} 
+            style:font-size={forced_font_size === undefined ? headline_font_size : forced_font_size} 
             style:text-transform={text_transform}
         >
             {headline_text}

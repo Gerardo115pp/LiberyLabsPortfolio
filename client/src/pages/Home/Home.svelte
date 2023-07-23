@@ -6,6 +6,7 @@
     import MyServices from "./page-components/MyServices/MyServices.svelte";
     import NoBoundaries from "./page-components/NoBoundaries/NoBoundaries.svelte";
     import MyWork from "./page-components/MyWork/MyWork.svelte";
+    import ContactMe from "./page-components/ContactMe/ContactMe.svelte";
 </script>
 
 <main id="home-page">
@@ -32,6 +33,11 @@
     <section id="recent-work-section" class="page-section">
         <div class="section-content">
             <MyWork />
+        </div>
+    </section>
+    <section id="contact-me-section" class="page-section">
+        <div class="section-content">
+            <ContactMe />
         </div>
     </section>
 </main>
