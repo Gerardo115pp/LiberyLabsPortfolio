@@ -1,4 +1,5 @@
 <script>
+    import { layout_properties } from "@stores/layout";
         
     /*=============================================
     =            Lines generation            =
@@ -11,8 +12,9 @@
      * @type {number} The width of the svg element, by default it is the innerWidth of the window. It's not recommended to change this value.
      */
     export let svg_width = innerWidth;
-    let svg_height_width_ratio = 0.3828125;
+    let svg_height_width_ratio = layout_properties.IS_MOBILE ? 1.9 : 0.3828125 ;
     export let svg_height = svg_width * svg_height_width_ratio;
+    svg_height = svg_height > layout_properties.VIEWPORT_HEIGHT ? layout_properties.VIEWPORT_HEIGHT : svg_height;
 
     let y_limit_percentage = 0.9738068027210885;
     let y_limit = svg_height * y_limit_percentage;
@@ -25,6 +27,8 @@
     let y_step = svg_height * step;
     export let x_base = 1500;
     export let y_base = 200;
+
+    console.log(`x_base: ${x_base} | y_base: ${y_base}`)
 
     /**
         @type {SVGElement}

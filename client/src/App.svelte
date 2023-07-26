@@ -3,6 +3,12 @@
     import { routes } from './routes';
     import NotificationsPopup from '@components/Popups/NotificationsPopup.svelte';
     import Navbar from '@components/Navbar/Navbar.svelte';
+    import { onMount } from 'svelte';
+    import { defineLayout } from '@stores/layout';
+
+    onMount(() => {
+        defineLayout();
+    })
 
 
 </script>
@@ -101,6 +107,9 @@
             --danger-3: hsla(7, 94.3%, 79.4%, 1);
             --danger-2: hsla(4, 85.5%, 89.2%, 1);
             --danger-1: hsla(4, 85.5%, 89.2%, 1);
+
+            /* Elements */
+            --html-tag-color: var(--grey-8);
         /* Spacing */
             --vspacing-base:8px;
             --vspacing-scale: 1;
@@ -119,18 +128,18 @@
             --hspacing-2: 36px;
 
         /* Fonts */
-            --font-size-1: 16px;
-            --font-size-2: 19px;
-            --font-size-3: 21px;
-            --font-size-4: 23px;
+            --font-size-1: var(--vspacing-2); /* 16px */
+            --font-size-2: calc(var(--vspacing-3) * 0.59375); /* 19px */
+            --font-size-3: calc(var(--vspacing-3) * 0.65625); /* 21px */
+            --font-size-4: calc(var(--vspacing-3) * 0.71875); /* 23px */
 
             --font-size-p: var(--font-size-3);
 
-            --font-size-h1: 112px;
-            --font-size-h2: 56px;
-            --font-size-h3: 32px;
+            --font-size-h1: calc(var(--vspacing-5) * 0.875); /* 112px */
+            --font-size-h2: calc(var(--vspacing-5) * 0.4375);
+            --font-size-h3: var(--vspacing-3);
 
-            --font-size-CTA-1: 36px;
+            --font-size-CTA-1: calc(var(--vspacing-4) * 0.5625);
 
             --font-titles: 'Permanent Marker';
             --font-read: 'Raleway';
@@ -187,13 +196,12 @@
 
         /* Misc */
 
-            --navbar-height: 124px;
+            --navbar-height: calc(var(--vspacing-5) * 0.96875);
             --border-radius: 4px;
             --border-radius-2: 19px;
             --page-content-width: 90.41%;
             --page-lateral-spacing: calc(calc(100vw - var(--page-content-width)) / 2);
     }
-
 
 /*=============================================
 =            Normalize            =
@@ -289,7 +297,7 @@
     }
 
     :global(.html-tag) {
-        color: var(--grey-8);
+        color: var(--html-tag-color);
         font-family: var(--font-decorative);
         font-size: var(--font-size-4);
         line-height: .6;
@@ -389,12 +397,12 @@
         30%,
         50%,
         70% {
-            transform: translateX(-10px);
+            transform: translateX(-10px) scaleX(1);
         }
         20%,
         40%,
         60% {
-            transform: translateX(10px);
+            transform: translateX(10px) scaleX(1.03);
         }
         80% {
             transform: translateX(8px);
@@ -437,9 +445,36 @@
     }
 
 /*=====  End of Animations  ======*/
+/*=============================================
+=            Mobile            =
+=============================================*/
 
+    :global(.hide-on-mobile) {
+        display: none !important;
+    }
 
+    @media only screen and (max-width: 765px) {
+        :root {
+            --vspacing-scale: .714583;
+            --default-grid: var(--mobile-grid);
+            --html-tag-color: var(--grey-6);
+        }
 
+        :global(.section-content-layout) {
+            display: flex;
+            width: var(--page-content-width);
+            flex-direction: column;
+            column-gap: var(--vspacing-3);
+        } 
+
+        :global(.html-tag) {
+            font-size: var(--font-size-h3);
+            line-height: .6;
+            user-select: none;
+        }
+    }
+
+/*=====  End of Mobile  ======*/
 
 
 

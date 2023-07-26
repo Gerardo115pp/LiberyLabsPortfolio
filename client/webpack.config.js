@@ -16,9 +16,9 @@ const config = {
 		static:{
 			directory: path.join(__dirname, 'public')
 		},
-		allowedHosts: [
-			'developer-libery-labs.com'
-		],
+		// allowedHosts: [
+		// 	'developer-libery-labs.com'
+		// ],
 		hot: true, // this
 		historyApiFallback: true
 	},
@@ -32,6 +32,7 @@ const config = {
 			'@models': path.resolve(__dirname, 'src/models'),
 			"@actions": path.resolve(__dirname, 'src/actions'),
 			"@events": path.resolve(__dirname, 'src/events'),
+			"@stores": path.resolve(__dirname, 'src/stores'),
 		},
 		extensions: ['*', '.mjs', '.js', '.svelte'],
 		mainFields: ['svelte', 'browser', 'module', 'main'],

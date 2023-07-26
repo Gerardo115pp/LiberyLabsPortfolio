@@ -29,7 +29,7 @@
 
 <nav id="libery-labs-navbar">
     <div id="lln-content">
-        <div id="lln-navoptions-container">
+        <div style:display="{is_mobile ? 'none' : 'flex'}" id="lln-navoptions-container">
             {#each Object.values(dropdown_names) as ddn}
                 <div class="lln-navoption">
                     <a class="highlight-text" href="{ddn.href}">{ddn.name}</a>

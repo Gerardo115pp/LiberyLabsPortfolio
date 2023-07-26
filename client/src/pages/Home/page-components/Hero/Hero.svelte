@@ -3,26 +3,46 @@
     import TaggedText from "@components/Wrappers/TaggedText.svelte";
     import LiberyFloatingStar from "@components/UI/LiberyFloatingStar.svelte";
     import LineSymbolsBg from "@components/UI/LineSymbolsBG.svelte";
+    import { layout_properties } from "@stores/layout";
+    import { writable } from "svelte/store";
+    import MainLogo from "@components/UI/MainLogo.svelte";
+
+    const hero_content_height = writable(0);
     
+    /**
+     * @type {HTMLDivElement}
+     */
+    let hero_star_element; 
+    hero_content_height.subscribe(updateStarHeight);
+    
+    function updateStarHeight(new_height){
+        if (hero_star_element === undefined) return;
+
+        console.log(hero_star_element)
+
+        hero_star_element.style.height = `${new_height}px`;
+    }
+
 </script>
 
-<article id="hero-content" class="section-content-layout"  style:position="relative" style:padding-top="var(--vspacing-4)">
+<article id="hero-content" class="section-content-layout"  style:position="relative" class:debug={false}>
     <div class="background-wrapper full-vw">
         <LineSymbolsBg
-            line_count={8}
-            step={0.026}
-            x_base={1400}
-            y_base={310}
-            svg_width={innerWidth + 120}
+            line_count={layout_properties.IS_MOBILE ? 23 : 10}
+            step={ layout_properties.IS_MOBILE ? 0.028 : 0.026}
+            x_base={layout_properties.IS_MOBILE ? 50 : 1400}
+            y_base={layout_properties.IS_MOBILE ? 680 : 310}
+            svg_width={layout_properties.IS_MOBILE ? innerWidth : innerWidth + 120}
         />
     </div>
     <div id="libery-hero-info">
         <div id="lhi-top">
             <div id="lhi-headline-wrapper">
-                <div id="headline-logo">
-                    {@html libery_labs_textlogo}    
-                </div>
-                <h2 class="sub-headline">Where I Cast Your Dreams into Digital Reality</h2>
+                <MainLogo
+                    fill_color="var(--main)"
+                    stroke_color="var(--main)"
+                    subheadline_color="var(--main-5)"
+                /> 
             </div>
             <div id="libery-description-wrapper">
                 <TaggedText tag_name="p">
@@ -32,14 +52,14 @@
                 </TaggedText>
             </div>
         </div>
-        <div id="cta-wrapper">
+        <div id="cta-wrapper" class:hide-on-mobile={layout_properties.IS_MOBILE}>
             <div class="button-1-wrapper">
                 <button class="button-1">Check my work</button>
             </div>
         </div>
     </div>
-    <div id="hero-star-wrapper">
-        <LiberyFloatingStar/>
+    <div bind:this={hero_star_element} id="hero-star-wrapper">
+        <LiberyFloatingStar height_store={hero_content_height}/>
     </div>
 </article>
 
@@ -51,6 +71,7 @@
 
     #hero-content {
         height: calc(100vh - var(--navbar-height));
+        padding-top: var(--vspacing-4);
     }
     
     /*=============================================
@@ -101,6 +122,37 @@
     
     /*=====  End of Libery Star  ======*/
     
+    
+    /*=============================================
+    =            Mobile            =
+    =============================================*/
+    
+        @media only screen and (max-width: 765px) {
+            #hero-content {
+                flex-direction: column-reverse;
+                justify-content: flex-end;
+                row-gap: var(--vspacing-4);
+                padding-top: var(--vspacing-3);
+            }
+
+            #libery-hero-info {
+                grid-column: 1 / span 4; /* section-content-layout not sets a 4 column grid as material design suggests */
+            }
+
+            #hero-star-wrapper {
+                display: flex;
+                justify-content: center;
+            }
+
+            #lhi-top {
+                row-gap: var(--vspacing-3);
+            }
+        }
+    
+    /*=====  End of Mobile  ======*/
+    
+    
+
     
 </style>
     

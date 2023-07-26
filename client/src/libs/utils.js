@@ -2,6 +2,8 @@ import { push } from 'svelte-spa-router';
 import bonhart_storage from './bonhart-storage';
 
 
+const MOBILE_BREAKPOINT = 768;
+
 export const isLoggedIn = (redirect=true) => {
     let json_web_token = bonhart_storage.Token;
     console.log("isLoggedIn", json_web_token);
@@ -25,7 +27,7 @@ export const logout = () => {
 export const isMobile = () => {
     let is_mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
-    if (!is_mobile && window.innerWidth < 768) {
+    if (!is_mobile && window.innerWidth < MOBILE_BREAKPOINT) {
         is_mobile = true;
     }
     
