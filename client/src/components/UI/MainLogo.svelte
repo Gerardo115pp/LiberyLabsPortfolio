@@ -41,6 +41,6 @@
     }
 
     .sub-headline {
-        font-size: calc(var(--font-size-h3) * 0.59375);
+        font-size: calc(var(--font-size-h3) * 0.57375);
     }
 </style>

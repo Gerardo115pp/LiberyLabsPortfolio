@@ -4,7 +4,7 @@
     import libery_line from "@svg/libery_line.svg"
 
     const star_x_offset = 74; // px
-    const star_y_offset = 37; // px
+    const star_y_offset = -17; // px
 </script>
 
 <div id="libery-star-wrapper">
@@ -15,13 +15,13 @@
         {@html blue_star}
     </div>
     <div id="lsw-lines">
-        <div id="lsw-line-one" class="line-wrapper svg-container anim-shake-h" style:animation-duration="1s" style:animation-delay=".5s">
+        <div id="lsw-line-one" class="line-wrapper svg-container anim-shake-h" style:animation-duration="3.4s" style:animation-delay=".5s">
             {@html libery_line}
         </div>
-        <div id="lsw-line-two" class="line-wrapper svg-container anim-shake-h" style:animation-duration=".8s" >
+        <div id="lsw-line-two" class="line-wrapper svg-container anim-shake-h" style:animation-duration="2.8s" >
             {@html libery_line}
         </div>
-        <div id="lsw-line-three" class="line-wrapper svg-container anim-shake-h" style:animation-delay=".5s" style:animation-duration="1s">
+        <div id="lsw-line-three" class="line-wrapper svg-container anim-shake-h" style:animation-delay=".5s" style:animation-duration="3.5s">
             {@html libery_line}
         </div>
     </div>
@@ -78,6 +78,7 @@
         position: absolute;
         width: 100%;
         height: 100%;
+        top: -11%;
         z-index: 2;
     }
 
