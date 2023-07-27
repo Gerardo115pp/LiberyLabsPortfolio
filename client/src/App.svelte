@@ -456,6 +456,10 @@
     @media only screen and (max-width: 765px) {
         :root {
             --vspacing-scale: .714583;
+
+            --font-size-h1: calc(var(--vspacing-5) * 0.575); /* 112px */
+            --font-size-h2: calc(var(--vspacing-5) * 0.3375);
+
             --default-grid: var(--mobile-grid);
             --html-tag-color: var(--grey-6);
         }

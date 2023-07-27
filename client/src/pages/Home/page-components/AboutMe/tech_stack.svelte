@@ -47,7 +47,7 @@
     <div class="section-headline-wrapper-reverse">
         <LiberyHeadline headline_text="My Arsenal" headline_color="var(--main)" text_transform="capitalize"/>
     </div>
-    <div id="tsc-bottom-content">
+    <div id="tsc-bottom-content" >
         <div class="bracket-wrapper">
             <Bracket/>
         </div>
@@ -125,6 +125,47 @@
         text-align: center;
     }
 
+    
+    /*=============================================
+    =            Mobile            =
+    =============================================*/
+    
+    @media (max-width: 768px) {
+        #tsc-bottom-content {
+            flex-direction: column;
+            align-items: center;
+            /* row-gap: var(--vspacing-4); */
+        }
 
+        .bracket-wrapper {
+            display: flex;
+            width: 100%;
+            height: 22vw;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        
+        :global(.bracket-wrapper svg) {
+            transform: translateY(-30%) rotate(90deg);
+            transform-origin: center;
+            height: 100vw !important;
+            width: max-content;
+            opacity: .1;
+
+        }
+
+        #teck-stack-container {
+            grid-template-columns: repeat(3, minmax(80px, 1fr));
+            width: 100%;
+        }
+
+        .teck-stack-item {
+            font-size: var(--font-size-3);
+        }
+    }
+    
+    /*=====  End of Mobile  ======*/
+    
+    
 
 </style>
