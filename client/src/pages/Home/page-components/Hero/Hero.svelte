@@ -12,13 +12,14 @@
     /**
      * @type {HTMLDivElement}
      */
-    let hero_star_element; 
+    let hero_star_element;
     hero_content_height.subscribe(updateStarHeight);
     
     function updateStarHeight(new_height){
-        if (hero_star_element === undefined) return;
-
-        console.log(hero_star_element)
+        if (hero_star_element === undefined) return; 
+        
+        window.hero_star_element = hero_star_element;
+        
 
         hero_star_element.style.height = `${new_height}px`;
     }

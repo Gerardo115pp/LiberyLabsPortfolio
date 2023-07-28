@@ -5,15 +5,15 @@
     import Navbar from '@components/Navbar/Navbar.svelte';
     import { onMount } from 'svelte';
     import { defineLayout, layout_properties } from '@stores/layout';
-
+    
     const ENABLE_DEBUG_ON_MOBILE = true;
+    if (ENABLE_DEBUG_ON_MOBILE && layout_properties.IS_MOBILE) {
+        debugOnMobile();
+    }
 
     onMount(() => {
         defineLayout();
 
-        if (ENABLE_DEBUG_ON_MOBILE && layout_properties.IS_MOBILE) {
-            debugOnMobile();
-        }
     })
     function debugOnMobile() { 
         let script = document.createElement('script');
@@ -21,7 +21,6 @@
         document.body.append(script); 
         script.onload = () => eruda.init();
     }
-
 
 </script>
 

@@ -4,15 +4,20 @@
     import libery_line from "@svg/libery_line.svg"
     import { layout_properties } from "@stores/layout";
     import { writable } from "svelte/store";
+    import { onMount } from "svelte";
+    
 
     const star_x_offset = layout_properties.IS_MOBILE ? 44 : 74; // px
     const star_y_offset = layout_properties.IS_MOBILE ? 0 : -17; // px
     const stars_separation = layout_properties.IS_MOBILE ? 12 : 37; // px
 
+    onMount(() => {
+        height_store.set(star_height);
+    })
+
+
     export let height_store = writable(0);
     let star_height = 0;
-    $: height_store.set(star_height);
-
 </script>
 
 <div id="libery-star-wrapper">
