@@ -12,9 +12,10 @@
      * @type {number} The width of the svg element, by default it is the innerWidth of the window. It's not recommended to change this value.
      */
     export let svg_width = innerWidth;
+    export let limit_height = true;
     let svg_height_width_ratio = layout_properties.IS_MOBILE ? 1.9 : 0.3828125 ;
     export let svg_height = svg_width * svg_height_width_ratio;
-    svg_height = svg_height > layout_properties.VIEWPORT_HEIGHT ? layout_properties.VIEWPORT_HEIGHT : svg_height;
+    svg_height = (svg_height > layout_properties.VIEWPORT_HEIGHT) && limit_height ? layout_properties.VIEWPORT_HEIGHT : svg_height;
 
     let y_limit_percentage = 0.9738068027210885;
     let y_limit = svg_height * y_limit_percentage;

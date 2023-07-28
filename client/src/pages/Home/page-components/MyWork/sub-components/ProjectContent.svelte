@@ -127,4 +127,40 @@
         }
     }
 
+    
+    /*=============================================
+    =            Mobile            =
+    =============================================*/
+    
+        @media only screen and (max-width: 765px) {
+            #bottom-content-wrapper {
+                flex-direction: column;
+                row-gap: var(--vspacing-3);
+            }
+
+            #tech-stack {
+                width: 100%;
+                justify-content: center;
+            }
+
+            #previewer-controls {
+                width: 100%;
+                gap: var(--vspacing-2);
+            }
+
+            #previewer-controls .button-1-wrapper {
+                display: flex;
+                justify-content: center;
+            }
+
+            #previewer-controls .button-1-wrapper .button-1 {
+                padding: var(--vspacing-2) var(--vspacing-3);
+                white-space: nowrap;
+            }
+        }
+    
+    /*=====  End of Mobile  ======*/
+    
+    
+
 </style>

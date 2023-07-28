@@ -1,11 +1,9 @@
 <script>
-    import LiberyBorderStar from "@components/UI/LiberyBorderStar.svelte";
-    import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
     import LineSymbolsBg from "@components/UI/LineSymbolsBG.svelte";
-    import TaggedText from "@components/Wrappers/TaggedText.svelte";
     import ProjectContent from "./ProjectContent.svelte";
     import ProjectScreenshots from "./ProjectScreenshots.svelte";
     import { Project } from "@models/Project";
+    import { layout_properties } from "@stores/layout";
 
     /** 
      * @type {Project}
@@ -17,8 +15,10 @@
     <div class="background-wrapper">
         <LineSymbolsBg
             line_count={15}
-            x_base={1300}
-            y_base={120}
+            x_base={layout_properties.IS_MOBILE ? 450 : 1300}
+            y_base={layout_properties.IS_MOBILE ? 340 : 120}
+            svg_width={layout_properties.IS_MOBILE ? innerWidth + 120 : innerWidth}
+            limit_height={!layout_properties.IS_MOBILE}
             step={0.026}
         />
     </div>
@@ -55,5 +55,22 @@
         grid-column: 7 / span 5;
         height: 100%;
     }
+
+    
+    /*=============================================
+    =            Mobile            =
+    =============================================*/
+    
+        @media only screen and (max-width: 765px) {
+            #lpp-project-content {
+                flex-direction: column-reverse;
+                justify-content: flex-end;
+            }
+            
+        }
+    
+    /*=====  End of Mobile  ======*/
+    
+    
 
 </style>

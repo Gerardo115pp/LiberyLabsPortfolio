@@ -2,6 +2,8 @@
     import { onMount } from "svelte";
     import { ProjectListItem } from "@models/Project";
     import { createEventDispatcher } from "svelte";
+    import { layout_properties } from "@stores/layout";
+    import CarouselItemCorners from "./CarouselItemCorners.svelte";
 
     onMount(() => {
         if (projects.length > 0) {
@@ -53,12 +55,7 @@
         {#each projects as project, h}
             <div id="pcw-pc-project-{h}" on:click={() => selectProject(h)} class="pcw-project-item" style:position="relative">
                 <span class="pcw-pi-name">{project.name}</span>
-                <svg viewBox="0 0 100 86" class="pcw-pi-corners" fill="none" preserveAspectRatio="xMidYMax meet">
-                    <path d="M1 10V0H10" />
-                    <path d="M89.2 0h10v10" />
-                    <path d="M1 75.3v10h10" />
-                    <path d="M89.2 85.3h10v-10" /> 
-                </svg>
+                <CarouselItemCorners />
             </div>
         {/each}
     </div>
@@ -113,17 +110,29 @@
         font-size: var(--font-size-4);
     }
 
-    svg.pcw-pi-corners {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        z-index: var(--z-index-b-1);
-    }
+    
+    /*=============================================
+    =            Mobile            =
+    =============================================*/
+    
+    @media (max-width: 768px) {
+        #projects-carousel-wrapper {
+            height: max-content;
+        }
 
-    svg.pcw-pi-corners path {
-        stroke: var(--grey-1);
-        stroke-width: .8;
+        #pcw-projects-container {
+            overflow: visible;
+        }
+
+        .pcw-project-item {
+            padding: var(--vspacing-2) var(--vspacing-2);
+        }
+
+        .pcw-project-item svg {
+        }
     }
+    
+    /*=====  End of Mobile  ======*/
+    
+    
 </style>

@@ -4,11 +4,23 @@
     import NotificationsPopup from '@components/Popups/NotificationsPopup.svelte';
     import Navbar from '@components/Navbar/Navbar.svelte';
     import { onMount } from 'svelte';
-    import { defineLayout } from '@stores/layout';
+    import { defineLayout, layout_properties } from '@stores/layout';
+
+    const ENABLE_DEBUG_ON_MOBILE = true;
 
     onMount(() => {
         defineLayout();
+
+        if (ENABLE_DEBUG_ON_MOBILE && layout_properties.IS_MOBILE) {
+            debugOnMobile();
+        }
     })
+    function debugOnMobile() { 
+        let script = document.createElement('script');
+        script.src="https://cdn.jsdelivr.net/npm/eruda"; 
+        document.body.append(script); 
+        script.onload = () => eruda.init();
+    }
 
 
 </script>
