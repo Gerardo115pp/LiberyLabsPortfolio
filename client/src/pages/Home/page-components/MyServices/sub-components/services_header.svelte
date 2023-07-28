@@ -1,8 +1,7 @@
 <script>
     import LiberyBorderStar from "@components/UI/LiberyBorderStar.svelte";
     import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
-    import { fade, fly } from "svelte/transition";
-    import { bounceIn } from "svelte/easing";
+    import { layout_properties } from "@stores/layout";
 
 </script>
 
@@ -10,10 +9,7 @@
     <div id="white-star-wrapper">
         <LiberyBorderStar />
     </div>
-    <LiberyHeadline headline_text="what can i craft for you?" headline_color="var(--grey-1)" text_transform="lowercase" />
-    <!-- <svg id="vertical-lines" viewBox="0 0 1920 100" style:width="110%">
-
-    </svg> -->
+    <LiberyHeadline forced_font_size="{layout_properties.IS_MOBILE ? 'calc(var(--font-size-h2) * 1.03)' : 'var(--font-size-h1)'}" headline_text="what can i craft for you?" headline_color="var(--grey-1)" text_transform="lowercase" />
 </header>    
     
 <style>
@@ -31,4 +27,23 @@
     :global(#white-star-wrapper svg) {
         width: 100%;
     }
+
+    
+    /*=============================================
+    =            mobile            =
+    =============================================*/
+    
+        @media only screen and (max-width: 765px) {
+            .services-header {
+                row-gap: var(--vspacing-3);
+            }
+
+            #white-star-wrapper {
+                width: 30%;
+            }
+        }
+    
+    /*=====  End of mobile  ======*/
+    
+    
 </style>

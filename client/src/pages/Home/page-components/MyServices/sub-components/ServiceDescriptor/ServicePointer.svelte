@@ -11,16 +11,16 @@
      */
     const path_values = {
         CENTER: {
-            d: "M151.959 399.543L2.67856 66.0619L151.959 2L313.178 63.6812L151.959 399.543Z",
-            view_box: "0 0 468 404"
+            d: "M250 1L375 50L250 400L125 50L185.7 25Z", // use exactly 1 move command, 4 line commands and 1 close command or 5 line commands and no close command.
+            view_box: "0 0 500 400"
         },
         LEFT: {
             d:  "M1.99996 298.883L208 2.32293L373.5 28.7254L445 63.0484L1.99996 298.883Z",
-            view_box: "0 0 468 404"
+            view_box: "0 0 500 400"
         },
         RIGHT: {
             d: "M392.5 342.908L4 25.8521L89 2.40796L244.5 41.99L392.5 342.908Z",
-            view_box: "0 0 468 404"
+            view_box: "0 0 500 400"
         }
     }
 
