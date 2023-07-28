@@ -25,7 +25,7 @@
                 </section>
                 <section id="chat-bot-section" class="page-section" >
                     <div class="section-content">
-                        <!-- <ChatBot /> -->
+                        <ChatBot />
                     </div>
                 </section>
             </div>
@@ -85,7 +85,7 @@
 
             #bc-relative-wrapper #chat-bot-section {
                 width: 100%;
-                top: 52.726%;
+                top: 47.726%;
             }       
         }
     

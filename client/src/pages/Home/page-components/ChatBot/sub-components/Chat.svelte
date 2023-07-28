@@ -1,3 +1,7 @@
+<script>
+    import { layout_properties } from "@stores/layout";
+</script>
+
 <div id="chat-component">
     <div id="status-bar">
         <svg id="sb-controls" viewBox="0 0 48 14">
@@ -11,7 +15,7 @@
     </div>
     <div id="chat-content" style:position="relative">
         <div class="chat-bg-star">
-            <svg width="355" height="334" viewBox="0 0 355 334" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="{layout_properties.IS_MOBILE ? layout_properties.VIEWPORT_WIDTH * .3 : 355}" height="{layout_properties.IS_MOBILE ? (layout_properties.VIEWPORT_WIDTH * .3) * 0.940 : 334}" viewBox="0 0 355 334" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M180.344 165.358L223.772 96.3071L229.588 219.714L180.344 165.358Z" stroke="#7D2900" stroke-dasharray="2 2"/>
                 <path d="M128.996 225.124L176.322 165.357H180.345L229.589 219.713L229.64 220.838L183.361 212.764L177.825 212.435L128.996 225.124Z" stroke="#7D2900" stroke-dasharray="2 2"/>
                 <path d="M132.013 93.835L176.322 165.358L128.996 225.125L130.645 182.133L132.013 93.835Z" stroke="#7D2900" stroke-dasharray="2 2"/>
@@ -56,11 +60,11 @@
             </svg>   
         </div>
     </div>
-    <div id="writer-bar">
+    <div id="writer-bar" class:debug={false}>
         <div id="sender-wrapper">
-            <input type="text" id="sender-writer">
+            <input class:hide={layout_properties.IS_MOBILE} type="text" id="sender-writer">
             <div id="sender-btn" class="button-1-wrapper">
-                <button class="button-1">send</button>
+                <button class="button-1">{ layout_properties.IS_MOBILE ? 'open chat' : 'send'}</button>
             </div>
         </div>
     </div>
@@ -129,4 +133,37 @@
     #sender-wrapper #sender-btn {
         background: var(--main-dark-color-5);
     }
+
+    
+    /*=============================================
+    =            Mobile            =
+    =============================================*/
+    
+        @media only screen and (max-width: 768px) {
+            #chat-content {
+                opacity: 0;
+            }
+
+            #writer-bar {
+                padding: calc(.75 * var(--vspacing-1));
+            }
+
+            #sender-wrapper {
+                width: max-content;
+                height: 100%;
+            }
+
+            #chat-component {
+                height: calc(var(--vspacing-8) * 0.455859375);
+            }
+
+            #sender-wrapper .button-1-wrapper button {
+                height: 100%;
+                padding: 0 var(--vspacing-2);
+            }
+        }
+    
+    /*=====  End of Mobile  ======*/
+    
+    
 </style>

@@ -2,11 +2,12 @@
     import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
     import OrangeBg from "./sub-components/OrangeBG.svelte";
     import Chat from "./sub-components/Chat.svelte";
+    import { layout_properties } from "@stores/layout";
 </script>
 
 <section id="ask-chat-section" class:debug={false}>
     <div id="acs-section-content" class="section-content-layout" >
-        <div id="acs-information">
+        <div class:hide={layout_properties.IS_MOBILE} id="acs-information">
             <header id="acs-info-header">
                 <LiberyHeadline headline_text="Ask Away" forced_font_size="var(--font-size-h2)" headline_color="var(--grey-1)"/>
             </header>
@@ -42,4 +43,26 @@
         grid-column:6 / -1;
     }
 
+    
+    /*=============================================
+    =            Mobile                           =
+    =============================================*/
+    
+        @media only screen and (max-width: 765px) {
+            #ask-chat-section {
+
+            }
+
+            #acs-information {
+
+            }
+
+            #acs-chat {
+                
+            }
+        }
+    
+    /*=====  End of Mobile  ======*/
+    
+    
 </style>
