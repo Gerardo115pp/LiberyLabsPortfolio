@@ -110,4 +110,28 @@
     #socials-wrapper svg {
         width: calc(var(--vspacing-3) * 1.5)
     }
+
+    
+    /*=============================================
+    =            Mobile            =
+    =============================================*/
+    
+      @media only screen and (max-width: 765px) {
+        footer#libery-labs-footer {
+            width: 100%;
+            min-height: calc(100vh - var(--navbar-height));
+            background: var(--grey);
+            flex-direction: column;
+            padding: var(--vspacing-4) var(--vspacing-4);
+            gap: calc(var(--vspacing-6) * 0.34765625);
+        }
+
+        #footer-libery-labs-star {
+            width: calc(var(--vspacing-6) * 0.5154140625);
+        }
+      }
+    
+    /*=====  End of Mobile  ======*/
+    
+    
 </style>

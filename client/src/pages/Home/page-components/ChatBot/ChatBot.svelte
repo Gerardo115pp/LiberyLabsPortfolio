@@ -42,27 +42,5 @@
     #acs-chat {
         grid-column:6 / -1;
     }
-
-    
-    /*=============================================
-    =            Mobile                           =
-    =============================================*/
-    
-        @media only screen and (max-width: 765px) {
-            #ask-chat-section {
-
-            }
-
-            #acs-information {
-
-            }
-
-            #acs-chat {
-                
-            }
-        }
-    
-    /*=====  End of Mobile  ======*/
-    
     
 </style>
