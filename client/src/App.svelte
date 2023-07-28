@@ -465,6 +465,10 @@
         display: none !important;
     }
 
+    :global(.hide) {
+        display: none !important;
+    }
+
     @media only screen and (max-width: 765px) {
         :root {
             --vspacing-scale: .714583;

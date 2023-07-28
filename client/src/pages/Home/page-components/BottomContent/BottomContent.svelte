@@ -25,7 +25,7 @@
                 </section>
                 <section id="chat-bot-section" class="page-section" >
                     <div class="section-content">
-                        <ChatBot />
+                        <!-- <ChatBot /> -->
                     </div>
                 </section>
             </div>
@@ -69,4 +69,27 @@
         width: 100%;
         top: 52.726%;
     }
+
+    
+    /*=============================================
+    =            mobile            =
+    =============================================*/
+    
+        @media only screen and (max-width: 765px) {
+            
+            #bc-relative-wrapper #contact-me-section {
+                width: 100%;
+                top: 8.726%;
+                left: 0;
+            }
+
+            #bc-relative-wrapper #chat-bot-section {
+                width: 100%;
+                top: 52.726%;
+            }       
+        }
+    
+    /*=====  End of mobile  ======*/
+    
+    
 </style>
