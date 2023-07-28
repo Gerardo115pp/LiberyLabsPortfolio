@@ -4,10 +4,7 @@
     import Chat from "./sub-components/Chat.svelte";
 </script>
 
-<section id="ask-chat-section" style:position="relative"class:debug={false}>
-    <div id="orange-bg-wrapper">
-        <OrangeBg />
-    </div>
+<section id="ask-chat-section" class:debug={false}>
     <div id="acs-section-content" class="section-content-layout" >
         <div id="acs-information">
             <header id="acs-info-header">
@@ -26,13 +23,8 @@
 <style>
     #ask-chat-section {
         width: 100%;
-    }
-
-    #acs-section-content {
-        position: absolute;
-        top: 10%;
-        left: 50%;
-        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
     }
 
     #acs-information {

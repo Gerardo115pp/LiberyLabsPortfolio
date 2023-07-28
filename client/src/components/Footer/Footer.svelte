@@ -73,15 +73,10 @@
 
 <style>
     footer#libery-labs-footer {
-        
         display: flex;
-        position: absolute;
         box-sizing: border-box;
-        /* height: calc(var(--vspacing-7) * 0.53125); */
         width: 100vw;
         background: var(--grey-9);
-        left: 0;
-        bottom: 0;
         z-index: var(--z-index-t-1);
         align-items: center;
         padding: 42px 225px;

@@ -2,61 +2,71 @@
     import ContactMe from "../ContactMe/ContactMe.svelte";
     import ChatBot from "../ChatBot/ChatBot.svelte";
     import Footer from "@components/Footer/Footer.svelte";
+    import BlueBg from "../ContactMe/sub-components/BlueBg.svelte";
+    import { layout_properties } from "@stores/layout.js"
 
-    let bottom_content_height = 0;
-    let chat_section_content_height = 0;
-    let contact_section_content_height = 0;
-    const chat_top_offset = 0.3;
 
-    $: bottom_content_height = chat_section_content_height + contact_section_content_height;
 </script>
 
-<div id="stupid-wrapper" style:position="relative">
-    <div id="bottom-content" style:height="{(bottom_content_height) - (bottom_content_height * chat_top_offset) }px" style:position="relative" class:debug={false}>
-        <section bind:clientHeight={contact_section_content_height} id="contact-me-section" class="page-section">
-            <div class="section-content">
-                <ContactMe />
+
+<div id="bottom-content"  class:debug={false}>
+    <div id="bc-wrapper" style:position="relative">
+        <div id="blue-bg-wrapper">
+            <BlueBg 
+                match_viewport={true}
+            />
+        </div>
+        <div id="bc-content">
+            <div id="bc-relative-wrapper" style:position="relative">
+                <section id="contact-me-section" class="page-section" >
+                    <div class="section-content">
+                        <ContactMe />
+                    </div>
+                </section>
+                <section id="chat-bot-section" class="page-section" >
+                    <div class="section-content">
+                        <ChatBot />
+                    </div>
+                </section>
             </div>
-        </section>
-        <section bind:clientHeight={chat_section_content_height} style:top="{chat_top_offset*100}%" id="chat-bot-section" class="page-section ">
-            <div class="section-content">
-                <ChatBot />
-            </div>
-        </section>
+        </div>
     </div>
-    <Footer/>
+    <div id="home-footer-wrapper">
+        <Footer/>
+    </div>
 </div>
 
 <style>
-
-    #stupid-wrapper {
-        max-height: 220vh;
-        overflow: hidden;
-    }
-
-    .page-section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        overflow: hidden;
-    }
-
-    .section-content {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-    }
-
     #bottom-content {
         height: max-content;
         width: 100%;
     }
 
-    #chat-bot-section {
+    #bc-content {
         position: absolute;
-        top: 30%;
         width: 100%;
-        z-index: var(--z-index-2);
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+
+    #bc-relative-wrapper {
+        height: 100%;
+        width: 100%;
+    }
+
+    #bc-relative-wrapper .page-section {
+        width: max-content;
+        position: absolute;
+    }
+
+    #bc-relative-wrapper #contact-me-section {
+        top: 8.726%;
+        left: 19.021%;
+    }
+
+    #bc-relative-wrapper #chat-bot-section {
+        width: 100%;
+        top: 52.726%;
     }
 </style>

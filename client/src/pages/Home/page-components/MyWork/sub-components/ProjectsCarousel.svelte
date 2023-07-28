@@ -127,9 +127,6 @@
         .pcw-project-item {
             padding: var(--vspacing-2) var(--vspacing-2);
         }
-
-        .pcw-project-item svg {
-        }
     }
     
     /*=====  End of Mobile  ======*/

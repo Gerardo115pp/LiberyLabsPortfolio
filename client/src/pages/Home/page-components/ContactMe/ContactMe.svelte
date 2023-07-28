@@ -1,15 +1,11 @@
 <script>
+    import { layout_properties } from "@stores/layout";
     import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
-import BlueBg from "./sub-components/BlueBg.svelte";
-    import LiberyBorderStar from "@components/UI/LiberyBorderStar.svelte";
+    import BlueBg from "./sub-components/BlueBg.svelte";
 </script>
 
-<section id="contact-me-section" style:position="relative">
-    <div id="blue-bg-wrapper">
-        <BlueBg />
-    </div>
+<section id="cms-wrapper" style:position="relative" class:debug={false}>
     <div id="cms-libery-star-wrapper">
-        <!-- <LiberyBorderStar fill_color="none" stroke_color="var(--main-8)" stroke_width=".9"/> -->
         <svg viewBox="0 0 557 484" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_44_12)">
                 <path d="M283.276 239.984L351.908 139.797L361.099 318.849L283.276 239.984Z" stroke="#7F3F00" stroke-linejoin="round"/>
@@ -60,7 +56,6 @@ import BlueBg from "./sub-components/BlueBg.svelte";
                 </clipPath>
             </defs>
         </svg>
-            
     </div>
     <article id="cms-contact-cta">
         <div id="cms-cc-top-content">
@@ -83,27 +78,19 @@ import BlueBg from "./sub-components/BlueBg.svelte";
 </section>
 
 <style>
-    #blue-bg-wrapper {
-        position: relative;
-        z-index: var(--z-index-b-1);
-    }
 
     #cms-libery-star-wrapper {
         position: absolute;
-        top: 5.8%;
-        left: 71.4%;
+        top: 62%;
+        left: 99.4%;
         width: calc(var(--vspacing-7) * 1.08789);
-        transform: translateX(-50%);
+        transform: translate(-50%, -50%);
         z-index: var(--z-index-b-2);
     }
 
     #cms-contact-cta {
         display: flex;
         flex-direction: column;
-        position: absolute;
-        top: 8.7%;
-        left: 46.3%;
-        transform: translateX(-50%);
         gap: var(--vspacing-2);
     }
 
