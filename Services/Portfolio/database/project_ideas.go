@@ -67,6 +67,10 @@ func (project_ideas_repo ProjectIdeasRepository) GetNIdeas(n int) []string {
 	return project_ideas_repo.ProjectIdeas[:n]
 }
 
+func (project_ideas_repo ProjectIdeasRepository) IdeasCount() int {
+	return len(project_ideas_repo.ProjectIdeas)
+}
+
 func (project_ideas_repo *ProjectIdeasRepository) writeIdeas() (err error) {
 	project_ideas_file := fmt.Sprintf("%s/project_ideas.json", app_config.OPERATION_DATA_PATH)
 

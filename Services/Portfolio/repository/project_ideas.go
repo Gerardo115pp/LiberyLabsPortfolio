@@ -5,6 +5,7 @@ type ProjectIdeasRepository interface {
 	GetRandomIdea() string
 	GetIdeas() []string
 	GetNIdeas(n int) []string
+	IdeasCount() int
 }
 
 var project_ideas_repo_implementation ProjectIdeasRepository
@@ -27,4 +28,8 @@ func GetIdeas() []string {
 
 func GetNIdeas(n int) []string {
 	return project_ideas_repo_implementation.GetNIdeas(n)
+}
+
+func IdeasCount() int {
+	return project_ideas_repo_implementation.IdeasCount()
 }

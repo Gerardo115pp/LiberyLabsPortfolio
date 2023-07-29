@@ -11,6 +11,7 @@ var DOMAIN_SECRET string = os.Getenv("DOMAIN_SECRET")
 var PROJECTS_DATA_PATH string = os.Getenv("PROJECTS_DATA_PATH")
 var OPERATION_DATA_PATH string = os.Getenv("OPERATION_DATA_PATH")
 var ENABLE_IDEA_GENERATION bool = os.Getenv("ENABLE_IDEA_GENERATION") == "1"
+var OPENAI_API_KEY string = os.Getenv("OPENAI_API_KEY")
 
 func VerifyConfig() {
 
