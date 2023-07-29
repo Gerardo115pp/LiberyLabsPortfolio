@@ -14,32 +14,32 @@ type PortfolioRepository interface {
 	Close()
 }
 
-var admin_repo_implentation PortfolioRepository
+var admin_repo_implementation PortfolioRepository
 
 func SetPortfolioRepositoryImplementation(implementation PortfolioRepository) {
-	admin_repo_implentation = implementation
+	admin_repo_implementation = implementation
 }
 
 func InsertProject(ctx context.Context, project models.Project) error {
-	return admin_repo_implentation.InsertProject(ctx, project)
+	return admin_repo_implementation.InsertProject(ctx, project)
 }
 
 func GetProjects(ctx context.Context) ([]models.Project, error) {
-	return admin_repo_implentation.GetProjects(ctx)
+	return admin_repo_implementation.GetProjects(ctx)
 }
 
 func GetProjectByID(ctx context.Context, id string) (models.Project, error) {
-	return admin_repo_implentation.GetProjectByID(ctx, id)
+	return admin_repo_implementation.GetProjectByID(ctx, id)
 }
 
 func DeleteProject(ctx context.Context, id string) error {
-	return admin_repo_implentation.DeleteProject(ctx, id)
+	return admin_repo_implementation.DeleteProject(ctx, id)
 }
 
 func UpdateProject(ctx context.Context, project models.Project) error {
-	return admin_repo_implentation.UpdateProject(ctx, project)
+	return admin_repo_implementation.UpdateProject(ctx, project)
 }
 
 func Close() {
-	admin_repo_implentation.Close()
+	admin_repo_implementation.Close()
 }

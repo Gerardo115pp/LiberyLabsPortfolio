@@ -11,7 +11,7 @@ import (
 	"github.com/Gerardo115pp/patriots_lib/echo"
 )
 
-func PortfolioHandler(order_server server.Server) http.HandlerFunc {
+func PortfolioHandler(portfolio_server server.Server) http.HandlerFunc {
 	return func(response http.ResponseWriter, request *http.Request) {
 		switch request.Method {
 		case http.MethodGet:

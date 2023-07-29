@@ -6,7 +6,7 @@
     import { onMount } from 'svelte';
     import { defineLayout, layout_properties } from '@stores/layout';
     
-    const ENABLE_DEBUG_ON_MOBILE = true;
+    const ENABLE_DEBUG_ON_MOBILE = false;
     if (ENABLE_DEBUG_ON_MOBILE && layout_properties.IS_MOBILE) {
         debugOnMobile();
     }
