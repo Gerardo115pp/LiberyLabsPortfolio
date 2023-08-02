@@ -2,8 +2,7 @@ import { writable } from "svelte/store";
 import { isMobile } from "@libs/utils";
 
 const root_styles = getComputedStyle(document.documentElement);
-console.log(`vspacing-2: ${root_styles.getPropertyValue("--vspacing-2")}`);
-console.log(`mobile: ${isMobile()}`)
+export const show_contact_form = writable(true);
 
 export const layout_properties = {
     IS_MOBILE: isMobile(),

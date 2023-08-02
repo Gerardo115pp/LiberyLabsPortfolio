@@ -2,6 +2,7 @@
     import LiberyBorderStar from "@components/UI/LiberyBorderStar.svelte";
     import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
     import TaggedText from "@components/Wrappers/TaggedText.svelte";
+    import { show_contact_form } from "@stores/layout";
     import { Project } from "@models/Project";
 
     /** 
@@ -56,7 +57,7 @@
                 </div>
             {/if}
             <div id="bcw-cta" class="button-1-wrapper">
-                <button class="button-1">Contact me!</button>
+                <button on:click={() => show_contact_form.set(true)} class="button-1">Contact me!</button>
             </div>
         </div>
     </div>

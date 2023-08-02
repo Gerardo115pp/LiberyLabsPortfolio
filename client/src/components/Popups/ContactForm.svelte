@@ -2,6 +2,9 @@
     import FieldData, { verifyFormFields } from "@libs/FieldData";
     import Input from "@components/Input/Input.svelte";
     import ContactMessage from "@models/Contact";
+    import { show_contact_form } from "@stores/layout";
+    import { onMount } from "svelte";
+    import { fade } from "svelte/transition";
 
     let new_contact_submission = [
         new FieldData("cfm-lc-name", /^.{3,}$/, "name"),
@@ -24,6 +27,31 @@
     // End of defining placeholders
 
     let is_form_ready = false;
+    let show_form = $show_contact_form;
+
+    
+    /*=============================================
+    =            Animation settings            =
+    =============================================*/
+
+        /**
+         * @type {HTMLDivElement}
+         * Element that contains the content of the popup and the we will scroll to the bottom of
+         */
+        let first_visible_element;
+    
+        const initial_animation_duration = 600;
+        const content_animation_duration = 500;
+    
+    /*=====  End of Animation settings  ======*/
+    
+    
+
+
+    onMount(() => {
+        show_contact_form.subscribe(toggleContactForm);
+    })
+
 
     const submitContactForm = async () => {
         if (!is_form_ready) return;
@@ -47,88 +75,111 @@
         }
     }
 
+    const toggleContactForm = (new_value) => {
+        show_form = new_value;
+
+        setTimeout(() => {
+            if (show_form) {
+                first_visible_element.scrollIntoView({behavior: "smooth"});
+            }
+        }, initial_animation_duration);
+    }
+
     const verifyContactForm = () => {
         let is_valid = verifyFormFields(new_contact_submission);
         is_form_ready = is_valid;
         new_contact_submission = [...new_contact_submission]; 
     }
-
-
-
-
 </script>
 
-<aside id="contact-form-modal-wrapper">
-    <div id="contact-form-modal">
-        <header id="cfm-form-header">
-            <h3 class="cfm-fh-headline">
-                Level up your business — get a free quote!
-            </h3>
-            <div class="close-btn-wrapper">
-                <svg role="button" aria-label="close btn" id="cfm-close-btn" viewBox="0 0 50 50">
-                    <path d="M0 0L50 50" class="cfm-close-line"/>
-                    <path d="M0 50L50 0" class="cfm-close-line"/>
-                </svg>
-            </div>
-        </header>
-        <div id="cfm-form-content">
-            <form action="none" id="cfm-libery-contact">
-                {#each new_contact_submission as fd}
-                    {#if fd instanceof FieldData}
-                        <div class="cfm-input-wrapper">
-                            <Input 
-                                field_data={fd}
-                                border_color="transparent"
-                                input_color="var(--main-dark-color-1)"
-                                text_font="var(--font-decorative)"
-                                label_color="var(--main-dark-color-5)"
-                                input_label={fd.name}
-                                placeholder_color="var(--grey-6)"
-                                input_padding="calc(var(--vspacing-1) * 1) var(--vspacing-2)"
-                                onBlur={verifyContactForm}
-                                show_placeholder
-                                modeColumn
-                                isSquared
-                            />
-                        </div>
-                        {:else if fd instanceof Array}
-                        <div class="input-groups">
-                            {#each fd as nested_fd}
-                                <div class="cfm-input-wrapper">
-                                    <Input 
-                                        field_data={nested_fd}
-                                        border_color="transparent"
-                                        input_color="var(--main-dark-color-1)"
-                                        label_color="var(--main-dark-color-5)"
-                                        input_label={nested_fd.name}
-                                        placeholder_color="var(--grey-6)"
-                                        input_padding="calc(var(--vspacing-1) * 1) var(--vspacing-2)"
-                                        show_placeholder
-                                        modeColumn
-                                        isSquared
-                                    />
-                                </div>
-                            {/each}
-                        </div>
-                    {/if}
-                {/each}
-            </form>
-            <div id="cfm-libery-controls">
-                <div class="cfm-input-wrapper">
-                    <input type="checkbox" checked>
-                    <h5>
-                        I agree to be a nice and kind person!
-                    </h5>
-                </div>
-                <div class="button-1-wrapper">
-                    <button on:click={submitContactForm} disabled={!is_form_ready} class="button-1">Send Message</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</aside>
+{#if show_form}
+     <aside id="contact-form-modal-wrapper">
+         <div style:animation-duration="{initial_animation_duration}ms" id="contact-form-modal">
+             <header in:fade={{delay: (initial_animation_duration * 1), duration: content_animation_duration}} id="cfm-form-header">
+                 <h3 class="cfm-fh-headline">
+                     Level up your business — get a free quote!
+                 </h3>
+                 <div class="close-btn-wrapper">
+                     <svg on:click={() => show_contact_form.set(false)} tabindex="0" role="button" aria-label="close btn" id="cfm-close-btn" viewBox="0 0 50 50">
+                         <path d="M0 0L50 50" class="cfm-close-line"/>
+                         <path d="M0 50L50 0" class="cfm-close-line"/>
+                     </svg>
+                 </div>
+             </header>
+             <div  id="cfm-form-content" in:fade={{delay: (initial_animation_duration * 1), duration: content_animation_duration}}>
+                 <form action="none" id="cfm-libery-contact">
+                     {#each new_contact_submission as fd}
+                         {#if fd instanceof FieldData}
+                             <div class="cfm-input-wrapper">
+                                 <Input 
+                                     field_data={fd}
+                                     border_color="transparent"
+                                     input_color="var(--main-dark-color-1)"
+                                     text_font="var(--font-decorative)"
+                                     label_color="var(--main-dark-color-5)"
+                                     input_label={fd.name}
+                                     placeholder_color="var(--grey-6)"
+                                     input_padding="calc(var(--vspacing-1) * 1) var(--vspacing-2)"
+                                     onBlur={verifyContactForm}
+                                     show_placeholder
+                                     modeColumn
+                                     isSquared
+                                 />
+                             </div>
+                             {:else if fd instanceof Array}
+                             <div class="input-groups">
+                                 {#each fd as nested_fd}
+                                     <div class="cfm-input-wrapper">
+                                         <Input 
+                                             field_data={nested_fd}
+                                             border_color="transparent"
+                                             input_color="var(--main-dark-color-1)"
+                                             label_color="var(--main-dark-color-5)"
+                                             input_label={nested_fd.name}
+                                             placeholder_color="var(--grey-6)"
+                                             input_padding="calc(var(--vspacing-1) * 1) var(--vspacing-2)"
+                                             show_placeholder
+                                             modeColumn
+                                             isSquared
+                                         />
+                                     </div>
+                                 {/each}
+                             </div>
+                         {/if}
+                     {/each}
+                 </form>
+                 <div id="cfm-libery-controls">
+                     <div class="cfm-input-wrapper">
+                         <input type="checkbox" checked>
+                         <h5>
+                             I agree to be a nice and kind person!
+                         </h5>
+                     </div>
+                     <div bind:this={first_visible_element} class="button-1-wrapper">
+                         <button on:click={submitContactForm} disabled={!is_form_ready} class="button-1">Send Message</button>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </aside>
+{/if}
 
 <style>
+    @keyframes present-contact-form {
+        0% {
+            clip-path: circle(20%);
+            transform: translateY(-100%);
+        }
+        50% {
+            clip-path: circle(20%);
+            transform: translateY(0%);
+        }
+        100% {
+            clip-path: circle(100%);
+            transform: translateY(0%);
+        }
+    }
+
     #contact-form-modal-wrapper {
         position: fixed;
         width: 100vw;
@@ -148,6 +199,12 @@
         width: 700px;
         height: 80%;
         padding: var(--vspacing-3);
+        clip-path: circle(20%);
+        transform: translateY(-100%);
+
+        animation-name: present-contact-form;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
     }
 
     header#cfm-form-header {
@@ -161,7 +218,17 @@
 
     #cfm-close-btn {
         width: 20px;
-        stroke: var(--grey-1);
+        stroke: var(--grey-2);
+        stroke-linecap: round;
+        stroke-width: 1.5px;
+        transition: all .2s ease-in-out;
+    }
+
+    @media(pointer: fine) {
+        #cfm-close-btn:hover {
+            stroke: var(--grey-1);
+            transform: scale(1.1);
+        }
     }
 
     #cfm-form-content {

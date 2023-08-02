@@ -1,5 +1,5 @@
 <script>
-    import { layout_properties } from "@stores/layout";
+    import { layout_properties, show_contact_form } from "@stores/layout";
     import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
     import BlueBg from "./sub-components/BlueBg.svelte";
 </script>
@@ -71,7 +71,7 @@
                 <LiberyHeadline headline_tag="h2" headline_text="Let's Talk" text_transform="none"/>
             </div>
             <div id="cms-cc-bc-cta-btn" class="button-1-wrapper">
-                <button class="button-1">Contact me!</button>
+                <button on:click={() => show_contact_form.set(true)} class="button-1">Contact me!</button>
             </div>
         </div>
     </article>

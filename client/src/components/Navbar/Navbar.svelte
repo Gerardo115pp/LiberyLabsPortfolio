@@ -1,5 +1,6 @@
 <script>
     import { isMobile } from "@libs/utils";
+    import { show_contact_form } from "@stores/layout";
 
     const dropdown_names = {
         HOME: {
@@ -29,7 +30,7 @@
 
 <nav id="libery-labs-navbar">
     <div id="lln-content">
-        <div style:display="{is_mobile ? 'none' : 'flex'}" id="lln-navoptions-container">
+        <!-- <div style:display="{is_mobile ? 'none' : 'flex'}" id="lln-navoptions-container">
             {#each Object.values(dropdown_names) as ddn}
                 <div class="lln-navoption">
                     <a class="highlight-text" href="{ddn.href}">{ddn.name}</a>
@@ -42,9 +43,9 @@
                     {/if}
                 </div>
             {/each}
-        </div>
+        </div> -->
         <div id="lln-cta">
-            <button id="cta">
+            <button on:click={() => show_contact_form.set(true)} id="cta">
                 <strong class="highlight-text--CTA">Get in touch</strong>
             </button>
         </div>
@@ -97,5 +98,13 @@
         border: none;
         padding: none;
         color: var(--success-3);
+        transform-origin: center;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    @media(pointer: fine) {
+        button#cta:hover {
+            transform: scale(1.05);
+        }
     }
 </style>
