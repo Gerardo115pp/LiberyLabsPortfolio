@@ -116,3 +116,36 @@ export class GetProjectIdeasRequest {
     }
 
 }
+
+export class PostContactMessageRequest {
+    constructor({email, name, budget, company, start_date, end_date, subject}) {
+        this.email = email;
+        this.name = name;
+        this.budget = budget;
+        this.company = company;
+        this.start_date = start_date;
+        this.end_date = end_date;
+        this.subject = subject;
+    }
+
+    toJson = attributesToJson.bind(this);
+
+    do = (on_success, on_error) => {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        const request = new Request(`${portfolio_service}/contact`, {
+            method: 'POST',
+            headers: headers,
+            body: this.toJson()
+        });
+
+        fetch(request).then(promise => {
+            if (promise.status >= 200 && promise.status < 300) {
+                on_success();
+            } else {
+                on_error(promise.status);
+            }
+        });
+    }
+}

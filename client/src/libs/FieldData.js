@@ -8,6 +8,11 @@ export const verifyFormFields = (form_data) => {
     let field_value = null;
     let is_valid = true;
     for(let fd of form_data) {
+        if (fd instanceof Array) {
+            is_valid = verifyFormFields(fd);
+            continue;
+        }
+
         field_value = fd.getFieldValue();
         if (field_value === "") {
             

@@ -66,7 +66,7 @@
         background: var(--grey);
         width: 100%;
         place-items: center;
-        z-index: 1000;
+        z-index: var(--z-index-t-2);
     }
 
     #lln-content {

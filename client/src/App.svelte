@@ -3,6 +3,7 @@
     import { routes } from './routes';
     import NotificationsPopup from '@components/Popups/NotificationsPopup.svelte';
     import Navbar from '@components/Navbar/Navbar.svelte';
+    import ContactForm from '@components/Popups/ContactForm.svelte';
     import { onMount } from 'svelte';
     import { defineLayout, layout_properties } from '@stores/layout';
     
@@ -31,6 +32,7 @@
 </svelte:head>
 <div id="libery-website-wrapper">
     <Navbar />
+    <ContactForm />
     <!-- <NotificationsPopup /> -->
     <div id="router-wrapper">
         <Router {routes}/>
@@ -85,6 +87,9 @@
             --grey-3: hsla(0, 0%, 54.9%, 1);
             --grey-2: hsla(0, 0%, 72.9%, 1);
             --grey-1: hsla(0, 0%, 91%, 1);
+
+
+            --grey-t: hsla(0, 0%, 5.9%, .6);
             /* Success */
             --success: hsla(81, 100%, 51.2%, 1);
             --success-9: hsla(91, 100%, 12.5%, 1);
@@ -261,6 +266,7 @@
 
     #libery-website-wrapper {
         border-top: .1px solid var(--grey);
+        position: relative;
     }
 
     :global(.section-content-layout) {
