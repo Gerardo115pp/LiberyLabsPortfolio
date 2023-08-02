@@ -23,7 +23,7 @@
             <MyServices />
         </div>
     </section>
-    <section id="broke-text-section" class="page-section">
+    <section id="broke-text-section" class="page-section" style:overflow="visible">
         <div class="section-content">
             <NoBoundaries />
         </div>

@@ -53,6 +53,9 @@ const config = {
 					options: {
 						onwarn: (warning, handler) => {
 							if (warning.code.startsWith("a11y") || warning.code.startsWith("css-unused")) return;
+
+							if (warning.code === "unused-export-let") return;
+							console.log(`stupid warning: ${warning.code}`);
 		
 							handler(warning);
 						}

@@ -7,9 +7,18 @@ function ensureIntersectionObserver() {
 
     intersectionObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-            // entred the viewport
+            let event_name;
+            // entered the viewport
             if (entry.isIntersecting) {
-                const event_name = entry.isIntersecting ? 'viewportEnter' : 'viewportLeave';
+                entry.target._isIntersecting = true;
+                event_name = 'viewportEnter';
+            } 
+            // left the viewport
+            else if (!entry.isIntersecting && entry.target._isIntersecting) {
+                entry.target._isIntersecting = false;
+                event_name = 'viewportLeave';
+            }
+            if (event_name) {
                 const event = new CustomEvent(event_name);
                 entry.target.dispatchEvent(event);
             }
@@ -19,6 +28,7 @@ function ensureIntersectionObserver() {
 
 const viewport = e => {
     ensureIntersectionObserver();
+    e._isIntersecting = false;
     intersectionObserver.observe(e);
     
     return {

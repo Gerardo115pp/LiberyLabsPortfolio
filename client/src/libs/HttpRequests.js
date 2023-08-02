@@ -91,3 +91,28 @@ export class GetProjectImagesData {
         });
     }
 }
+
+export class GetProjectIdeasRequest {
+    toJson = attributesToJson.bind(this);
+
+    do = (on_success, on_error) => {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        const request = new Request(`${portfolio_service}/project-ideas`, {
+            method: 'GET',
+            headers: headers
+        });
+
+        fetch(request).then(promise => {
+            if (promise.status >= 200 && promise.status < 300) {
+                promise.json().then(data => {
+                    on_success(data);
+                })
+            } else {
+                on_error(promise.status);
+            }
+        });
+    }
+
+}

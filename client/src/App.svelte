@@ -232,12 +232,15 @@
     }
 
     :global(body) {
+        --body-bg-color: var(--grey);
+        --body-text-color: var(--grey-1);
+
         margin: 0;
         padding: 0;
         font-family: var(--font-read);
         font-size: var(--font-size-1);
-        color: var(--grey-1);
-        background: var(--grey);
+        color: var(--body-text-color);
+        background: var(--body-bg-color);
     }
 
     :global(h1, h2, h3, h4, h5, h6) {

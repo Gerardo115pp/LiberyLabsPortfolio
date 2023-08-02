@@ -1,4 +1,4 @@
-import { GetAllProjectsRequest, GetProjectById } from "@libs/HttpRequests";
+import { GetAllProjectsRequest, GetProjectById, GetProjectIdeasRequest } from "@libs/HttpRequests";
 
 export class ProjectListItem {
     #id;
@@ -73,4 +73,10 @@ export function getProjectByID(project_id, success_callback, error_callback) {
     }
 
     request.do(on_success, error_callback);
+}
+
+export function getProjectIdeas(success_callback, error_callback) {
+    const request = new GetProjectIdeasRequest();
+
+    request.do(success_callback, error_callback);
 }
