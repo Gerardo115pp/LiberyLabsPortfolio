@@ -372,9 +372,17 @@
     :global(.debug) {
         border: 1px solid red;
     }
+    
+    :global(.adebug) {
+        border: 1px solid rgb(255, 72, 72);
+    }
 
     :global(.debug > *) {
         border: 1px solid red;
+    }
+
+    :global(.adebug *) {
+        border: 1px solid rgb(107, 107, 255);
     }
 
     :global(.dtwo) {
