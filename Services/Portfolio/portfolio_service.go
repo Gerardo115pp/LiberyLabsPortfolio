@@ -43,8 +43,15 @@ func main() {
 		echo.EchoFatal(err)
 	}
 
+	chat_repository, err := database.NewChatDatabase()
+	if err != nil {
+		echo.Echo(echo.RedFG, "Error while creating chat repository")
+		echo.EchoFatal(err)
+	}
+
 	repository.SetPortfolioRepositoryImplementation(project_repository)
 	repository.SetProjectIdeasRepositoryImplementation(project_ideas_repository)
+	repository.SetChatRepositoryImplementation(&chat_repository)
 
 	echo.EchoDebug(fmt.Sprintf("server config: %+v", new_server_config))
 

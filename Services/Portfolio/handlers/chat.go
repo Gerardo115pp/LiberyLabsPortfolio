@@ -1,8 +1,14 @@
 package handlers
 
 import (
+	"encoding/json"
+	"fmt"
+	"libery_labs_portfolio/models"
+	"libery_labs_portfolio/repository"
 	"libery_labs_portfolio/server"
 	"net/http"
+
+	"github.com/Gerardo115pp/patriots_lib/echo"
 )
 
 func ChatHandler(portfolio_server server.Server) http.HandlerFunc {
@@ -27,12 +33,39 @@ func ChatHandler(portfolio_server server.Server) http.HandlerFunc {
 }
 
 func getChatHandler(response http.ResponseWriter, request *http.Request) {
-	response.WriteHeader(http.StatusMethodNotAllowed)
-	return
+	var claim_data *models.ChatClaims = request.Context().Value("claims").(*models.ChatClaims)
+	echo.Echo(echo.BlueFG, fmt.Sprintf("claims: %+v", claim_data)) // copilot pendejo
+
+	if claim_data.ChatID == "" {
+		response.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	var chat_room *models.ChatRoom = repository.GetChatByID(claim_data.ChatID)
+
+	chat_room.AddMessage("Good day Sir, how can I help you?", false)
+	fmt.Printf("Chat ID: %s\n", chat_room.ID)
+
+	err := repository.SaveChat(chat_room)
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	response.Header().Set("Content-Type", "application/json")
+	response.WriteHeader(http.StatusOK)
+
+	err = json.NewEncoder(response).Encode(chat_room)
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+	}
+
 }
+
 func postChatHandler(response http.ResponseWriter, request *http.Request) {
-	response.Write([]byte("{\"message\": \"Hello World\"}"))
+	var test_message string = "{\"message\": \"Hello World\"}"
 	response.WriteHeader(200)
+	response.Write([]byte(test_message))
 	return
 }
 func patchChatHandler(response http.ResponseWriter, request *http.Request) {
