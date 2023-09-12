@@ -1,0 +1,119 @@
+package handlers
+
+import (
+	app_config "libery_labs_portfolio/Config"
+	"libery_labs_portfolio/models"
+	"libery_labs_portfolio/server"
+	"net/http"
+	"time"
+
+	"github.com/Gerardo115pp/patriots_lib/echo"
+)
+
+func ChatClaimsHandler(portfolio_server server.Server) http.HandlerFunc {
+	return func(response http.ResponseWriter, request *http.Request) {
+		switch request.Method {
+		case http.MethodGet:
+			getChatClaimsHandler(response, request)
+		case http.MethodPost:
+			postChatClaimsHandler(response, request)
+		case http.MethodPatch:
+			patchChatClaimsHandler(response, request)
+		case http.MethodDelete:
+			deleteChatClaimsHandler(response, request)
+		case http.MethodPut:
+			putChatClaimsHandler(response, request)
+		case http.MethodOptions:
+			response.WriteHeader(http.StatusOK)
+		default:
+			response.WriteHeader(http.StatusMethodNotAllowed)
+		}
+	}
+}
+
+func getChatClaimsHandler(response http.ResponseWriter, request *http.Request) {
+	var request_route string = request.URL.Path
+
+	if request_route == "/chat-claims/verify" {
+		verifyChatClaims(response, request)
+	} else {
+		createChatClaims(response, request)
+	}
+
+	return
+}
+
+func verifyChatClaims(response http.ResponseWriter, request *http.Request) {
+	claims_token, err := request.Cookie(app_config.CHAT_CLAIM_COOKIE_NAME)
+
+	if err != nil || claims_token.Value == "" {
+		echo.Echo(echo.RedBG, "Error verifying chat claims: no claims token")
+		response.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	echo.Echo(echo.GreenBG, "Verifying chat claims: "+claims_token.Value)
+
+	client_ip := request.Header.Get("X-Forwarded-For")
+	if client_ip == "" {
+		client_ip = request.RemoteAddr
+	}
+
+	err, _ = models.VerifyChatClaims(claims_token.Value, client_ip)
+	if err != nil {
+		echo.Echo(echo.RedBG, "Error verifying chat claims: "+err.Error())
+		response.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	response.Header().Set("Content-Type", "application/json")
+	response.WriteHeader(200)
+}
+
+func createChatClaims(response http.ResponseWriter, request *http.Request) {
+	client_ip := request.Header.Get("X-Forwarded-For")
+	if client_ip == "" {
+		client_ip = request.RemoteAddr
+	}
+
+	err, token := models.CreateChatClaims(client_ip)
+	if err != nil {
+		echo.Echo(echo.RedBG, "Error creating chat claims: "+err.Error())
+		response.WriteHeader(http.StatusInternalServerError)
+	}
+
+	cookie := http.Cookie{
+		Name:     app_config.CHAT_CLAIM_COOKIE_NAME,
+		Value:    token,
+		Expires:  time.Now().Add(time.Minute * 30),
+		Domain:   request.Host,
+		SameSite: http.SameSiteStrictMode,
+		HttpOnly: true,
+		Path:     "/",
+	}
+
+	http.SetCookie(response, &cookie)
+
+	response.Header().Set("Content-Type", "application/json")
+	response.Header().Set("X-Chat-Token", token)
+	response.WriteHeader(http.StatusOK)
+
+	return
+}
+
+func postChatClaimsHandler(response http.ResponseWriter, request *http.Request) {
+	response.WriteHeader(http.StatusMethodNotAllowed)
+	return
+}
+func patchChatClaimsHandler(response http.ResponseWriter, request *http.Request) {
+	response.WriteHeader(http.StatusMethodNotAllowed)
+	return
+}
+func deleteChatClaimsHandler(response http.ResponseWriter, request *http.Request) {
+	response.WriteHeader(http.StatusMethodNotAllowed)
+	return
+}
+func putChatClaimsHandler(response http.ResponseWriter, request *http.Request) {
+	response.WriteHeader(http.StatusMethodNotAllowed)
+	return
+}

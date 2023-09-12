@@ -16,6 +16,7 @@ var OPENAI_API_KEY string = os.Getenv("OPENAI_API_KEY")
 var TELEGRAM_API_KEY string = os.Getenv("TELEGRAM_API_KEY")
 var chat_id string = os.Getenv("TELEGRAM_CHAT_ID")
 var TELEGRAM_CHAT_ID int64 = 0
+var CHAT_CLAIM_COOKIE_NAME string = "portfolio_libery_chat_token"
 
 func VerifyConfig() {
 

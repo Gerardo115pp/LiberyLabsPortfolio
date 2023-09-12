@@ -6,6 +6,7 @@ import (
 	app_config "libery_labs_portfolio/Config"
 	"libery_labs_portfolio/database"
 	"libery_labs_portfolio/handlers"
+	"libery_labs_portfolio/middleware"
 	"libery_labs_portfolio/repository"
 	"libery_labs_portfolio/server"
 
@@ -18,7 +19,8 @@ func BinderRoutes(server server.Server, router *patriot_router.Router) {
 	router.RegisterRoute(patriot_router.NewRoute("/project-images", true), handlers.ProjectImagesHandler(server))
 	router.RegisterRoute(patriot_router.NewRoute("/project-ideas", true), handlers.ProjectIdeasHandler(server))
 	router.RegisterRoute(patriot_router.NewRoute("/contact", true), handlers.ContactHandler(server))
-	// router.RegisterRoute(patriot_router.NewRoute("^/profile_pictures.*", false), middleware.CheckAuth(handlers.ProfilePicturesHandler(server)))
+	router.RegisterRoute(patriot_router.NewRoute("^/chat-claims.*", false), handlers.ChatClaimsHandler(server))
+	router.RegisterRoute(patriot_router.NewRoute("/chat", true), middleware.CheckAuthCookie(handlers.ChatHandler(server)))
 }
 
 func main() {
