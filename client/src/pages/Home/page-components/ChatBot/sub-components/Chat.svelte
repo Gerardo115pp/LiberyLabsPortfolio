@@ -1,5 +1,15 @@
 <script>
     import { layout_properties } from "@stores/layout";
+    import { token as chat_token, is_available, messages } from "@stores/chat";
+    import { ChatDialer } from "@models/Chat";
+    import { onMount } from "svelte";
+
+    let chat_dialer;
+    
+    const handleChatFocus = () => {
+        chat_dialer = new ChatDialer();
+    }
+
 </script>
 
 <div id="chat-component">
@@ -11,9 +21,42 @@
                 <ellipse cx="40.7288" cy="6.72339" rx="6.65505" ry="6.65503" fill="#A9FF06"/>
             </g>
         </svg>
-            
     </div>
     <div id="chat-content" style:position="relative">
+        {#if chat_dialer !== undefined}
+            <div id="chat-connection-status">
+                <ul id="status-labels">
+                    <li class="status-label">
+                        <span class="status-name">Valaria:</span>
+                        <span class="status-value" class:status-ok={$is_available} >{$is_available ? 'Available' : 'Unavailable'}</span>
+                    </li>
+                    {#if $is_available}
+                            <li class="status-label">
+                                <span class="status-name">Connection status:</span>
+                                <span class="status-value" class:status-ok={$chat_token !== ''}>{$chat_token !== '' ? 'Connected' : 'Connecting...'}</span>
+                            </li>
+                    {/if}
+                </ul>
+            </div>
+            <ul id="messages-container">
+            {#if $messages.length > 0}
+                {#each $messages as message}
+                    {@debug message}
+                    <li class="message" class:external-message={message.sender !== 'user'}>
+                        <span class="message-sender">{message.sender === 'user' ? 'You' : 'Valaria'}</span>
+                        <p class="message-content">
+                            {message.content}
+                        </p>
+                        <div class="messsage-metadata">
+                            <span class="metadata-item">
+                                {message.send_date}
+                            </span>
+                        </div>
+                    </li>
+                {/each}
+            {/if}
+            </ul>
+        {/if}
         <div class="chat-bg-star">
             <svg width="{layout_properties.IS_MOBILE ? layout_properties.VIEWPORT_WIDTH * .3 : 355}" height="{layout_properties.IS_MOBILE ? (layout_properties.VIEWPORT_WIDTH * .3) * 0.940 : 334}" viewBox="0 0 355 334" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M180.344 165.358L223.772 96.3071L229.588 219.714L180.344 165.358Z" stroke="#7D2900" stroke-dasharray="2 2"/>
@@ -62,7 +105,7 @@
     </div>
     <div id="writer-bar" class:debug={false}>
         <div id="sender-wrapper">
-            <input class:hide={layout_properties.IS_MOBILE} type="text" id="sender-writer">
+            <input on:focus={handleChatFocus}  class:hide={layout_properties.IS_MOBILE} type="text" id="sender-writer">
             <div id="sender-btn" class="button-1-wrapper">
                 <button class="button-1">{ layout_properties.IS_MOBILE ? 'open chat' : 'send'}</button>
             </div>
@@ -98,6 +141,7 @@
     }
 
     #chat-content {
+        --connection-status-bar-height: 50px;
         height: var(--chat-content-height);
     }
 
@@ -107,6 +151,56 @@
         left: 50%;
         transform: translate(-50%, -50%);
         opacity: .5;
+    }
+
+    #chat-content #chat-connection-status {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: var(--connection-status-bar-height);
+        background: var(--accent-9);
+        display: flex;
+        align-items: center;
+        padding: 0 var(--vspacing-3);
+    }
+
+    #messages-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: calc(var(--connection-status-bar-height) + var(--vspacing-2)) var(--vspacing-3) 0;
+        list-style: none;
+    }
+    
+    #messages-container .message {
+        align-self: start;
+        max-width: 50%;
+        background: var(--main-7);
+        padding: var(--vspacing-1) var(--vspacing-1) var(--vspacing-1) var(--vspacing-3);
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 3% 100%, 3% 20%, 0 0);
+        border-radius: var(--border-radius);
+    }
+
+    #messages-container .message .message-content {
+        min-height: 4ch;
+    }
+
+    #status-labels {
+        display: flex;
+        width: 100%;
+        gap: var(--vspacing-3);
+        list-style: none;
+    }
+
+    .status-value {
+        font-weight: 500;
+        color: var(--danger-7);
+    }
+
+    .status-value.status-ok {
+        color: var(--success-5);
     }
 
     #writer-bar {
@@ -128,6 +222,7 @@
         background: var(--grey-8);
         border: none;
         border-radius: var(--border-radius);
+        outline: none;
     }
 
     #sender-wrapper #sender-btn {

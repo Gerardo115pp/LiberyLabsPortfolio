@@ -149,3 +149,49 @@ export class PostContactMessageRequest {
         });
     }
 }
+
+export class GetChatCredentialsRequest {
+    do = (on_success, on_error) => {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        const request = new Request(`${portfolio_service}/chat-claims`, {
+            method: 'GET',
+            headers: headers, 
+            credentials: 'same-origin'
+        });
+
+        fetch(request).then(promise => {
+            if (promise.status >= 200 && promise.status < 300) {
+                let token = promise.headers.get('X-Chat-Token');
+                return on_success(token);
+            } else {
+                on_error(promise.status);
+            }
+        });
+    }
+}
+
+export class GetChatRoomRequest {
+    do = (on_success, on_error) => {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        const request = new Request(`${portfolio_service}/chat`, {
+            method: 'GET',
+            headers: headers, 
+            credentials: 'same-origin'
+        });
+
+        fetch(request).then(promise => {
+            if (promise.status >= 200 && promise.status < 300) {
+                promise.json().then(data => {
+                    on_success(data);
+                });
+            } else {
+                on_error(promise.status);
+            }
+        });
+    }
+
+}

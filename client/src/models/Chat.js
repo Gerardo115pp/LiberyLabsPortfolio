@@ -1,0 +1,192 @@
+import { is_available, token, messages } from "@stores/chat";
+import { GetChatCredentialsRequest, GetChatRoomRequest } from "@libs/HttpRequests";
+import { get } from "svelte/store";
+
+export class ChatMessage {
+    constructor({ chat_id, message, sender, send_date }) {
+        this.chat_id = chat_id;
+        this.content = message;
+        this.sender = sender;
+        this.send_date = send_date;
+    }
+}
+
+class ChatNODE {
+    constructor (message, back, next) {
+        this.message = message;
+        this.back = back;
+        this.next = next;
+    }
+}
+
+export class ChatQueue {
+    
+    /**
+     * @type {ChatNODE}
+    */
+
+    #head;
+    /**
+     * @type {ChatNODE}
+    */
+    
+    #tail;
+    /**
+     * @type {ChatNODE}
+     */
+    #traverser;
+    constructor() {
+        this.#head = null;
+        this.#tail = null;
+        this.#traverser = null;
+    }
+
+    enqueue = (message) => {
+        let node = new ChatNODE(message, null, this.#tail);
+
+        if (this.#tail) {
+            this.#tail.back = node;
+        }
+
+        this.#tail = node;
+        this.#head = this.#head || node;
+        
+    }
+
+    dequeue = () => {
+        let node = this.#head;
+        this.#head = this.#head?.back;
+
+        if (this.#head) {
+            this.#head.next = null;
+        } else {
+            this.#tail = null;
+        }
+
+        return node?.message;
+    }
+
+    
+    /**
+     * Yields the next message in the queue
+     * @date 9/11/2023 - 8:26:16 PM
+     * @returns {ChatMessage}
+    */
+    traverse = () => {
+        this.#traverser = this.#traverser?.back || this.#head;
+        return this.#traverser?.message;
+    }
+
+    isEmpty = () => {
+        return this.#head === null;
+    }
+
+}
+
+export class ChatDialer {
+    constructor() {
+        this.messages_queue = new ChatQueue();
+        this.chat_id = null;
+        this.chat_ready = get(token) !== "";
+
+        if (!this.chat_ready) {
+            if (this.#setClaims()) {
+                this.#requestChatRoom();
+            }
+        }
+    }
+
+    #requestChatRoom = async () => {
+        const chat_room_promise = new Promise((resolve, reject) => {
+            const chat_room_request = new GetChatRoomRequest();
+
+            const on_success = (chat_room) => {
+                resolve(chat_room);
+            }
+
+            const on_error = (status) => {
+                console.log(`Error ${status} while getting chat room`);
+                reject(new Error(`Error ${status} while getting chat room`));
+            }
+
+            chat_room_request.do(on_success, on_error);
+        });
+
+        const chat_room = await chat_room_promise.catch((error) => console.log(error));
+
+        if (chat_room) {
+            this.chat_id = chat_room.id;
+            const visible_messages = [];
+            chat_room.messages.forEach((message, h) => {
+                let new_message = new ChatMessage({ 
+                    chat_id: this.chat_id,
+                    message: message.content,
+                    sender: message.author,
+                    send_date: message.send_date
+                })
+
+                this.messages_queue.enqueue(new_message);
+
+                if (new_message.sender !== "system") {
+                    visible_messages.push(new_message);
+                }
+            });
+            console.log(visible_messages);
+            messages.set(visible_messages);
+        }
+
+
+    }
+
+    #setClaims = async () => {
+        let claims_promised = new Promise((resolve, reject) => {
+            const claims_request = new GetChatCredentialsRequest();
+
+            const on_success = (token) => {
+                this.chat_ready = true;
+                resolve(token);
+            }
+
+            const on_error = (status) => {
+                is_available.set(false);
+                console.log(`Error ${status} while getting chat credentials`);
+                token.set("");
+                reject(new Error(`Error ${status} while getting chat credentials`));
+            }
+
+            claims_request.do(on_success, on_error);
+        });
+
+        let claims = await claims_promised.catch((error) => {
+            console.log(error);
+            return null;
+        });
+        
+        if (claims) {
+            token.set(claims);
+            return true;
+        }
+
+        return false;
+    }
+}
+
+export function testQueue() {
+    let queue = new ChatQueue();
+
+    queue.enqueue(new ChatMessage({ chat_id: 1, message: "Hello A", sender: "user", order: 1 }));
+    queue.enqueue(new ChatMessage({ chat_id: 1, message: "Hello B", sender: "user", order: 2 }));
+    queue.enqueue(new ChatMessage({ chat_id: 1, message: "Hello C", sender: "user", order: 3 }));
+
+    console.log(queue.traverse());
+    console.log(queue.traverse());
+    console.log(queue.traverse());
+
+    console.log(queue.dequeue());
+    console.log(queue.dequeue());
+    console.log(queue.dequeue());
+
+    console.log(queue.isEmpty());
+
+    return queue;
+}
