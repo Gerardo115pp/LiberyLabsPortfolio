@@ -2,12 +2,36 @@
     import { layout_properties } from "@stores/layout";
     import { token as chat_token, is_available, messages } from "@stores/chat";
     import { ChatDialer } from "@models/Chat";
-    import { onMount } from "svelte";
+    import { onMount, afterUpdate } from "svelte";
 
     let chat_dialer;
+    /** @type {HTMLDivElement}*/
+    let chat_messages_element;
     
+    onMount(() => {
+        chat_dialer = new ChatDialer(); // To styleize the chat component enable this line
+    });
+
+    afterUpdate(() => {
+        if (chat_messages_element === undefined) return;
+
+        chat_messages_element.scrollTo(0, chat_messages_element.scrollHeight) 
+    });
+
     const handleChatFocus = () => {
-        chat_dialer = new ChatDialer();
+        // chat_dialer = new ChatDialer(); // To styleize the chat component disable this line
+    }
+
+    const handleMessagebarKeypress = e => {
+        if (e.key !== 'Enter') return;  
+
+        /** @type string */
+        let new_message_content = e.target.value;
+        e.target.value = '';
+
+        if (new_message_content.length < 3) return;
+
+        chat_dialer.sendMessage(new_message_content);     
     }
 
 </script>
@@ -23,40 +47,6 @@
         </svg>
     </div>
     <div id="chat-content" style:position="relative">
-        {#if chat_dialer !== undefined}
-            <div id="chat-connection-status">
-                <ul id="status-labels">
-                    <li class="status-label">
-                        <span class="status-name">Valaria:</span>
-                        <span class="status-value" class:status-ok={$is_available} >{$is_available ? 'Available' : 'Unavailable'}</span>
-                    </li>
-                    {#if $is_available}
-                            <li class="status-label">
-                                <span class="status-name">Connection status:</span>
-                                <span class="status-value" class:status-ok={$chat_token !== ''}>{$chat_token !== '' ? 'Connected' : 'Connecting...'}</span>
-                            </li>
-                    {/if}
-                </ul>
-            </div>
-            <ul id="messages-container">
-            {#if $messages.length > 0}
-                {#each $messages as message}
-                    {@debug message}
-                    <li class="message" class:external-message={message.sender !== 'user'}>
-                        <span class="message-sender">{message.sender === 'user' ? 'You' : 'Valaria'}</span>
-                        <p class="message-content">
-                            {message.content}
-                        </p>
-                        <div class="messsage-metadata">
-                            <span class="metadata-item">
-                                {message.send_date}
-                            </span>
-                        </div>
-                    </li>
-                {/each}
-            {/if}
-            </ul>
-        {/if}
         <div class="chat-bg-star">
             <svg width="{layout_properties.IS_MOBILE ? layout_properties.VIEWPORT_WIDTH * .3 : 355}" height="{layout_properties.IS_MOBILE ? (layout_properties.VIEWPORT_WIDTH * .3) * 0.940 : 334}" viewBox="0 0 355 334" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M180.344 165.358L223.772 96.3071L229.588 219.714L180.344 165.358Z" stroke="#7D2900" stroke-dasharray="2 2"/>
@@ -102,10 +92,44 @@
                 <path d="M79.5761 233.422L63.0405 196.786L49.9468 180.106L78.5705 200.467L79.5761 233.422Z" stroke="#7D2900" stroke-dasharray="2 2"/>
             </svg>   
         </div>
+        {#if chat_dialer !== undefined}
+            <div id="chat-connection-status">
+                <ul id="status-labels">
+                    <li class="status-label">
+                        <span class="status-name">Valaria:</span>
+                        <span class="status-value" class:status-ok={$is_available} >{$is_available ? 'Available' : 'Unavailable'}</span>
+                    </li>
+                    {#if $is_available}
+                            <li class="status-label">
+                                <span class="status-name">Connection status:</span>
+                                <span class="status-value" class:status-ok={$chat_token !== ''}>{$chat_token !== '' ? 'Connected' : 'Connecting...'}</span>
+                            </li>
+                    {/if}
+                </ul>
+            </div>
+            <ul bind:this={chat_messages_element} id="messages-container">
+            {#if $messages.length > 0}
+                {#each $messages as message}
+                    {@debug message}
+                    <li class="message" class:external-message={message.sender !== 'user'}>
+                        <span class="message-sender">{message.sender === 'user' ? 'You' : 'Valaria'}</span>
+                        <p class="message-content">
+                            {message.content}
+                        </p>
+                        <div class="message-metadata">
+                            <span class="metadata-item">
+                                {message.send_date}
+                            </span>
+                        </div>
+                    </li>
+                {/each}
+            {/if}
+            </ul>
+        {/if}
     </div>
     <div id="writer-bar" class:debug={false}>
         <div id="sender-wrapper">
-            <input on:focus={handleChatFocus}  class:hide={layout_properties.IS_MOBILE} type="text" id="sender-writer">
+            <input aria-label="Write any doubts you have about my services and my AI assistant will clear them for you. press enter to send the message" data-name="message-bar" on:keydown={handleMessagebarKeypress} on:focus={handleChatFocus} class:hide={layout_properties.IS_MOBILE} type="text" id="sender-writer" placeholder="Clear you'r doubts">
             <div id="sender-btn" class="button-1-wrapper">
                 <button class="button-1">{ layout_properties.IS_MOBILE ? 'open chat' : 'send'}</button>
             </div>
@@ -118,6 +142,8 @@
         --status-bar-height: 7%;
         --writer-height: 11%;
         --chat-content-height: calc(100% - calc(var(--status-bar-height) + var(--writer-height)));
+
+        position: relative;
 
         width: 100%;
         height: calc(var(--vspacing-8) * 0.655859375);
@@ -134,6 +160,7 @@
         background: var(--main);
         align-items: center;
         padding: 0 var(--vspacing-3);
+        z-index: var(--z-index-2);
     }
 
     #sb-controls {
@@ -163,28 +190,69 @@
         display: flex;
         align-items: center;
         padding: 0 var(--vspacing-3);
+        z-index: var(--z-index-2);
     }
 
     #messages-container {
+        position: relative;
         width: 100%;
+        overflow-y: auto;
+        height: 100%;
         display: flex;
         flex-direction: column;
         margin: 0;
         padding: calc(var(--connection-status-bar-height) + var(--vspacing-2)) var(--vspacing-3) 0;
+        row-gap: var(--vspacing-3);
         list-style: none;
+        z-index: var(--z-index-1);
     }
     
     #messages-container .message {
-        align-self: start;
+        display: flex;
         max-width: 50%;
-        background: var(--main-7);
-        padding: var(--vspacing-1) var(--vspacing-1) var(--vspacing-1) var(--vspacing-3);
-        clip-path: polygon(0 0, 100% 0, 100% 100%, 3% 100%, 3% 20%, 0 0);
+        align-self: end;
+        flex-direction: column;
+        padding: var(--vspacing-1) var(--vspacing-3) var(--vspacing-1) var(--vspacing-2);
         border-radius: var(--border-radius);
+        background: var(--grey-8);
+        gap: var(--vspacing-1);
+        clip-path: polygon(0 0, 100% 0, 97% 30%, 97% 100%, 0 100%, 0 0);
+    }
+    
+    #messages-container .message.external-message {
+        align-self: start;
+        background: var(--main-7);
+        padding: var(--vspacing-1) var(--vspacing-2) var(--vspacing-1) var(--vspacing-3);
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 3% 100%, 3% 20%, 0 0);
+    }
+
+    .message-sender {
+        font-weight: 500;
+        color: var(--main);
+    }
+
+    #messages-container .message.external-message .message-sender {
+        width: 100%;
+        color: var(--danger-9);
+        text-align: end;
     }
 
     #messages-container .message .message-content {
+        box-sizing: content-box;
         min-height: 4ch;
+        font-size: var(--font-size-1);
+        padding: 0 0 0 var(--vspacing-2);
+        
+    }
+    
+    #messages-container .message.external-message .message-content {
+        padding: 0 var(--vspacing-2) 0 0;
+    }
+
+    .message-metadata {
+        display: flex;
+        justify-content: flex-end;
+        gap: var(--vspacing-1);
     }
 
     #status-labels {
@@ -204,11 +272,13 @@
     }
 
     #writer-bar {
+        position: relative;
         display: grid;
         width: 100%;
         height: var(--writer-height);
         border-top: 1px solid var(--grey-4);
         place-items: center;
+        z-index: var(--z-index-2);
     }
 
     #sender-wrapper {
@@ -219,9 +289,12 @@
 
     #sender-wrapper input {
         width: 80%;
+        font-family: var(--font-read);
         background: var(--grey-8);
         border: none;
+        color: var(--grey-1);
         border-radius: var(--border-radius);
+        padding: 0 var(--vspacing-2);
         outline: none;
     }
 

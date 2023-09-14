@@ -25,33 +25,32 @@ func NewChatDatabase() (ChatDatabase, error) {
 	return *new_db, nil
 }
 
-func (chat_db *ChatDatabase) GetChatByID(chat_id string) *models.ChatRoom {
-	var chat_room *models.ChatRoom = new(models.ChatRoom)
+func (chat_db *ChatDatabase) GetChatByID(chat_id string, create bool) (*models.ChatRoom, error) {
+	var new_chat_room *models.ChatRoom = new(models.ChatRoom)
 	var err error
-	chat_room.ID = chat_id
-	chat_room.CreationDate = time.Now().Format("2006-01-02 15:04:05")
-	chat_room.LastMessageDate = time.Now().Format("2006-01-02 15:04:05")
-	chat_room.Messages = make([]*models.ChatMessage, 0)
-	fmt.Printf("Chat ID: %s\n", chat_room.ID)
+	new_chat_room.ID = chat_id
+	new_chat_room.CreationDate = time.Now().Format("2006-01-02 15:04:05")
+	new_chat_room.LastMessageDate = time.Now().Format("2006-01-02 15:04:05")
+	new_chat_room.InstructionMessage = app_config.SALES_CHAT_INSTRUCTION
+	new_chat_room.Messages = make([]*models.ChatMessage, 0)
 
 	found_chat_room := chat_db.chats_buffer[chat_id]
 
 	if found_chat_room == nil {
 		found_chat_room, err = chat_db.searchChatOnFS(chat_id)
 		if err != nil {
-			return nil
+			return nil, err
 		}
 
 		chat_db.chats_buffer[chat_id] = found_chat_room
 	}
 
-	fmt.Printf("Chat ID: %s\n", chat_room.ID)
-	fmt.Printf("Found chat: %+v\n", found_chat_room)
-	if found_chat_room != nil {
-		chat_room = found_chat_room
+	if found_chat_room == nil && create {
+		found_chat_room = new_chat_room
+		chat_db.chats_buffer[chat_id] = found_chat_room
 	}
-	fmt.Printf("Chat ID: %s\n", chat_room.ID)
-	return chat_room
+
+	return found_chat_room, nil
 }
 
 func (chat_db *ChatDatabase) searchChatOnFS(chat_id string) (*models.ChatRoom, error) {

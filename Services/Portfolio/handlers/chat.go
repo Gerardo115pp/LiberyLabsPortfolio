@@ -6,6 +6,7 @@ import (
 	"libery_labs_portfolio/models"
 	"libery_labs_portfolio/repository"
 	"libery_labs_portfolio/server"
+	"libery_labs_portfolio/workflows"
 	"net/http"
 
 	"github.com/Gerardo115pp/patriots_lib/echo"
@@ -34,19 +35,25 @@ func ChatHandler(portfolio_server server.Server) http.HandlerFunc {
 
 func getChatHandler(response http.ResponseWriter, request *http.Request) {
 	var claim_data *models.ChatClaims = request.Context().Value("claims").(*models.ChatClaims)
-	echo.Echo(echo.BlueFG, fmt.Sprintf("claims: %+v", claim_data)) // copilot pendejo
 
 	if claim_data.ChatID == "" {
 		response.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
-	var chat_room *models.ChatRoom = repository.GetChatByID(claim_data.ChatID)
+	var chat_room *models.ChatRoom
+	chat_room, err := repository.GetChatByID(claim_data.ChatID, true)
+	if err != nil {
+		response.WriteHeader(404)
+		return
+	}
 
-	chat_room.AddMessage("Good day Sir, how can I help you?", false)
+	if len(chat_room.Messages) == 0 {
+		chat_room.AddMessage("Good day Sir, how can I help you?", false)
+	}
 	fmt.Printf("Chat ID: %s\n", chat_room.ID)
 
-	err := repository.SaveChat(chat_room)
+	err = repository.SaveChat(chat_room)
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
 		return
@@ -59,13 +66,59 @@ func getChatHandler(response http.ResponseWriter, request *http.Request) {
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
 	}
-
 }
 
 func postChatHandler(response http.ResponseWriter, request *http.Request) {
-	var test_message string = "{\"message\": \"Hello World\"}"
+	var err error
+	var claim_data *models.ChatClaims = request.Context().Value("claims").(*models.ChatClaims)
+
+	echo.Echo(echo.GreenBG, "posting to chat ID: "+claim_data.ChatID)
+
+	if claim_data.ChatID == "" {
+		response.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	var chat_room *models.ChatRoom
+	chat_room, err = repository.GetChatByID(claim_data.ChatID, false)
+	if err != nil {
+		response.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	var request_data map[string]string = make(map[string]string)
+
+	err = json.NewDecoder(request.Body).Decode(&request_data)
+	if err != nil {
+		response.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	var message_content string = request_data["content"]
+
+	chat_room.AddMessage(message_content, true)
+
+	err = repository.SaveChat(chat_room)
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	var new_assistant_message *models.ChatMessage
+	new_assistant_message, err = workflows.SalesChatWithGPT3Turbo(chat_room) // workflows.SalesChatWithGPT3 uses AddMessage internally, don't duplicate it
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	response.Header().Set("Content-Type", "application/json")
 	response.WriteHeader(200)
-	response.Write([]byte(test_message))
+
+	err = json.NewEncoder(response).Encode(new_assistant_message)
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+	}
+
 	return
 }
 func patchChatHandler(response http.ResponseWriter, request *http.Request) {

@@ -17,11 +17,11 @@ type ChatRoom struct {
 	Messages           []*ChatMessage `json:"messages"`
 }
 
-func (chat *ChatRoom) AddMessage(message string, from_user bool) {
+func (chat *ChatRoom) AddMessage(message string, from_user bool) *ChatMessage {
 	var new_message *ChatMessage = new(ChatMessage)
 	new_message.Order = len(chat.Messages)
 	new_message.Content = message
-	new_message.Author = "User"
+	new_message.Author = "user"
 
 	if !from_user {
 		new_message.Author = "assistant"
@@ -30,4 +30,6 @@ func (chat *ChatRoom) AddMessage(message string, from_user bool) {
 	new_message.SendDate = time.Now().Format("2006-01-02 15:04:05")
 	chat.Messages = append(chat.Messages, new_message)
 	chat.LastMessageDate = new_message.SendDate
+
+	return new_message
 }

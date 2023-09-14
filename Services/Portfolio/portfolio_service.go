@@ -19,8 +19,11 @@ func BinderRoutes(server server.Server, router *patriot_router.Router) {
 	router.RegisterRoute(patriot_router.NewRoute("/project-images", true), handlers.ProjectImagesHandler(server))
 	router.RegisterRoute(patriot_router.NewRoute("/project-ideas", true), handlers.ProjectIdeasHandler(server))
 	router.RegisterRoute(patriot_router.NewRoute("/contact", true), handlers.ContactHandler(server))
-	router.RegisterRoute(patriot_router.NewRoute("^/chat-claims.*", false), handlers.ChatClaimsHandler(server))
-	router.RegisterRoute(patriot_router.NewRoute("/chat", true), middleware.CheckAuthCookie(handlers.ChatHandler(server)))
+
+	if app_config.CHAT_ENABLED {
+		router.RegisterRoute(patriot_router.NewRoute("^/chat-claims.*", false), handlers.ChatClaimsHandler(server))
+		router.RegisterRoute(patriot_router.NewRoute("/chat", true), middleware.CheckAuthCookie(handlers.ChatHandler(server)))
+	}
 }
 
 func main() {

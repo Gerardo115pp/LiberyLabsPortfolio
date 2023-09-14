@@ -67,6 +67,7 @@ func verifyChatClaims(response http.ResponseWriter, request *http.Request) {
 	}
 
 	response.Header().Set("Content-Type", "application/json")
+	response.Header().Set("X-Chat-Token", claims_token.Value)
 	response.WriteHeader(200)
 }
 
@@ -75,6 +76,8 @@ func createChatClaims(response http.ResponseWriter, request *http.Request) {
 	if client_ip == "" {
 		client_ip = request.RemoteAddr
 	}
+
+	
 
 	err, token := models.CreateChatClaims(client_ip)
 	if err != nil {

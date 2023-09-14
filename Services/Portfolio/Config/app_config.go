@@ -1,7 +1,9 @@
 package app_config
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"strconv"
 
@@ -24,6 +26,10 @@ var CHAT_CLAIM_COOKIE_NAME string = "portfolio_libery_chat_token"
 var MAX_CHAT_SIZE int = 10
 var custom_max_chat_size string = os.Getenv("MAX_CHAT_SIZE")
 var CHATS_DATA_PATH string = fmt.Sprintf("%s/chats", OPERATION_DATA_PATH)
+
+// ------- Settings config -------
+var SALES_CHAT_INSTRUCTION string
+var CHAT_ENABLED bool
 
 func VerifyConfig() {
 
@@ -66,4 +72,51 @@ func VerifyConfig() {
 	}
 
 	PROJECTS_DATA_PATH = fmt.Sprintf("%s/%s", OPERATION_DATA_PATH, PROJECTS_DATA_PATH)
+
+	err = loadSettings()
+	if err != nil {
+		echo.Echo(echo.RedFG, "Error loading settings: %s", err.Error())
+		echo.EchoFatal(err)
+	}
+}
+
+func loadSettings() error {
+	var settings_path string = fmt.Sprintf("%s/settings.json", OPERATION_DATA_PATH)
+	var err error
+
+	if _, err = os.Stat(settings_path); os.IsNotExist(err) {
+		return err
+	}
+
+	var settings_content []byte
+
+	settings_content, err = ioutil.ReadFile(settings_path)
+	if err != nil {
+		return err
+	}
+
+	var settings map[string]interface{}
+
+	err = json.Unmarshal(settings_content, &settings)
+	if err != nil {
+		return err
+	}
+
+	defer func() {
+		if r := recover(); r != nil {
+			echo.EchoFatal(fmt.Errorf("Error loading settings: %s", r))
+		}
+	}()
+
+	SALES_CHAT_INSTRUCTION = settings["sales_chat_system_instruction"].(string)
+	if SALES_CHAT_INSTRUCTION == "" {
+		return fmt.Errorf("sales_chat_instruction is required")
+	}
+
+	if settings["chat_enabled"] == nil {
+		return fmt.Errorf("chat_enabled is required")
+	}
+	CHAT_ENABLED = settings["chat_enabled"].(bool)
+
+	return nil
 }

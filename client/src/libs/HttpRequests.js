@@ -172,6 +172,28 @@ export class GetChatCredentialsRequest {
     }
 }
 
+export class GetChatCredentialsVerificationRequest {
+    do = (on_success, on_error) => {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        const request = new Request(`${portfolio_service}/chat-claims/verify`, {
+            method: 'GET',
+            headers: headers, 
+            credentials: 'same-origin'
+        });
+
+        fetch(request).then(promise => {
+            if (promise.status >= 200 && promise.status < 300) {
+                let token = promise.headers.get('X-Chat-Token');
+                return on_success(token);
+            } else {
+                on_error(promise.status);
+            }
+        });
+    }
+}
+
 export class GetChatRoomRequest {
     do = (on_success, on_error) => {
         const headers = new Headers();
@@ -194,4 +216,35 @@ export class GetChatRoomRequest {
         });
     }
 
+}
+
+export class PostChatMessageRequest {
+    constructor({chat_id, message}) {
+        this.chat_id = chat_id;
+        this.content = message;
+    }
+
+    toJson = attributesToJson.bind(this);
+
+    do = (on_success, on_error) => {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        const request = new Request(`${portfolio_service}/chat`, {
+            method: 'POST',
+            headers: headers,
+            body: this.toJson(),
+            credentials: 'same-origin'
+        });
+
+        fetch(request).then(promise => {
+            if (promise.status >= 200 && promise.status < 300) {
+                promise.json().then(new_messages => {
+                    on_success(new_messages);
+                });
+            } else {
+                on_error(promise.status);
+            }
+        });
+    }
 }

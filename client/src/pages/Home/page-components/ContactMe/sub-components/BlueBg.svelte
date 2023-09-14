@@ -56,7 +56,9 @@
 
 <style>
     #svg-blue-bg {
+        position: relative;
         fill: none;
+        z-index: var(--z-index-b-1);
     }
 
     .sbb-letters {

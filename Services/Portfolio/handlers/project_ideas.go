@@ -109,7 +109,7 @@ func getAllIdeasHandler(response http.ResponseWriter, request *http.Request) {
 func getRandomIdeasHandler(response http.ResponseWriter, request *http.Request) {
 	var ideas_count int = repository.IdeasCount()
 	var new_idea_chance float64 = 1.0 - (float64(ideas_count) / 100.0)
-	var max_chance float64 = 0.15
+	var max_chance float64 = 0.65
 
 	if new_idea_chance > max_chance {
 		new_idea_chance = max_chance

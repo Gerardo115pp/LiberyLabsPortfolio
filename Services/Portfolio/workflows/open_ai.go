@@ -10,6 +10,8 @@ import (
 	"net/http"
 	"os"
 
+	app_config "libery_labs_portfolio/Config"
+
 	"github.com/Gerardo115pp/patriots_lib/echo"
 )
 
@@ -25,6 +27,77 @@ func CreateNewProjectIdea() (string, error) {
 	project_idea, err := requestGPT3TurboIdea(prompt)
 
 	return project_idea, err
+}
+
+func SalesChatWithGPT3Turbo(chat_room *models.ChatRoom) (*models.ChatMessage, error) {
+	var chat_request *models.GPT3TurboRequest = models.CreateGPT3TurboRequest()
+	var system_message *models.GPT3TurboMessage = new(models.GPT3TurboMessage)
+
+	system_message.Role = "system"
+	system_message.Content = app_config.SALES_CHAT_INSTRUCTION
+
+	chat_request.Messages = append(chat_request.Messages, system_message)
+
+	var new_message *models.GPT3TurboMessage
+
+	for _, message := range chat_room.Messages {
+		new_message = new(models.GPT3TurboMessage)
+		new_message.Role = message.Author
+		new_message.Content = message.Content
+
+		chat_request.Messages = append(chat_request.Messages, new_message)
+	}
+
+	response, err := requestGPT3Turbo(chat_request)
+	if err != nil {
+		return nil, err
+	}
+
+	new_chat_message := chat_room.AddMessage(response.Choices[0].Message.Content, false)
+
+	return new_chat_message, nil
+}
+
+func requestGPT3Turbo(request *models.GPT3TurboRequest) (*models.GPT3TurboResponse, error) {
+	var request_body []byte
+	var err error
+
+	request_body, err = json.Marshal(request)
+	if err != nil {
+		echo.Echo(echo.RedFG, fmt.Sprintf("Error marshalling request body: %s", err.Error()))
+		return nil, err
+	}
+
+	body := bytes.NewBuffer(request_body)
+	http_request, err := http.NewRequest("POST", "https://api.openai.com/v1/chat/completions", body)
+	if err != nil {
+		echo.Echo(echo.RedFG, fmt.Sprintf("Error sending GPT 3-Turbo request: %s", err.Error()))
+		return nil, err
+	}
+
+	http_request.Header.Add("Content-Type", "application/json")
+	http_request.Header.Add("Authorization", fmt.Sprintf("Bearer %s", app_config.OPENAI_API_KEY))
+
+	http_client := http.Client{}
+	response, err := http_client.Do(http_request)
+	if err != nil {
+		echo.Echo(echo.RedFG, fmt.Sprintf("Error sending GPT 3-Turbo request: %s", err.Error()))
+		return nil, err
+	}
+
+	if response.StatusCode < 200 || response.StatusCode > 299 {
+		echo.Echo(echo.RedFG, fmt.Sprintf("Error sending GPT 3-Turbo request, status code: %d", response.StatusCode))
+		body_content, err := ioutil.ReadAll(response.Body)
+		if err != nil {
+			echo.Echo(echo.RedFG, fmt.Sprintf("Error reading response body: %s", err.Error()))
+			return nil, err
+		}
+		echo.Echo(echo.RedFG, fmt.Sprintf("Reason: %s", string(body_content)))
+		echo.Echo(echo.RedFG, fmt.Sprintf("Request body: %s", string(request_body)))
+		return nil, fmt.Errorf("Error sending GPT 3-Turbo request, status code: %d", response.StatusCode)
+	}
+
+	return parseGPT3TurboResponse(response)
 }
 
 func requestGPT3TurboIdea(prompt string) (string, error) {
