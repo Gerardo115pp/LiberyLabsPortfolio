@@ -32,12 +32,12 @@
                 />
                 <TaggedText tag_name="p">
                     <p class="bio-block">
-                        Yo soy lalo y soy bien chido. Lorem ipsum dolor sit amet consectetur. Aliquet viverra vitae volutpat non. Tellus amet vitae dolor id. Fames sed eget ac mauris et eget ut. Eget nullam placerat at leo. Faucibus tellus bibendum eu a consequat diam volutpat. Rhoncus blandit massa sed ut pellentesque maecenas. Magna rhoncus in at nulla amet egestas a amet netus. Nisl viverra congue malesuada volutpat eleifend. Non lectus sollicitudin aenean amet molestie. Tincidunt consequat massa purus odio massa sed vitae.<br/>Morbi velit libero eu mauris viverra. Mattis turpis sagittis vitae nullam purus mi amet. Libero 
+                        Welcome! My name is Lalo, I'm a fullstack web engineer based in Jalisco, Mexico. I'm passionate about turning ideas into reality and taking businesses to the next level. I understand front-end, backend and I'm in love with Linux, Docker and K8S, i know exactly what how each of these technologies a must be combined to give <strong>your business the scalability, reliability and efficiency it needs to grow and succeed</strong>.
                     </p>
                 </TaggedText>
                 <TaggedText tag_name="p">
                     <p class="bio-block">
-                        Lorem ipsum dolor sit amet consectetur. Aliquet viverra vitae volutpat non. Tellus amet vitae dolor id. Fames sed eget ac mauris et eget ut. Eget nullam placerat at leo. Faucibus tellus bibendum eu a co Morbi velit libero eu mauris viverra. Mattis turpis sagittis vitae nullam purus mi amet. Libero 
+                        Ever since i was a child i always loved building things, and getting new tools on my toolkit to achieve bigger and better things. Aside from coding, my other passions are carpentry, wood carving, 3D modeling, printing and painting miniatures. For me the only thing better than building things is helping others through something i built.
                     </p>
                 </TaggedText>
             </div>
