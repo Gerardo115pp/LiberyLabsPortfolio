@@ -29,7 +29,10 @@ var CHATS_DATA_PATH string = fmt.Sprintf("%s/chats", OPERATION_DATA_PATH)
 
 // ------- Settings config -------
 var SALES_CHAT_INSTRUCTION string
-var CHAT_ENABLED bool
+var SALES_CHAT_ENABLED bool
+var SALES_CHAT_TEMPERATURE float64 = 1.2
+var SALES_CHAT_TOP_P float64 = 1.0
+var SALES_CHAT_MAX_TOKENS int = 100
 
 func VerifyConfig() {
 
@@ -108,15 +111,29 @@ func loadSettings() error {
 		}
 	}()
 
-	SALES_CHAT_INSTRUCTION = settings["sales_chat_system_instruction"].(string)
+	var sales_chat_settings map[string]interface{} = settings["sales_chat"].(map[string]interface{})
+
+	SALES_CHAT_INSTRUCTION = sales_chat_settings["instruction_message"].(string)
 	if SALES_CHAT_INSTRUCTION == "" {
 		return fmt.Errorf("sales_chat_instruction is required")
 	}
 
-	if settings["chat_enabled"] == nil {
+	if sales_chat_settings["chat_enabled"] == nil {
 		return fmt.Errorf("chat_enabled is required")
 	}
-	CHAT_ENABLED = settings["chat_enabled"].(bool)
+	SALES_CHAT_ENABLED = sales_chat_settings["chat_enabled"].(bool)
+
+	if sales_chat_settings["temperature"] != nil {
+		SALES_CHAT_TEMPERATURE = sales_chat_settings["temperature"].(float64)
+	}
+
+	if sales_chat_settings["top_p"] != nil {
+		SALES_CHAT_TOP_P = sales_chat_settings["top_p"].(float64)
+	}
+
+	if sales_chat_settings["max_tokens"] != nil {
+		SALES_CHAT_MAX_TOKENS = int(sales_chat_settings["max_tokens"].(float64))
+	}
 
 	return nil
 }

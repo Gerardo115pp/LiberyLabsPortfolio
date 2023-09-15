@@ -31,6 +31,11 @@ func CreateNewProjectIdea() (string, error) {
 
 func SalesChatWithGPT3Turbo(chat_room *models.ChatRoom) (*models.ChatMessage, error) {
 	var chat_request *models.GPT3TurboRequest = models.CreateGPT3TurboRequest()
+
+	chat_request.Temperature = app_config.SALES_CHAT_TEMPERATURE
+	chat_request.TopP = app_config.SALES_CHAT_TOP_P
+	chat_request.MaxTokens = app_config.SALES_CHAT_MAX_TOKENS
+
 	var system_message *models.GPT3TurboMessage = new(models.GPT3TurboMessage)
 
 	system_message.Role = "system"
