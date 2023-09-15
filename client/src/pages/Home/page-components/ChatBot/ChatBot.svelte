@@ -1,7 +1,7 @@
 <script>
     import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
     import OrangeBg from "./sub-components/OrangeBG.svelte";
-    import Chat from "./sub-components/Chat.svelte";
+    import Chat from "@components/Chat/Chat.svelte";
     import { layout_properties } from "@stores/layout";
 </script>
 
