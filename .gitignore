@@ -2,3 +2,4 @@
 *.code-workspace
 client/public/resources/
 Services/Portfolio/operation_data
+SalesChat/contact_detector.ipynb

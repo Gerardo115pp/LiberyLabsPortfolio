@@ -3,6 +3,8 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	app_config "libery_labs_portfolio/Config"
+	"libery_labs_portfolio/helpers"
 	"libery_labs_portfolio/models"
 	"libery_labs_portfolio/repository"
 	"libery_labs_portfolio/server"
@@ -74,6 +76,8 @@ func postChatHandler(response http.ResponseWriter, request *http.Request) {
 
 	echo.Echo(echo.GreenBG, "posting to chat ID: "+claim_data.ChatID)
 
+	// ---- IDENTIFYING CHAT ----
+
 	if claim_data.ChatID == "" {
 		response.WriteHeader(http.StatusBadRequest)
 		return
@@ -86,6 +90,7 @@ func postChatHandler(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
+	// ---- READING REQUEST DATA ----
 	var request_data map[string]string = make(map[string]string)
 
 	err = json.NewDecoder(request.Body).Decode(&request_data)
@@ -94,18 +99,43 @@ func postChatHandler(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 
+	// ---- READING MESSAGE DATA ----
 	var message_content string = request_data["content"]
+	if helpers.TokenCount(message_content) > float64(app_config.SALES_MAX_USER_TOKENS) {
+		echo.Echo(echo.RedFG, fmt.Sprintf("Message too long: %f tokens for a limit of %d", helpers.TokenCount(message_content), app_config.SALES_MAX_USER_TOKENS))
+		helpers.WriteRejection(response, 413, "message-too-long")
+		return
+	}
 
-	chat_room.AddMessage(message_content, true)
+	user_message := chat_room.AddMessage(message_content, true)
 
-	err = repository.SaveChat(chat_room)
+	// ---- GENERATING ASSISTANT RESPONSE ----
+	if len(chat_room.Messages) > app_config.SALES_MAX_CHAT_SIZE {
+		echo.Echo(echo.RedFG, fmt.Sprintf("Chat message count reached limits: %d messages for a limit of %d", len(chat_room.Messages), app_config.SALES_MAX_CHAT_SIZE))
+		helpers.WriteRejection(response, 429, "too-many-messages")
+		return
+	}
+
+	has_contact_info, err := workflows.DetectContactInfo(user_message)
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
+	if has_contact_info {
+		echo.Echo(echo.GreenFG, "Contact info detected")
+		response.WriteHeader(http.StatusOK)
+		return
+	}
+
 	var new_assistant_message *models.ChatMessage
 	new_assistant_message, err = workflows.SalesChatWithGPT3Turbo(chat_room) // workflows.SalesChatWithGPT3 uses AddMessage internally, don't duplicate it
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	err = repository.SaveChat(chat_room)
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
 		return

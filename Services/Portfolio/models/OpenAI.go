@@ -36,6 +36,28 @@ type GPT3TurboRequest struct {
 	Messages    []*GPT3TurboMessage `json:"messages"`
 }
 
+type AdaEmbedRequest struct {
+	Input []string `json:"input"`
+	Model string   `json:"model"`
+}
+
+type AdaEmbedResponseData struct {
+	Object    string    `json:"object"`
+	Index     int       `json:"index"`
+	Embedding []float64 `json:"embedding"`
+}
+
+type AdaEmbedResponseUsage struct {
+	PromptTokens int `json:"prompt_tokens"`
+	TotalTokens  int `json:"total_tokens"`
+}
+
+type AdaEmbedResponse struct {
+	Object string                  `json:"object"`
+	Data   []*AdaEmbedResponseData `json:"data"`
+	Usage  AdaEmbedResponseUsage   `json:"usage"`
+}
+
 func CreateGPT3TurboRequest() *GPT3TurboRequest {
 	var new_request *GPT3TurboRequest = new(GPT3TurboRequest)
 	new_request.MaxTokens = 100
@@ -46,6 +68,14 @@ func CreateGPT3TurboRequest() *GPT3TurboRequest {
 	new_request.PresencePen = 0
 	new_request.FrequencyPe = 0
 	new_request.Messages = make([]*GPT3TurboMessage, 0)
+
+	return new_request
+}
+
+func CreateAdaEmbedRequest() *AdaEmbedRequest {
+	var new_request *AdaEmbedRequest = new(AdaEmbedRequest)
+	new_request.Model = "text-embedding-ada-002"
+	new_request.Input = make([]string, 0)
 
 	return new_request
 }

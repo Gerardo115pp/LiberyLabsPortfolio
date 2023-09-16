@@ -2,6 +2,9 @@ package models
 
 import "time"
 
+// TODO: Add a user-hidde options for massages that should be used for assistant context only
+// TODO: Add a assistant-hidden option for massages that provide no value to the assistant(like a Greeting to the user) so the system should avoid sending them to OpenAI to reduce costs
+
 type ChatMessage struct {
 	Order    int    `json:"order"`
 	Author   string `json:"author"`

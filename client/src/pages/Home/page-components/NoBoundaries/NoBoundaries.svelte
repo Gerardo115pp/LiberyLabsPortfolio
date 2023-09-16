@@ -37,7 +37,6 @@
 <article 
     use:viewport 
     on:viewportEnter={() => on_viewport = true} 
-    on:viewportLeave={() =>  on_viewport = false}
     id="no-boundaries-wrapper" class="section-content-layout"
 >
     {#if on_viewport}

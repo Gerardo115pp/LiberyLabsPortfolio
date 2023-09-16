@@ -20,7 +20,7 @@ func NewChatDatabase() (ChatDatabase, error) {
 	new_db := new(ChatDatabase)
 
 	new_db.chats_buffer = make(map[string]*models.ChatRoom)
-	new_db.chats_buffer_size = app_config.MAX_CHAT_SIZE
+	new_db.chats_buffer_size = app_config.SALES_MAX_CHAT_SIZE
 
 	return *new_db, nil
 }

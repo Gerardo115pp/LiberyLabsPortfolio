@@ -23,8 +23,6 @@ var TELEGRAM_CHAT_ID int64 = 0
 
 // -------- Asisstant chats config --------
 var CHAT_CLAIM_COOKIE_NAME string = "portfolio_libery_chat_token"
-var MAX_CHAT_SIZE int = 10
-var custom_max_chat_size string = os.Getenv("MAX_CHAT_SIZE")
 var CHATS_DATA_PATH string = fmt.Sprintf("%s/chats", OPERATION_DATA_PATH)
 
 // ------- Settings config -------
@@ -32,7 +30,11 @@ var SALES_CHAT_INSTRUCTION string
 var SALES_CHAT_ENABLED bool
 var SALES_CHAT_TEMPERATURE float64 = 1.2
 var SALES_CHAT_TOP_P float64 = 1.0
-var SALES_CHAT_MAX_TOKENS int = 100
+var SALES_CHAT_ASSISTANT_MAX_TOKENS int = 100 // Limit of the assistants response
+var SALES_MAX_USER_TOKENS int = 100           // Limit of tokens per user message
+var SALES_MAX_CHAT_SIZE int = 10              // Max number of messages in a single chat
+var CONTACT_INFO_EMBEDDING *[]float64
+var CONTACT_SIMILARITY_THRESHOLD float64 = 0.8
 
 func VerifyConfig() {
 
@@ -67,13 +69,6 @@ func VerifyConfig() {
 		panic(err)
 	}
 
-	if custom_max_chat_size != "" {
-		MAX_CHAT_SIZE, err = strconv.Atoi(custom_max_chat_size)
-		if err != nil {
-			echo.EchoFatal(err)
-		}
-	}
-
 	PROJECTS_DATA_PATH = fmt.Sprintf("%s/%s", OPERATION_DATA_PATH, PROJECTS_DATA_PATH)
 
 	err = loadSettings()
@@ -87,6 +82,7 @@ func loadSettings() error {
 	var settings_path string = fmt.Sprintf("%s/settings.json", OPERATION_DATA_PATH)
 	var err error
 
+	// ---- READ SETTINGS ----
 	if _, err = os.Stat(settings_path); os.IsNotExist(err) {
 		return err
 	}
@@ -105,13 +101,17 @@ func loadSettings() error {
 		return err
 	}
 
-	defer func() {
-		if r := recover(); r != nil {
-			echo.EchoFatal(fmt.Errorf("Error loading settings: %s", r))
-		}
-	}()
+	// ---- END READ SETTINGS ----
+
+	// defer func() {
+	// 	if r := recover(); r != nil {
+	// 		echo.EchoFatal(fmt.Errorf("Error loading settings: %s", r))
+	// 	}
+	// }()
 
 	var sales_chat_settings map[string]interface{} = settings["sales_chat"].(map[string]interface{})
+
+	// ---- PARSING SETTINGS ----
 
 	SALES_CHAT_INSTRUCTION = sales_chat_settings["instruction_message"].(string)
 	if SALES_CHAT_INSTRUCTION == "" {
@@ -132,7 +132,34 @@ func loadSettings() error {
 	}
 
 	if sales_chat_settings["max_tokens"] != nil {
-		SALES_CHAT_MAX_TOKENS = int(sales_chat_settings["max_tokens"].(float64))
+		SALES_CHAT_ASSISTANT_MAX_TOKENS = int(sales_chat_settings["max_tokens"].(float64))
+	}
+
+	if sales_chat_settings["max_chat_size"] == nil {
+		return fmt.Errorf("max_chat_size is required")
+	}
+	SALES_MAX_CHAT_SIZE = int(sales_chat_settings["max_chat_size"].(float64))
+
+	if sales_chat_settings["max_tokens_user_message"] == nil {
+		return fmt.Errorf("max_tokens_user_message is required")
+	}
+	SALES_MAX_USER_TOKENS = int(sales_chat_settings["max_tokens_user_message"].(float64))
+
+	var embeddings map[string]interface{} = settings["embeddings"].(map[string]interface{})
+
+	if _, exists := embeddings["contact_info_embedding"]; !exists {
+		return fmt.Errorf("contact_info embedding is required")
+	}
+
+	contact_embed := embeddings["contact_info_embedding"].([]interface{})
+	CONTACT_INFO_EMBEDDING = new([]float64)
+
+	for _, value := range contact_embed {
+		*CONTACT_INFO_EMBEDDING = append(*CONTACT_INFO_EMBEDDING, value.(float64))
+	}
+
+	if sales_chat_settings["contact_similarity_threshold"] != nil {
+		CONTACT_SIMILARITY_THRESHOLD = sales_chat_settings["contact_similarity_threshold"].(float64)
 	}
 
 	return nil

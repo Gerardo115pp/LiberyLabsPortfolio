@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"libery_labs_portfolio/helpers"
 	"libery_labs_portfolio/models"
 	"libery_labs_portfolio/repository"
 	"net/http"
@@ -29,12 +30,45 @@ func CreateNewProjectIdea() (string, error) {
 	return project_idea, err
 }
 
+func DetectContactInfo(message *models.ChatMessage) (bool, error) {
+	var looks_like_contact_info bool = false
+
+	looks_like_contact_info = helpers.MessageLooksLikeContactInfo(message.Content)
+	if !looks_like_contact_info {
+		return false, nil
+	}
+
+	echo.Echo(echo.GreenFG, fmt.Sprintf("Message looks like contact info, checking.."))
+
+	var embedding_request *models.AdaEmbedRequest = models.CreateAdaEmbedRequest()
+
+	embedding_request.Input = []string{message.Content}
+
+	response, err := requestAdaEmbedding(embedding_request)
+	if err != nil {
+		return false, err
+	}
+
+	var contact_info_embedding *[]float64 = &response.Data[0].Embedding
+
+	var cosine_similarity float64
+
+	cosine_similarity, err = helpers.ComputeCosineSimilarity(*app_config.CONTACT_INFO_EMBEDDING, *contact_info_embedding)
+	if err != nil {
+		return false, err
+	}
+
+	echo.Echo(echo.GreenFG, fmt.Sprintf("Cosine similarity: %f", cosine_similarity))
+
+	return cosine_similarity >= app_config.CONTACT_SIMILARITY_THRESHOLD, nil
+}
+
 func SalesChatWithGPT3Turbo(chat_room *models.ChatRoom) (*models.ChatMessage, error) {
 	var chat_request *models.GPT3TurboRequest = models.CreateGPT3TurboRequest()
 
 	chat_request.Temperature = app_config.SALES_CHAT_TEMPERATURE
 	chat_request.TopP = app_config.SALES_CHAT_TOP_P
-	chat_request.MaxTokens = app_config.SALES_CHAT_MAX_TOKENS
+	chat_request.MaxTokens = app_config.SALES_CHAT_ASSISTANT_MAX_TOKENS
 
 	var system_message *models.GPT3TurboMessage = new(models.GPT3TurboMessage)
 
@@ -105,6 +139,44 @@ func requestGPT3Turbo(request *models.GPT3TurboRequest) (*models.GPT3TurboRespon
 	return parseGPT3TurboResponse(response)
 }
 
+func requestAdaEmbedding(request *models.AdaEmbedRequest) (*models.AdaEmbedResponse, error) {
+	var request_body []byte
+	var err error
+
+	request_body, err = json.Marshal(request)
+	if err != nil {
+		echo.Echo(echo.RedFG, fmt.Sprintf("Error marshalling request body: %s", err.Error()))
+		return nil, err
+	}
+
+	body := bytes.NewBuffer(request_body)
+	http_request, err := http.NewRequest("POST", "https://api.openai.com/v1/embeddings", body)
+
+	http_request.Header.Add("Content-Type", "application/json")
+	http_request.Header.Add("Authorization", fmt.Sprintf("Bearer %s", app_config.OPENAI_API_KEY))
+
+	http_client := http.Client{}
+	response, err := http_client.Do(http_request)
+	if err != nil {
+		echo.Echo(echo.RedFG, fmt.Sprintf("Error sending Ada-002 request: %s", err.Error()))
+		return nil, err
+	}
+
+	if response.StatusCode < 200 || response.StatusCode > 299 {
+		echo.Echo(echo.RedFG, fmt.Sprintf("Error sending Ada-002 request, status code: %d", response.StatusCode))
+		body_content, err := ioutil.ReadAll(response.Body)
+		if err != nil {
+			echo.Echo(echo.RedFG, fmt.Sprintf("Error reading response body: %s", err.Error()))
+			return nil, err
+		}
+		echo.Echo(echo.RedFG, fmt.Sprintf("Reason: %s", string(body_content)))
+		echo.Echo(echo.RedFG, fmt.Sprintf("Request body: %s", string(request_body)))
+		return nil, fmt.Errorf("Error sending Ada-002 request, status code: %d", response.StatusCode)
+	}
+
+	return parseAdaEmbedResponse(response)
+}
+
 func requestGPT3TurboIdea(prompt string) (string, error) {
 	request_data := map[string]interface{}{
 		"max_tokens":  40,
@@ -164,6 +236,17 @@ func requestGPT3TurboIdea(prompt string) (string, error) {
 
 func parseGPT3TurboResponse(response *http.Response) (*models.GPT3TurboResponse, error) {
 	var response_data *models.GPT3TurboResponse = new(models.GPT3TurboResponse)
+	err := json.NewDecoder(response.Body).Decode(&response_data)
+	if err != nil {
+		echo.Echo(echo.RedFG, fmt.Sprintf("Error decoding response: %s", err.Error()))
+		return nil, err
+	}
+
+	return response_data, nil
+}
+
+func parseAdaEmbedResponse(response *http.Response) (*models.AdaEmbedResponse, error) {
+	var response_data *models.AdaEmbedResponse = new(models.AdaEmbedResponse)
 	err := json.NewDecoder(response.Body).Decode(&response_data)
 	if err != nil {
 		echo.Echo(echo.RedFG, fmt.Sprintf("Error decoding response: %s", err.Error()))
