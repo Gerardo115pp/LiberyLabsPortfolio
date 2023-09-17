@@ -6,6 +6,7 @@
     import ContactForm from '@components/Popups/ContactForm.svelte';
     import { onMount } from 'svelte';
     import { defineLayout, layout_properties } from '@stores/layout';
+    import { recaptcha_pk, has_recaptcha_loaded } from '@stores/env';
     
     const ENABLE_DEBUG_ON_MOBILE = false;
     if (ENABLE_DEBUG_ON_MOBILE && layout_properties.IS_MOBILE) {
@@ -14,13 +15,26 @@
 
     onMount(() => {
         defineLayout();
-
+        loadRecaptcha();
     })
+
     function debugOnMobile() { 
         let script = document.createElement('script');
         script.src="https://cdn.jsdelivr.net/npm/eruda"; 
         document.body.append(script); 
         script.onload = () => eruda.init();
+    }
+
+    function loadRecaptcha() {
+        let script = document.createElement('script');
+        script.src=`https://www.google.com/recaptcha/api.js?render=${recaptcha_pk}`; 
+        document.body.append(script); 
+
+        script.onload = () => {
+            console.log('Recaptcha loaded');
+            console.log(grecaptcha);
+            has_recaptcha_loaded.set(true);
+        }
     }
 
 </script>
@@ -150,6 +164,7 @@
             --font-size-4: calc(var(--vspacing-3) * 0.71875); /* 23px */
 
             --font-size-p: var(--font-size-3);
+            --font-size-fineprint: calc(var(--font-size-1) * 0.7);
 
             --font-size-h1: calc(var(--vspacing-5) * 0.875); /* 112px */
             --font-size-h2: calc(var(--vspacing-5) * 0.4375);
@@ -229,6 +244,10 @@
 
     :global(body::-webkit-scrollbar) {
         display: none;
+    }
+
+    :global(.grecaptcha-badge) {
+        visibility: hidden !important;
     }
 
     :global(body) {

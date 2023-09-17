@@ -20,6 +20,7 @@ var ENABLE_IDEA_GENERATION bool = os.Getenv("ENABLE_IDEA_GENERATION") == "1"
 var TELEGRAM_API_KEY string = os.Getenv("TELEGRAM_API_KEY")
 var chat_id string = os.Getenv("TELEGRAM_CHAT_ID")
 var TELEGRAM_CHAT_ID int64 = 0
+var RECAPTCHA_SK string = os.Getenv("RECAPTCHA_SK")
 
 // -------- Asisstant chats config --------
 var CHAT_CLAIM_COOKIE_NAME string = "portfolio_libery_chat_token"
@@ -67,6 +68,10 @@ func VerifyConfig() {
 	TELEGRAM_CHAT_ID, err = strconv.ParseInt(chat_id, 10, 64)
 	if err != nil {
 		panic(err)
+	}
+
+	if RECAPTCHA_SK == "" {
+		panic("RECAPTCHA_SK environment variable is required")
 	}
 
 	PROJECTS_DATA_PATH = fmt.Sprintf("%s/%s", OPERATION_DATA_PATH, PROJECTS_DATA_PATH)

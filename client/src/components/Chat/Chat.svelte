@@ -58,8 +58,8 @@
 
 <style>
     #chat-component {
-        --status-bar-height: 7%;
-        --writer-height: 11%;
+        --status-bar-height: 6%;
+        --writer-height: 14%;
         --chat-content-height: calc(100% - calc(var(--status-bar-height) + var(--writer-height)));
 
         position: relative;

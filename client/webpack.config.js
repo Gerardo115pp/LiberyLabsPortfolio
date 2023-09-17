@@ -89,11 +89,13 @@ module.exports = (env, argv) => {
 	const isProd = argv.mode === 'production';
 	const build_config = {
 		PORTFOLIO_SERVICE: process.env.PORTFOLIO_SERVICE,
+		RECAPTCHA_PK: process.env.RECAPTCHA_PK,
 	}
 
 	config.plugins.push(
 		new webpack.DefinePlugin({
-			"PORTFOLIO_SERVICE": JSON.stringify(build_config.PORTFOLIO_SERVICE)
+			"PORTFOLIO_SERVICE": JSON.stringify(build_config.PORTFOLIO_SERVICE),
+			"RECAPTCHA_PK": JSON.stringify(build_config.RECAPTCHA_PK)
 		})
 	);
 

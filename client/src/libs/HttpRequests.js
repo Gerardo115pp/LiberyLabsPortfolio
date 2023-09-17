@@ -248,3 +248,37 @@ export class PostChatMessageRequest {
         });
     }
 }
+
+export class GetRecaptchaVerificationRequest {
+    constructor(token) {
+        this.token = token;
+    }
+
+    toJson = attributesToJson.bind(this);
+
+    do = (on_success, on_error) => {
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        const request = new Request(`${portfolio_service}/is-user-human?token=${this.token}`, {
+            method: 'GET',
+            headers: headers,
+            credentials: 'same-origin'
+        });
+
+        fetch(request).then(promise => {
+            if (promise.status >= 200 && promise.status < 300) {
+                promise.json().then(data => {
+                    const { IsHuman:is_human } = data;
+                    if(is_human) {
+                        on_success();
+                    } else {
+                        on_error(-1);
+                    }
+                });
+            } else {
+                on_error(promise.status);
+            }
+        });
+    }
+}
