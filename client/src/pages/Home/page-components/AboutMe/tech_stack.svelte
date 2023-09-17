@@ -1,8 +1,10 @@
 <script>
+    import viewport from "@components/viewport_actions/useViewportActions";
     import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
     import Bracket from "@components/UI/Bracket.svelte";
+    import { onMount, onDestroy } from "svelte";
 
-    const teck_stack = [
+    const tech_stack = [
         "svelte",
         "nginx",
         "kubernetes",
@@ -41,19 +43,84 @@
         "Discord Bots"
     ].slice(0, 36);
 
+    let random_tech_items = [];
+
+    
+    /*----------  Animation settings  ----------*/
+    const animation_round_length = 4500; // in ms
+    const items_transition_duration = animation_round_length * .55; 
+    let animation_enabled = false;
+
+    let animator_timer;
+    
+
+    onMount(() => {
+        random_tech_items = selectRandomTechItems(tech_stack);
+
+        animator_timer = window.setInterval(() => {
+            if (!animation_enabled) return;
+
+            random_tech_items = selectRandomTechItems(tech_stack);
+
+        }, animation_round_length);
+    })
+
+    onDestroy(() => {
+        window.clearInterval(animator_timer);
+    })
+
+    /**
+     * @description Selects a item from each of the 6 columns of the tech stack. Mainly used for animations.
+     * @param {string[]} tech_stack
+     * @returns {int[]} Array of 6 random numbers in ranges 0-5, 6-11, 12-17, 18-23, 24-29, 30-35
+    */
+    const selectRandomTechItems = tech_stack => {
+
+        const columns = tech_stack.length / 6;
+
+        /** @type {int[]} */
+        const random_teck_items = [];
+        const occupied_positions = new Set();
+
+        for (let h = 0; h < columns; h++) {
+            let random_number = Math.floor(Math.random() * 6) + (h * 6);
+            let position = random_number%columns;
+
+            if (occupied_positions.has(position)) {
+                random_number = h * columns; // sets random_number%columns to be 0
+                random_number -= 1; // so the loop sets it back to 0
+                do {
+                    random_number++;
+                    position = random_number%columns;
+                } while (occupied_positions.has(position) && random_number < ((h + 1) * columns));
+            }
+
+            random_teck_items.push(random_number);
+            occupied_positions.add(position);
+        }
+
+        return random_teck_items;
+    }
+
 </script>
 
 <article id="tech-stack-content" class="section-content-layout">
     <div class="section-headline-wrapper-reverse">
         <LiberyHeadline headline_text="My Arsenal" headline_color="var(--main)" text_transform="capitalize"/>
     </div>
-    <div id="tsc-bottom-content" >
+    <div id="tsc-bottom-content" on:viewportEnter={() => animation_enabled = true} on:viewportLeave={() => animation_enabled = false} use:viewport>
         <div class="bracket-wrapper">
             <Bracket/>
         </div>
         <ul id="teck-stack-container">
-            {#each teck_stack as ti}
-                <li class="teck-stack-item">{ti}</li>
+            {#each tech_stack as ti, k}
+                <li 
+                    data-item-index={k}
+                    class="teck-stack-item"
+                    class:ts-item-selected={random_tech_items.includes(k)}
+                    style:animation-duration="{animation_round_length* .87}ms"
+                    style:animation-delay={random_tech_items.includes(k) ? `${Math.random() * (animation_round_length * .13)}ms` : `${Math.random() * (animation_round_length * .73)}ms`} 
+                >{ti}</li>
             {/each}
         </ul>
         <div class="bracket-wrapper">
@@ -114,15 +181,70 @@
         /* padding-inline-start: 0 !important; */
     }
 
+    @keyframes LightUp {
+        0% {
+            color: var(--accent-8);
+        }
+        10% {
+            color: var(--accent-7);
+        }
+        22% {
+            color: var(--accent-3);
+            filter: blur(.6px);
+        }
+        70% {
+            color: var(--accent-4);
+            filter: blur(0px);
+        }
+        100% {
+            color: var(--accent-8);
+        }
+    }
+
+    @keyframes LightGently {
+        0% {
+            filter: brightness(1.2);
+        }
+        30% {
+            filter: brightness(1.22);
+        }
+        45% {
+            filter: brightness(1.4);
+        }
+        57% {
+            filter: brightness(1.22);
+        }
+        65% {
+            filter: brightness(1.2);
+        }
+        78% {
+            filter: brightness(1.22);
+        }
+        100% {
+            filter: brightness(1.2);
+        }
+    }
+
     .teck-stack-item {
         white-space: nowrap;
-        font-family: var(--font-titles);
+        /* font-family: var(--font-titles); */
+        /* font-family: var(--font-read); */
+        font-family: var(--font-decorative);
         color: var(--accent-8);
         font-size: var(--font-size-h3);
         text-transform: capitalize;
         line-height: 1;
         font-weight: lighter;
         text-align: center;
+        animation-name: LightGently;
+        animation-iteration-count: infinite;
+    }
+
+    :global(.teck-stack-item.ts-item-selected) {
+        animation-name: LightUp;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+        /* font-weight: bold; */
     }
 
     
