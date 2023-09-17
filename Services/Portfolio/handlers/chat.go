@@ -10,6 +10,7 @@ import (
 	"libery_labs_portfolio/server"
 	"libery_labs_portfolio/workflows"
 	"net/http"
+	"time"
 
 	"github.com/Gerardo115pp/patriots_lib/echo"
 )
@@ -123,8 +124,7 @@ func postChatHandler(response http.ResponseWriter, request *http.Request) {
 	}
 
 	if has_contact_info {
-		echo.Echo(echo.GreenFG, "Contact info detected")
-		response.WriteHeader(http.StatusOK)
+		handleContactInfo(chat_room, response, request)
 		return
 	}
 
@@ -151,6 +151,51 @@ func postChatHandler(response http.ResponseWriter, request *http.Request) {
 
 	return
 }
+
+func handleContactInfo(chat_room *models.ChatRoom, response http.ResponseWriter, request *http.Request) {
+	echo.Echo(echo.GreenFG, "Contact info detected")
+
+	conversation_end_message := chat_room.AddMessage("Thank you for your contact information, Gerardo will get back to you as soon as possible.", false)
+
+	err := repository.SaveChat(chat_room)
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	response.Header().Set("Content-Type", "application/json")
+	response.WriteHeader(http.StatusOK)
+	json.NewEncoder(response).Encode(conversation_end_message)
+
+	go func() {
+		localtime, err := time.LoadLocation("America/Mexico_City")
+		if err != nil {
+			echo.Echo(echo.RedFG, fmt.Sprintf("Error loading timezone: %s", err.Error()))
+			return
+		}
+
+		beginning_message := fmt.Sprintf("New contact info received on %s", time.Now().In(localtime).Format("2006-01-02 15:04:05"))
+		err = workflows.SendTelegramMessage(beginning_message)
+		if err != nil {
+			echo.Echo(echo.RedFG, fmt.Sprintf("Error sending telegram message: %s", err.Error()))
+			return
+		}
+
+		for _, message := range chat_room.Messages {
+			telegram_message := fmt.Sprintf("%s:\n\n %s", message.Author, message.Content)
+			err = workflows.SendTelegramMessage(telegram_message)
+			if err != nil {
+				echo.Echo(echo.RedFG, fmt.Sprintf("Error sending telegram message: %s", err.Error()))
+				return
+			}
+		}
+
+		echo.Echo(echo.GreenFG, "Contact info sent to telegram")
+	}()
+
+	return
+}
+
 func patchChatHandler(response http.ResponseWriter, request *http.Request) {
 	response.WriteHeader(http.StatusMethodNotAllowed)
 	return
