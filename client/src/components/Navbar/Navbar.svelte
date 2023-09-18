@@ -44,7 +44,7 @@
     <div id="lln-content">
         <div id="lln-right-content">
             <div class="lln-rc-burger-wrapper">
-                <BurgerBtn on:click={() => menu_visible.set(!$menu_visible)} />
+                <BurgerBtn on:click={() => menu_visible.set(!$menu_visible)} is_opened={menu_visible} />
             </div>
             {#if !$hero_visible}
                 <div in:fade={{duration: 300}} id="lln-main-logo-wrapper">
