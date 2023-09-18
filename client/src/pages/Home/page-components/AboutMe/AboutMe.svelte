@@ -1,53 +1,41 @@
 <script>
+    import viewport from "@components/viewport_actions/useViewportActions";
     import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
-    import TaggedText from "@components/Wrappers/TaggedText.svelte";
+    import { SECTIONS as HOME_SECTIONS } from "@pages/Home/sections";
     import ImagePortrait from "@components/UI/ImagePortrait.svelte";
     import LineRect from "@components/UI/LineRect.svelte";
-    import TechStack from "./tech_stack.svelte";
-    import AnchorsOne from "@components/UI/AnchorsOne.svelte";
     import { layout_properties } from "@stores/layout";
-    import { SECTIONS as HOME_SECTIONS } from "@pages/Home/sections";
+    import TechStack from "./tech_stack.svelte";
+    import AInfoArea from "./AInfoArea.svelte";
+    import { fly } from "svelte/transition";
     
+    let is_component_visible = false;
+    $: console.log(is_component_visible);
+
+    let animation_delay_increment = 300;
+    let animation_duration = 800;
+
 </script>
 
 
 <div id="about-me-section-wrapper" aria-hidden="true">
     <article id="about-me-content" class="section-content-layout">
-        <div class="section-headline-wrapper">
+        <div class="section-headline-wrapper" on:viewportEnter={() => is_component_visible = true} use:viewport>
             <LiberyHeadline headline_text="Myself" text_transform="none" headline_color="var(--main)"/>
         </div>
         <div data-scroll-section={HOME_SECTIONS.ABOUT} id="bio-wrapper">
             <div id="picture-area" >
                 <ImagePortrait image_src="resources/images/about-me-image.png" alt="Lalo's portrait" />
             </div>
-            <div id="text-area" style:position="relative">
-                <div id="text-area-anchor-wrapper" >
-                    <AnchorsOne/>
+            <AInfoArea visible={is_component_visible} {animation_delay_increment}/>
+        </div>
+        {#if is_component_visible}
+            <div in:fly={{x: 1500, duration: animation_duration, delay: animation_delay_increment*4}} id="line-rect" style:position="relative">
+                <div id="line-rect-wrapper">
+                    <LineRect/>
                 </div>
-                <LiberyHeadline 
-                    vspacing="var(--vspacing-2)" 
-                    headline_tag="h2" 
-                    headline_text="Hi, I,m Lalo!" 
-                    extra_props='role=”<span>passionate-engineer</span>”'
-                    text_transform="capitalize"
-                />
-                <TaggedText tag_name="p">
-                    <p class="bio-block">
-                        Welcome! My name is Lalo, I'm a fullstack web engineer based in Jalisco, Mexico. I'm passionate about turning ideas into reality and taking businesses to the next level. I understand front-end, backend and I'm in love with Linux, Docker and K8S, i know exactly what how each of these technologies a must be combined to give <strong>your business the scalability, reliability and efficiency it needs to grow and succeed</strong>.
-                    </p>
-                </TaggedText>
-                <TaggedText tag_name="p">
-                    <p class="bio-block">
-                        Ever since i was a child i always loved building things, and getting new tools on my toolkit to achieve bigger and better things. Aside from coding, my other passions are carpentry, wood carving, 3D modeling, printing and painting miniatures. For me the only thing better than building things is helping others through something i built.
-                    </p>
-                </TaggedText>
             </div>
-        </div>
-        <div id="line-rect" style:position="relative">
-            <div id="line-rect-wrapper">
-                <LineRect/>
-            </div>
-        </div>
+        {/if}
     </article>
     <TechStack/>
 </div>
@@ -93,24 +81,7 @@
         }
 
         
-        /*----------  Anchor  ----------*/
-        
-            #text-area-anchor-wrapper {
-                position: absolute;
-                top: -20%;
-                left: -23%;
-                height: 0px;
-            }
 
-        
-        /*----------  End of Anchor  ----------*/
-     
-        #text-area {
-            grid-column: 6 / span 7;
-            display: flex;
-            flex-direction: column;
-            row-gap: var(--vspacing-3);
-        }
     /*=====  End of About me content  ======*/
 
     
@@ -152,13 +123,6 @@
                 display: flex;
                 flex-direction: column;
                 row-gap: var(--vspacing-3);
-            }
-
-            #text-area-anchor-wrapper {
-                position: static;
-                width: max-content;
-                height: max-content
-                /* transform: translateX(-55%); */
             }
 
             #line-rect {
