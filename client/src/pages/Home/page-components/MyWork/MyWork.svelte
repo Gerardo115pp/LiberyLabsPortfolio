@@ -68,7 +68,7 @@
 {#if projects.length > 0}     
     <section id="my-work-section" class="section-content-layout" style:display="flex">
         <div class="section-headline-wrapper" style:grid-column="1 / -1">
-            <LiberyHeadline headline_text="Recent work" headline_color="var(--main)" text_transform="capitalize"/>
+            <LiberyHeadline animation_delay={300} animation_duration={800} headline_text="Recent work" headline_color="var(--main)" text_transform="capitalize"/>
         </div>
         <div id="projects-carousel-component" class="full-vw">
             <ProjectsCarousel on:selectedProject={handleSelectedProject}  {projects} />

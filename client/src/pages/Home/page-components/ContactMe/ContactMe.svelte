@@ -59,7 +59,9 @@
     </div>
     <article id="cms-contact-cta">
         <div id="cms-cc-top-content">
-            <LiberyHeadline  
+            <LiberyHeadline 
+                animation_delay={300}
+                animation_duration={1000}
                 headline_color="var(--grey-1)"
                 headline_text="Like what you see?"
                 text_transform="none"

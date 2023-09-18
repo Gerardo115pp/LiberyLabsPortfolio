@@ -21,7 +21,7 @@
 <div id="about-me-section-wrapper" aria-hidden="true">
     <article id="about-me-content" class="section-content-layout">
         <div class="section-headline-wrapper" on:viewportEnter={() => is_component_visible = true} use:viewport>
-            <LiberyHeadline headline_text="Myself" text_transform="none" headline_color="var(--main)"/>
+            <LiberyHeadline animated={false} headline_text="Myself" text_transform="none" headline_color="var(--main)"/>
         </div>
         <div data-scroll-section={HOME_SECTIONS.ABOUT} id="bio-wrapper">
             <div id="picture-area" >

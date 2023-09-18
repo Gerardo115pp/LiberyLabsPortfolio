@@ -9,7 +9,7 @@
     <div id="acs-section-content" class="section-content-layout" >
         <div class:hide={layout_properties.IS_MOBILE} id="acs-information">
             <header id="acs-info-header">
-                <LiberyHeadline headline_text="Ask Away" forced_font_size="var(--font-size-h2)" headline_color="var(--grey-1)"/>
+                <LiberyHeadline animation_delay={500} animation_duration={1000} headline_text="Ask Away" forced_font_size="var(--font-size-h2)" headline_color="var(--grey-1)"/>
             </header>
             <p id="acs-subheadline">
                 Clear Doubts, Discover Possibilities with Valaria powered by ChatGPT.

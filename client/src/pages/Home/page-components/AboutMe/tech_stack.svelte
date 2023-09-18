@@ -107,7 +107,7 @@
 
 <article id="tech-stack-content" class="section-content-layout">
     <div class="section-headline-wrapper-reverse">
-        <LiberyHeadline headline_text="My Arsenal" headline_color="var(--main)" text_transform="capitalize"/>
+        <LiberyHeadline animation_delay={300} animation_duration={600} headline_text="My Arsenal" headline_color="var(--main)" text_transform="capitalize"/>
     </div>
     <div id="tsc-bottom-content" on:viewportEnter={() => animation_enabled = true} on:viewportLeave={() => animation_enabled = false} use:viewport>
         <div class="bracket-wrapper">
