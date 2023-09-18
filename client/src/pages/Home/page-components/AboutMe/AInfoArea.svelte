@@ -11,8 +11,8 @@
 
 </script>
 
-{#if visible}
-    <div id="text-area" style:position="relative">
+{#key visible}
+    <div style:visibility={visible ? "visible" : "hidden"} id="text-area" style:position="relative">
         <div id="text-area-anchor-wrapper" >
             <AnchorsOne animation_delay={(animation_duration*1.2)+animation_delay_increment}/>
         </div>
@@ -40,20 +40,20 @@
             </TaggedText>
         </div>
     </div>
-{/if}
+{/key}
 
 <style>
-            /*----------  Anchor  ----------*/
+    /*----------  Anchor  ----------*/
         
-            #text-area-anchor-wrapper {
-                position: absolute;
-                top: -20%;
-                left: -23%;
-                height: 0px;
-            }
+        #text-area-anchor-wrapper {
+            position: absolute;
+            top: -20%;
+            left: -23%;
+            height: 0px;
+        }
 
-        
-        /*----------  End of Anchor  ----------*/
+    
+    /*----------  End of Anchor  ----------*/
      
         #text-area {
             grid-column: 6 / span 7;
