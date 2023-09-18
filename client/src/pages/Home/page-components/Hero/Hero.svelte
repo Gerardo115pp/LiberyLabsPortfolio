@@ -6,6 +6,7 @@
     import { layout_properties } from "@stores/layout";
     import { writable } from "svelte/store";
     import MainLogo from "@components/UI/MainLogo.svelte";
+    import { SECTIONS as HOME_SECTIONS, scrollToSection } from "@pages/Home/sections";
 
     const hero_content_height = writable(0);
     
@@ -26,7 +27,7 @@
 
 </script>
 
-<article id="hero-content" class="section-content-layout"  style:position="relative" class:debug={false}>
+<article data-scroll-section="{HOME_SECTIONS.HERO}" id="hero-content" class="section-content-layout"  style:position="relative" class:debug={false}>
     <div class="background-wrapper full-vw">
         <LineSymbolsBg
             line_count={layout_properties.IS_MOBILE ? 23 : 10}
@@ -55,7 +56,7 @@
         </div>
         <div id="cta-wrapper" class:hide-on-mobile={layout_properties.IS_MOBILE}>
             <div class="button-1-wrapper">
-                <button class="button-1">Check my work</button>
+                <button on:click={() => scrollToSection(HOME_SECTIONS.PORTFOLIO)} class="button-1">Check my work</button>
             </div>
         </div>
     </div>

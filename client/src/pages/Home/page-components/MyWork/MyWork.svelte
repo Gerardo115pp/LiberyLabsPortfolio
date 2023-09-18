@@ -1,8 +1,8 @@
 <script>
-    import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
+    import { getAllProjects, ProjectListItem, Project, getProjectByID } from "@models/Project";
     import ProjectsCarousel from "./sub-components/ProjectsCarousel.svelte";
     import ProjectPreviewer from "./sub-components/ProjectPreviewer.svelte";
-    import { getAllProjects, ProjectListItem, Project, getProjectByID } from "@models/Project";
+    import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
     import { onMount } from "svelte";
 
     /**

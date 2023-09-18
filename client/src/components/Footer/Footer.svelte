@@ -1,6 +1,7 @@
 <script>
   import MainLogo from "@components/UI/MainLogo.svelte";
   import LiberyBorderStar from "@components/UI/LiberyBorderStar.svelte";
+  import { SECTIONS as HOME_SECTIONS } from "@pages/Home/sections";
 
   const home_links = [
     {
@@ -34,7 +35,7 @@
   ]
 </script>
 
-<footer id="libery-labs-footer" >
+<footer data-scroll-section={HOME_SECTIONS.FOOTER} id="libery-labs-footer" >
     <div id="main-icon-wrapper">
       <MainLogo
         subheadline_color="var(--grey-3)"

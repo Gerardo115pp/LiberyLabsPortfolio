@@ -1,12 +1,13 @@
 <script>
     import ServicePointer from "./ServicePointer.svelte";
+    import { SECTIONS as HOME_SECTIONS } from "@pages/Home/sections";
 
     export let service_description;
     export let point_direction;
 
 </script>
 
-<div id="service-descriptor-wrapper" style:position="relative">
+<div data-scroll-section={HOME_SECTIONS.SERVICES} id="service-descriptor-wrapper" style:position="relative">
     <ServicePointer {point_direction} />
     <div id="service-description-wrapper">
         <p aria-label="service description" id="service-description" style:position="relative">

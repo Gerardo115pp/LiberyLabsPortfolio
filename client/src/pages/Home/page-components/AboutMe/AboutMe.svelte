@@ -6,6 +6,7 @@
     import TechStack from "./tech_stack.svelte";
     import AnchorsOne from "@components/UI/AnchorsOne.svelte";
     import { layout_properties } from "@stores/layout";
+    import { SECTIONS as HOME_SECTIONS } from "@pages/Home/sections";
     
 </script>
 
@@ -15,7 +16,7 @@
         <div class="section-headline-wrapper">
             <LiberyHeadline headline_text="Myself" text_transform="none" headline_color="var(--main)"/>
         </div>
-        <div id="bio-wrapper">
+        <div data-scroll-section={HOME_SECTIONS.ABOUT} id="bio-wrapper">
             <div id="picture-area" >
                 <ImagePortrait image_src="resources/images/about-me-image.png" alt="Lalo's portrait" />
             </div>

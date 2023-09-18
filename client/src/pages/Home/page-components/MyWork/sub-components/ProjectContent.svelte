@@ -1,9 +1,11 @@
 <script>
     import LiberyBorderStar from "@components/UI/LiberyBorderStar.svelte";
     import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
+    import { SECTIONS as HOME_SECTIONS } from "@pages/Home/sections";
     import TaggedText from "@components/Wrappers/TaggedText.svelte";
     import { show_contact_form } from "@stores/layout";
     import { Project } from "@models/Project";
+
 
     /** 
      * @type {Project}
@@ -14,7 +16,7 @@
 
 
 <!-- HTMl -->
-    <header id="project-name-wrapper" style:position="relative">
+    <header data-scroll-section={HOME_SECTIONS.PORTFOLIO} id="project-name-wrapper" style:position="relative">
         <LiberyHeadline headline_color="var(--grey-1)" headline_text="{project.name}" text_transform="capitalize" headline_tag="h2"/>
         <div class="pnw-libery-star-wrapper background-wrapper">
             <LiberyBorderStar stroke_color="var(--danger-9)" fill_color="none" stroke_width="2px"/>

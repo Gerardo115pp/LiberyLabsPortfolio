@@ -4,6 +4,7 @@
     import Footer from "@components/Footer/Footer.svelte";
     import BlueBg from "../ContactMe/sub-components/BlueBg.svelte";
     import { layout_properties } from "@stores/layout.js"
+    import { SECTIONS as HOME_SECTIONS } from "@pages/Home/sections";
 
 
 </script>
@@ -19,12 +20,12 @@
         <div id="bc-content">
             <div id="bc-relative-wrapper" style:position="relative">
                 <section id="contact-me-section" class="page-section" >
-                    <div class="section-content">
+                    <div data-scroll-section={HOME_SECTIONS.CONTACT} class="section-content">
                         <ContactMe />
                     </div>
                 </section>
                 <section id="chat-bot-section" class="page-section" >
-                    <div class="section-content">
+                    <div data-scroll-section={HOME_SECTIONS.CHAT} class="section-content">
                         <ChatBot />
                     </div>
                 </section>

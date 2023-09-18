@@ -3,6 +3,7 @@
     import LiberyHeadline from "@components/UI/LiberyHeadline.svelte";
     import Bracket from "@components/UI/Bracket.svelte";
     import { onMount, onDestroy } from "svelte";
+    import { SECTIONS as HOME_SECTIONS } from "@pages/Home/sections";
 
     const tech_stack = [
         "svelte",
@@ -112,7 +113,7 @@
         <div class="bracket-wrapper">
             <Bracket/>
         </div>
-        <ul id="teck-stack-container">
+        <ul data-scroll-section={HOME_SECTIONS.ARSENAL} id="teck-stack-container">
             {#each tech_stack as ti, k}
                 <li 
                     data-item-index={k}
