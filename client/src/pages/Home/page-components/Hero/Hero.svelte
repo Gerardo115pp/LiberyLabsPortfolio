@@ -1,12 +1,13 @@
 <script>
-    import libery_labs_textlogo from "@svg/main_icon_1.svg";
-    import TaggedText from "@components/Wrappers/TaggedText.svelte";
-    import LiberyFloatingStar from "@components/UI/LiberyFloatingStar.svelte";
-    import LineSymbolsBg from "@components/UI/LineSymbolsBG.svelte";
-    import { layout_properties } from "@stores/layout";
-    import { writable } from "svelte/store";
-    import MainLogo from "@components/UI/MainLogo.svelte";
     import { SECTIONS as HOME_SECTIONS, scrollToSection } from "@pages/Home/sections";
+    import LiberyFloatingStar from "@components/UI/LiberyFloatingStar.svelte";
+    import viewport from "@components/viewport_actions/useViewportActions";
+    import { layout_properties, hero_visible } from "@stores/layout";
+    import TaggedText from "@components/Wrappers/TaggedText.svelte";
+    import LineSymbolsBg from "@components/UI/LineSymbolsBG.svelte";
+    import libery_labs_textlogo from "@svg/main_icon_1.svg";
+    import MainLogo from "@components/UI/MainLogo.svelte";
+    import { writable } from "svelte/store";
 
     const hero_content_height = writable(0);
     
@@ -27,7 +28,16 @@
 
 </script>
 
-<article data-scroll-section="{HOME_SECTIONS.HERO}" id="hero-content" class="section-content-layout"  style:position="relative" class:debug={false}>
+<article 
+    data-scroll-section="{HOME_SECTIONS.HERO}"
+    id="hero-content"
+    class="section-content-layout"
+    style:position="relative"
+    class:debug={false}
+    on:viewportEnter={() => hero_visible.set(true)}
+    on:viewportLeave={() => hero_visible.set(false)}
+    use:viewport
+>
     <div class="background-wrapper full-vw">
         <LineSymbolsBg
             line_count={layout_properties.IS_MOBILE ? 23 : 10}

@@ -3,6 +3,7 @@ import { isMobile } from "@libs/utils";
 
 const root_styles = getComputedStyle(document.documentElement);
 export const show_contact_form = writable(false);
+export const hero_visible = writable(true);
 
 export const layout_properties = {
     IS_MOBILE: isMobile(),

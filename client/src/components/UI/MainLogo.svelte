@@ -2,6 +2,7 @@
     export let stroke_color = "white";
     export let fill_color = "white";
     export let subheadline_color = "white";
+    export let subheadline_font_size = "calc(var(--font-size-h3) * 0.57375)";
 </script>
 
 <div class="libery-main-logo">
@@ -30,7 +31,13 @@
             </g>
         </svg>
     </div>
-    <h2 style:color="{subheadline_color || fill_color}" class="sub-headline">Where I Cast Your Dreams into Digital Reality</h2>
+    <h2 
+        style:color="{subheadline_color || fill_color}"
+        style:font-size="{subheadline_font_size}"
+        class="sub-headline"
+    >
+        Where I Cast Your Dreams into Digital Realit
+    </h2>
 </div>
 
 <style>
@@ -38,9 +45,5 @@
         display: flex;
         flex-direction: column;
         gap: var(--vspacing-1);
-    }
-
-    .sub-headline {
-        font-size: calc(var(--font-size-h3) * 0.57375);
     }
 </style>
