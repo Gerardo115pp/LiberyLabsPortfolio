@@ -58,8 +58,14 @@
             {/if}
         </div>
         <div id="lln-cta">
-            <button on:click={() => show_contact_form.set(true)} id="cta">
-                <strong class="highlight-text--CTA">Get in touch</strong>
+            <button title="Send me a message" on:click={() => show_contact_form.set(true)} id="cta">
+                {#if !layout_properties.IS_MOBILE}
+                    <strong class="highlight-text--CTA">Get in touch</strong>
+                {:else}
+                    <svg id="cta-mobile-icon" viewBox="0 0 100 70">
+                        <path id="letter-icon" d="M10 0H90Q100 0 100 10V65Q100 70 90 70H10Q0 70 0 60V10Q0 0 10 0ZM2 2 L50 45L98 2M25 22.5L2 68M75 22.5L98 68"></path>
+                    </svg>
+                {/if}
             </button>
         </div>
     </div>
@@ -129,6 +135,32 @@
     @media(pointer: fine) {
         button#cta:hover {
             transform: scale(1.05);
+        }
+    }
+
+    @media only screen and (max-width: 767px) {
+        #lln-cta {
+            display: flex;
+            align-items: center;
+        }
+
+        button#cta {
+            width: calc(var(--vspacing-4) * .75);
+            padding: 0;
+        }
+        
+        #cta-mobile-icon {
+            /* border: 1px solid var(--success-1); */
+            width: 100%;
+            fill: none;
+            overflow: visible;
+        }
+
+        #cta-mobile-icon #letter-icon {
+            stroke: var(--success-3);
+            stroke-width: 5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
     }
 </style>

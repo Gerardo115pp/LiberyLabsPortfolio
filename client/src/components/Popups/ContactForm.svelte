@@ -282,4 +282,18 @@
         filter: saturate(.1);
         pointer-events: none;
     }
+
+    @media only screen and (max-width: 767px) {
+        #contact-form-modal {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+            padding: var(--vspacing-3) var(--vspacing-2);
+        }
+
+        #cfm-libery-contact .input-groups {
+            flex-direction: column;
+            gap: var(--vspacing-2);
+        }
+    }
 </style>

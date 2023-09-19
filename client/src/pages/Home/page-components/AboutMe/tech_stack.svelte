@@ -284,6 +284,7 @@
 
         .teck-stack-item {
             font-size: var(--font-size-3);
+            color: var(--accent-7);
         }
     }
     

@@ -471,32 +471,9 @@
         animation-delay: .5s;
     }
 
-    /* #bt-svg-wrapper svg g#broken-text > path {
-        fill: red
-    } */
-
-    
-    /* #bt-svg-wrapper svg g#broken-text > g#left-outter > path {
-        fill: blue;
-    } */
-
-    /* #bt-svg-wrapper svg g#broken-text > g#left-inner > path {
-        fill: yellow;
-    } */
-
-    /* #bt-svg-wrapper svg g#broken-text > g#left-mess > path {
-        fill: purple;
-    } */
-
-    /* #bt-svg-wrapper svg g#broken-text > g#right-mess > path {
-        fill: cyan;
-    } */
-    
-    /* #bt-svg-wrapper svg g#broken-text > g#right-inner > path {
-        fill: chartreuse;
-    } */
-    
-    /* #bt-svg-wrapper svg g#broken-text > g#right-outer > path {
-        fill: darkorange;
-    } */
+    @media only screen and (max-width: 767px) {
+        #no-boundaries-wrapper {
+            height: max-content;
+        }
+    }
 </style>
