@@ -5,10 +5,12 @@
     import { recaptcha_pk } from "@stores/env";
     import { GetRecaptchaVerificationRequest } from "@libs/HttpRequests";
     import { is_user_human } from "@stores/chat";
+    import { is_big_mode_enabled } from "@stores/chat";
 
     /** @type {ChatDialer}*/
     export let chat_dialer;
     const chat_focus_dispatcher = createEventDispatcher();
+    const big_mode_on_dispatcher = createEventDispatcher();
     let chat_active = false;
 
     const handleChatFocus = () => {
@@ -57,30 +59,36 @@
 
         chat_dialer.sendMessage(new_message_content);
     }
+
+    const handleBigMode = () => {
+        is_big_mode_enabled.set(!$is_big_mode_enabled);
+    }
 </script>
 
-<div id="writer-bar" class:debug={false}>
+<div id="writer-bar" class:big-mode={$is_big_mode_enabled} class:debug={false}>
     <div id="sender-wrapper">
         <textarea 
             aria-label="Write any doubts you have about my services and my AI assistant will clear them for you. press enter to send the message"
             data-name="message-bar"
             on:keydown={handleMessageBarKeypress}
             on:focus={handleChatFocus}
-            class:hide={layout_properties.IS_MOBILE}
+            class:hide={layout_properties.IS_MOBILE && !$is_big_mode_enabled}
             type="text"
             id="sender-writer"
             placeholder="Clear you'r doubts, ask us anything!"
             user
         />
         <div id="sender-btn" class:hide={!layout_properties.IS_MOBILE} class="button-1-wrapper">
-            <button class="button-1">{ layout_properties.IS_MOBILE ? 'open chat' : 'send'}</button>
+            <button on:click={handleBigMode} class="button-1">{ $is_big_mode_enabled ? 'close chat' : 'open chat'}</button>
         </div>
     </div>
-    <p id="grecaptcha-policy">
-        This component is protected by reCAPTCHA and the Google
-        <a href="https://policies.google.com/privacy">Privacy Policy</a> and
-        <a href="https://policies.google.com/terms">Terms of Service</a> apply.
-    </p>
+    {#if !layout_properties.IS_MOBILE || $is_big_mode_enabled}
+         <p id="grecaptcha-policy">
+             This component is protected by reCAPTCHA and the Google
+             <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+             <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+         </p>
+    {/if}
 </div>
 
 <style>
@@ -137,11 +145,13 @@
 
     @media only screen and (max-width: 768px) {
         #writer-bar {
-            padding: calc(.75 * var(--vspacing-1));
+            padding: calc(1.2 * var(--vspacing-1));
         }
 
         #sender-wrapper {
-            width: max-content;
+            display: flex;
+            justify-content: center;
+            width: 90%;
             height: 100%;
         }
 

@@ -56,6 +56,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         opacity: .5;
+        z-index: var(--z-index-t-1);
     }
 
     .dashed-arista {

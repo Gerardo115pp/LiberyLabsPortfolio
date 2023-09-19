@@ -1,6 +1,6 @@
 <script>
     import { layout_properties } from "@stores/layout";
-    import { token as chat_token, is_available, messages } from "@stores/chat";
+    import { token as chat_token, is_available, messages, is_big_mode_enabled } from "@stores/chat";
     import { ChatDialer } from "@models/Chat";
     import ChatMessages from "./sub-components/ChatMessages.svelte";
     import DottedStar from "./sub-components/DottedStar.svelte";
@@ -20,10 +20,9 @@
             chat_dialer = new ChatDialer();
         }
     }
-
 </script>
 
-<div id="chat-component">
+<div id="chat-component" class:big-mode-chat={$is_big_mode_enabled}>
     <div id="status-bar">
         <svg id="sb-controls" viewBox="0 0 48 14">
             <g>
@@ -70,6 +69,14 @@
         border-radius: var(--border-radius-2);
         box-shadow: 9px -1px 37px 3px rgba(0, 0, 0, 0.25);
         overflow: hidden;
+    }
+
+    #chat-component.big-mode-chat {
+        --status-bar-height: 0%;
+
+        width: 100%;
+        height: calc(100dvh - var(--navbar-height));
+        border-radius: 0;
     }
 
     #status-bar {
@@ -139,9 +146,9 @@
     =============================================*/
     
         @media only screen and (max-width: 768px) {
-            #chat-content {
+            /* #chat-content {
                 opacity: 0;
-            }
+            } */
 
             #chat-component {
                 height: calc(var(--vspacing-8) * 0.455859375);

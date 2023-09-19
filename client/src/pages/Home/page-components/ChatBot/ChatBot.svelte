@@ -3,6 +3,7 @@
     import OrangeBg from "./sub-components/OrangeBG.svelte";
     import Chat from "@components/Chat/Chat.svelte";
     import { layout_properties } from "@stores/layout";
+    import { is_big_mode_enabled } from "@stores/chat";
 </script>
 
 <section id="ask-chat-section" class:debug={false}>
@@ -15,7 +16,7 @@
                 Clear Doubts, Discover Possibilities with Valaria powered by ChatGPT.
             </p>
         </div>
-        <div id="acs-chat">
+        <div id="acs-chat" style:visibility={$is_big_mode_enabled && layout_properties.IS_MOBILE ? 'hidden' : 'visible'}>
             <Chat />
         </div>
     </div>

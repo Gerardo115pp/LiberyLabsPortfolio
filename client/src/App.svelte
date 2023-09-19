@@ -7,6 +7,8 @@
     import { onMount } from 'svelte';
     import { defineLayout, layout_properties } from '@stores/layout';
     import { recaptcha_pk, has_recaptcha_loaded } from '@stores/env';
+    import Chat from '@components/Chat/Chat.svelte';
+    import { is_big_mode_enabled } from '@stores/chat';
     
     const ENABLE_DEBUG_ON_MOBILE = false;
     if (ENABLE_DEBUG_ON_MOBILE && layout_properties.IS_MOBILE) {
@@ -47,6 +49,11 @@
 <div id="libery-website-wrapper">
     <Navbar />
     <ContactForm />
+    {#if $is_big_mode_enabled && layout_properties.IS_MOBILE}
+        <div id="big-mode-chat-wrapper">
+            <Chat />
+        </div>
+    {/if}
     <!-- <NotificationsPopup /> -->
     <div id="router-wrapper">
         <Router {routes}/>
@@ -526,6 +533,14 @@
             font-size: var(--font-size-h3);
             line-height: .6;
             user-select: none;
+        }
+
+        :global(#big-mode-chat-wrapper) {
+            position: fixed;
+            top: var(--navbar-height);
+            left: 0;
+            width: 100%;
+            z-index: var(--z-index-t-1);
         }
     }
 
