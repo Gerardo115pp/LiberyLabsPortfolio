@@ -12,6 +12,15 @@ import (
 
 func ChatClaimsHandler(portfolio_server server.Server) http.HandlerFunc {
 	return func(response http.ResponseWriter, request *http.Request) {
+		var current_origin string = request.Host
+
+		echo.Echo(echo.GreenFG, "Request from origin: "+current_origin)
+
+		if current_origin != "libery-labs.com" && current_origin != "developer-libery-labs.com" {
+			response.WriteHeader(http.StatusForbidden)
+			return
+		}
+
 		switch request.Method {
 		case http.MethodGet:
 			getChatClaimsHandler(response, request)
@@ -76,8 +85,6 @@ func createChatClaims(response http.ResponseWriter, request *http.Request) {
 	if client_ip == "" {
 		client_ip = request.RemoteAddr
 	}
-
-	
 
 	err, token := models.CreateChatClaims(client_ip)
 	if err != nil {
