@@ -36,7 +36,7 @@
         style:font-size="{subheadline_font_size}"
         class="sub-headline"
     >
-        Where I Cast Your Dreams into Digital Realit
+        Where I Cast Your Dreams into Digital Reality
     </h2>
 </div>
 

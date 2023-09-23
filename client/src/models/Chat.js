@@ -1,4 +1,4 @@
-import { is_available, token, messages } from "@stores/chat";
+import { is_available, token, messages, max_message_length } from "@stores/chat";
 import { GetChatCredentialsRequest, GetChatRoomRequest, PostChatMessageRequest, GetChatCredentialsVerificationRequest } from "@libs/HttpRequests";
 import { get } from "svelte/store";
 
@@ -171,7 +171,9 @@ export class ChatDialer {
 
         if (chat_room) {
             this.chat_id = chat_room.id;
+            max_message_length.set(chat_room.max_user_message_length);            
             const visible_messages = [];
+
             chat_room.messages.forEach((message, h) => {
                 let new_message = new ChatMessage({ 
                     chat_id: this.chat_id,
@@ -186,7 +188,7 @@ export class ChatDialer {
                     visible_messages.push(new_message);
                 }
             });
-            console.log(visible_messages);
+            
             messages.set(visible_messages);
         }
 

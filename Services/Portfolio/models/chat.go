@@ -13,11 +13,12 @@ type ChatMessage struct {
 }
 
 type ChatRoom struct {
-	ID                 string         `json:"id"`
-	CreationDate       string         `json:"creation_date"`
-	LastMessageDate    string         `json:"last_message_date"`
-	InstructionMessage string         `json:"instruction_message"`
-	Messages           []*ChatMessage `json:"messages"`
+	ID                   string         `json:"id"`
+	CreationDate         string         `json:"creation_date"`
+	LastMessageDate      string         `json:"last_message_date"`
+	InstructionMessage   string         `json:"instruction_message"`
+	MaxUserMessageLength int            `json:"max_user_message_length"`
+	Messages             []*ChatMessage `json:"messages"`
 }
 
 func (chat *ChatRoom) AddMessage(message string, from_user bool) *ChatMessage {
@@ -35,4 +36,19 @@ func (chat *ChatRoom) AddMessage(message string, from_user bool) *ChatMessage {
 	chat.LastMessageDate = new_message.SendDate
 
 	return new_message
+}
+
+type ChatRoomPublicResponse struct {
+	ID                   string         `json:"id"`
+	Messages             []*ChatMessage `json:"messages"`
+	MaxUserMessageLength int            `json:"max_user_message_length"`
+}
+
+func (chat *ChatRoom) GetPublicResponse() *ChatRoomPublicResponse {
+	var public_response *ChatRoomPublicResponse = new(ChatRoomPublicResponse)
+	public_response.ID = chat.ID
+	public_response.Messages = chat.Messages
+	public_response.MaxUserMessageLength = chat.MaxUserMessageLength
+
+	return public_response
 }

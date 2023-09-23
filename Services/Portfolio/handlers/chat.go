@@ -65,7 +65,9 @@ func getChatHandler(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("Content-Type", "application/json")
 	response.WriteHeader(http.StatusOK)
 
-	err = json.NewEncoder(response).Encode(chat_room)
+	var response_data *models.ChatRoomPublicResponse = chat_room.GetPublicResponse()
+
+	err = json.NewEncoder(response).Encode(response_data)
 	if err != nil {
 		response.WriteHeader(http.StatusInternalServerError)
 	}

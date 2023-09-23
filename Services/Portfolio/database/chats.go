@@ -7,6 +7,7 @@ import (
 	app_config "libery_labs_portfolio/Config"
 	"libery_labs_portfolio/helpers"
 	"libery_labs_portfolio/models"
+	"math"
 	"os"
 	"time"
 )
@@ -32,6 +33,7 @@ func (chat_db *ChatDatabase) GetChatByID(chat_id string, create bool) (*models.C
 	new_chat_room.CreationDate = time.Now().Format("2006-01-02 15:04:05")
 	new_chat_room.LastMessageDate = time.Now().Format("2006-01-02 15:04:05")
 	new_chat_room.InstructionMessage = app_config.SALES_CHAT_INSTRUCTION
+	new_chat_room.MaxUserMessageLength = int(math.Trunc(float64(app_config.SALES_MAX_USER_TOKENS) * 4))
 	new_chat_room.Messages = make([]*models.ChatMessage, 0)
 
 	found_chat_room := chat_db.chats_buffer[chat_id]
