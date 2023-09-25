@@ -10,7 +10,7 @@ on:
 jobs:
   build-portfolio:
     env:
-      NEW_IMAGE_TAG: ${{ secrets.DOCKER_USERNAME }}/portfolio:${{ github.sha }}
+      NEW_IMAGE_TAG: ${{ secrets.DOCKER_USERNAME }}/libery-portfolio:${{ github.sha }}
     runs-on: ubuntu-latest
     name: Build Services
     steps:
@@ -55,7 +55,7 @@ jobs:
             sed -i -e "s@${CURRENT_VERSION}@${NEW_IMAGE_TAG}@g" docker-compose.yaml
             scp docker-compose.yaml $GCP_HOST:$SERVER_PATH
             rm docker-compose.yaml
-            ssh $GCP_HOST "cd $SERVER_PATH && docker-compose pull && docker-compose up -d"
+            ssh $GCP_HOST "cd $SERVER_PATH && docker-compose -p libery_portfolio --profile production down && docker-compose -p libery_portfolio --profile production up -d"
             echo "Successfully restarted service"
           else
             echo "Failed to restart service"
