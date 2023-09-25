@@ -30,6 +30,7 @@ jobs:
           context: ./Services/Portfolio
           push: true
           tags: ${{ env.NEW_IMAGE_TAG }}
+          platforms: linux/amd64
       - name: Restart service
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PK }}
@@ -42,6 +43,7 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -t rsa $GCP_IP >> ~/.ssh/known_hosts
+          echo "Pulling docker-compose.yaml from server: $GCP_HOST:$SERVER_PATH"
           scp $GCP_HOST:$SERVER_PATH/docker-compose.yaml .
           CURRENT_VERSION=$(awk -F': ' "/image:\s${DOCKER_USERNAME}\/libery-portfolio/ {print \$2}" docker-compose.yaml)
           if [ -n $CURRENT_VERSION ]; then
