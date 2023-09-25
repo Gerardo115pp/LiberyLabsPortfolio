@@ -40,7 +40,7 @@ func main() {
 		echo.Echo(echo.RedFG, "Error while creating admin repository")
 		echo.EchoFatal(err)
 	}
-	//this is usless v.2.1.4
+	//this is usless v.2.2
 	project_ideas_repository, err := database.NewProjectIdeasRepository()
 	if err != nil {
 		echo.Echo(echo.RedFG, "Error while creating admin repository")
