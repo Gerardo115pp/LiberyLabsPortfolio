@@ -1,0 +1,56 @@
+name: Build Services
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'Services/Portfolio/**'
+
+jobs:
+  build-portfolio:
+    env:
+      NEW_IMAGE_TAG: ${{ secrets.DOCKER_USERNAME }}/portfolio:${{ github.sha }}
+    runs-on: ubuntu-latest
+    name: Build Services
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: ./Services/Portfolio
+          push: true
+          tags: ${{ env.NEW_IMAGE_TAG }}
+      - name: Restart service
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PK }}
+          GCP_HOST: ${{ secrets.GCP_HOST }}
+          GCP_IP: ${{ secrets.GCP_IP }}
+          SERVER_PATH: ${{ secrets.SERVER_PATH }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -t rsa $GCP_IP >> ~/.ssh/known_hosts
+          scp $GCP_HOST:$SERVER_PATH/docker-compose.yaml .
+          CURRENT_VERSION=$(awk -F': ' "/image:\s${DOCKER_USERNAME}\/libery-portfolio/ {print \$2}" docker-compose.yaml)
+          if [ -n $CURRENT_VERSION ]; then
+            sed -i "s/${CURRENT_VERSION}/${NEW_IMAGE_TAG}/g" docker-compose.yaml
+            scp docker-compose.yaml $GCP_HOST:$SERVER_PATH
+            rm docker-compose.yaml
+            ssh $GCP_HOST "cd $SERVER_PATH && docker-compose pull && docker-compose up -d"
+            echo "Successfully restarted service"
+          else
+            echo "Failed to restart service"
+            exit 1
+          fi

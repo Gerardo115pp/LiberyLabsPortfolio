@@ -1,0 +1,32 @@
+#!/bin/bash
+DOCKER_USER="";
+DOCKER_PASS="";
+
+# --- List of services
+PORTFOLIO_SERVICE_CHANGED=false;
+
+while getopts "u:p:" option;
+do
+    case "${option}" in
+        u) DOCKER_USER=${OPTARG};;
+        p) DOCKER_PASS=${OPTARG};;
+    esac
+done
+
+if [ -z "$DOCKER_USER" ] || [ -z "$DOCKER_PASS" ]; then
+    echo "Usage: $0 -u <docker_user> -p <docker_pass>" >&2
+    exit 1
+fi
+
+# Get the list of changed services
+file_changes=$(git diff --name-only HEAD~1..HEAD | grep -E 'Services/')
+PORTFOLIO_SERVICE_CHANGED=$(echo $file_changes | grep -E 'Services/Portfolio' | wc -l)
+
+if [ $PORTFOLIO_SERVICE_CHANGED -gt 0 ]; then 
+    echo "Portfolio service changed. Building and pushing to docker hub"
+    echo "PORTFOLIO_SERVICE_CHANGED=$PORTFOLIO_SERVICE_CHANGED" > FILE_CHANGES
+fi
+
+if [ -f FILE_CHANGES ]; then
+    chmod +x FILE_CHANGES
+fi
