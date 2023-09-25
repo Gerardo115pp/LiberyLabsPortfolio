@@ -50,9 +50,13 @@ jobs:
             echo "GCP_HOST is not set"
           fi
           scp $GCP_HOST:$SERVER_PATH/docker-compose.yaml .
+          ls -lha
           CURRENT_VERSION=$(awk -F': ' "/image:\s${DOCKER_USERNAME}\/libery-portfolio/ {print \$2}" docker-compose.yaml)
+          echo "Current version: $CURRENT_VERSION"
           if [ -n $CURRENT_VERSION ]; then
+            cat docker-compose.yaml
             sed -i -e "s@${CURRENT_VERSION}@${NEW_IMAGE_TAG}@g" docker-compose.yaml
+            cat docker-compose.yaml
             scp docker-compose.yaml $GCP_HOST:$SERVER_PATH
             rm docker-compose.yaml
             ssh $GCP_HOST "cd $SERVER_PATH && docker-compose -p libery_portfolio --profile production down && docker-compose -p libery_portfolio --profile production up -d"
