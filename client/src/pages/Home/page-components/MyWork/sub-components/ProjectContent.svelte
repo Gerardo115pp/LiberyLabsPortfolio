@@ -23,10 +23,10 @@
         </div>
     </header>
     <div id="project-description-wrapper">
-        <TaggedText tag_name="p">
-            <p class="project-description">
-                {project.description}
-            </p>
+        <TaggedText tag_name="article">
+            {@html project.description}
+            <!-- <p class="project-description">
+            </p> -->
         </TaggedText>
     </div>
     <div id="bottom-content-wrapper">
@@ -74,6 +74,40 @@
         width: calc(var(--vspacing-6) * .7981);
         top: -40%;
         left: 75%;
+    }
+
+    /* #project-description-wrapper {
+        
+    } */
+
+    :global(#project-description-wrapper article) {
+        display: flex;
+        flex-direction: column;
+        max-height: calc(1.1 * var(--vspacing-6));
+        gap: var(--vspacing-2);
+        overflow: auto;
+    }
+
+    :global(#project-description-wrapper article::-webkit-scrollbar) {
+        color: var(--grey-5);
+        width: var(--vspacing-1);
+        opacity: .1 !important;
+    }
+
+    :global(#project-description-wrapper article::-webkit-scrollbar-thumb) {
+        background: var(--grey-5);
+        border-radius: calc(.27777 * var(--border-radius-2));
+        opacity: .1;
+    }
+
+    :global(#project-description-wrapper article::-webkit-scrollbar-track) {
+        background: transparent;
+        margin-right: var(--vspacing-1);
+        padding: var(--vspacing-1);
+    }    
+
+    :global(#project-description-wrapper article strong) {
+        color: var(--main);
     }
 
     #bottom-content-wrapper {
