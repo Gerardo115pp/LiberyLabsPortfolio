@@ -25,8 +25,8 @@
     <div id="project-description-wrapper">
         <TaggedText tag_name="article">
             {@html project.description}
-            <!-- <p class="project-description">
-            </p> -->
+            <!-- <ps class="project-description">
+            </ps> -->
         </TaggedText>
     </div>
     <div id="bottom-content-wrapper">
