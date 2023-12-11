@@ -30,6 +30,9 @@
     */
     let mobile_image_display;
 
+    /** @type {boolean} - wether the project has both mobile and desktop screenshots or just one of the two.*/
+    let has_desktop_mobile = false;
+
     $: if (mobile_image_display !== undefined) {
         // images have loaded at least once
         setProjectImages(), project;
@@ -84,14 +87,31 @@
 
     const setImagesHref = () => {
         if (!has_images) return;
+        let has_desktop = false;
+        let has_mobile = false;
+
+        const mobile_display_wrapper = document.getElementById('mobile-view-wrapper');
+        const desktop_display_wrapper = document.getElementById('desktop-view-wrapper');
+
+        if (mobile_display_wrapper === null || desktop_display_wrapper === null) return;
         
-        if (desktop_image_display !== undefined) {
+        if (desktop_image_display !== undefined && project_images.CurrentDesktopImage !== null) {
+            desktop_display_wrapper.style.visibility = 'visible';
             desktop_image_display.href.baseVal = project_images.CurrentDesktopImage;
+            has_desktop = true;
+        } else {
+            desktop_display_wrapper.style.visibility = 'hidden';
         }
 
-        if (mobile_image_display !== undefined) {
+        if (mobile_image_display !== undefined && project_images.CurrentMobileImage !== null) {
+            mobile_display_wrapper.style.visibility = 'visible';
             mobile_image_display.href.baseVal = project_images.CurrentMobileImage;
+            has_mobile = true;
+        } else {
+            mobile_display_wrapper.style.visibility = 'hidden';
         }
+
+        has_desktop_mobile = has_desktop && has_mobile;
     }
 
     function getDisplaySizes() {
@@ -128,15 +148,21 @@
 </script>
 
 <div id="screenshot-displayer"  class:debug={false}>
-    <div id="desktop-view-wrapper">
-        <svg width="{svg_sizes.desktop_display.w}" height="{svg_sizes.desktop_display.h}" viewBox="0 0 522 367" fill="none">
+    <div id="desktop-view-wrapper" class:single-mode-display={!has_desktop_mobile}>
+        <svg 
+            width="{has_desktop_mobile ? svg_sizes.desktop_display.w : (svg_sizes.desktop_display.w * 1.3)}"
+            height="{has_desktop_mobile ? svg_sizes.desktop_display.h : (svg_sizes.desktop_display.h * 1.3)}"
+            viewBox="0 0 522 367"
+            fill="none"
+        >
+            <path id="desktop-bg" d="M20 3L502 3L502 264L20 264Z"/>
             <image bind:this={desktop_image_display} x="10" id="desktop-image-display" width="500" height="267"/>
-            <path class="device-body" d="M511.492 0.729004H11.2077C5.51417 0.729004 0.845276 5.16188 0.845276 10.5778V279.398C0.845276 284.813 5.51417 289.246 11.2077 289.246H511.483C517.185 289.246 521.845 284.813 521.845 279.398V10.5778C521.845 5.16188 517.176 0.729004 511.483 0.729004H511.492ZM504.382 247.616C504.382 253.737 499.57 258.745 493.689 258.745H29.6338C23.7531 258.745 18.9417 253.737 18.9417 247.616V32.3156C18.9417 26.1949 23.7531 21.187 29.6338 21.187H493.689C499.57 21.187 504.382 26.1949 504.382 32.3156V247.616Z"/>
             <path class="device-body" d="M334.154 366.729H188.545C188.545 366.729 187.752 355.193 213.102 344.472C238.442 333.761 232.9 282.653 232.9 282.653H289.809C289.809 282.653 284.258 333.761 309.607 344.472C334.947 355.193 334.154 366.729 334.154 366.729Z"/>
+            <path class="device-body" d="M511.492 0.729004H11.2077C5.51417 0.729004 0.845276 5.16188 0.845276 10.5778V279.398C0.845276 284.813 5.51417 289.246 11.2077 289.246H511.483C517.185 289.246 521.845 284.813 521.845 279.398V10.5778C521.845 5.16188 517.176 0.729004 511.483 0.729004H511.492ZM504.382 247.616C504.382 253.737 499.57 258.745 493.689 258.745H29.6338C23.7531 258.745 18.9417 253.737 18.9417 247.616V32.3156C18.9417 26.1949 23.7531 21.187 29.6338 21.187H493.689C499.57 21.187 504.382 26.1949 504.382 32.3156V247.616Z"/>
             <path on:click={() => advanceDesktopImage(false)} class="device-button next-btn action-btn" d="M254.204 268.167L262.57 283.255L270.946 268.167H254.204Z"/>
         </svg>    
     </div>
-    <div id="mobile-view-wrapper">
+    <div id="mobile-view-wrapper" class:single-mode-display={!has_desktop_mobile}>
         <svg width="{svg_sizes.mobile_display.w}" height="{svg_sizes.mobile_display.h}" viewBox="0 0 319 647" fill="none">
             <path id="cellphone-bg" d="M10 60Q0 0 50 10H269Q319 0 309 60V587Q319 647 269 637H50Q0 647 10 587Z"></path>
             <image bind:this={mobile_image_display} x="10" y="10" id="mobile-image-display" width="300" height="627"/>
@@ -154,6 +180,43 @@
 </div>
 
 <style>
+    @keyframes blink-buttons-color {
+        0% {
+            fill: var(--main-5);
+            scale: 1;
+        }
+
+        3% {
+            fill: var(--main-dark-color-2);
+            scale: 1.07;
+        }
+
+        6% {
+            fill: var(--main-5);
+            scale: 1;
+        }
+
+        9% {
+            fill: var(--main-dark-color-2);
+            scale: 1.07;
+        }
+
+        12% {
+            fill: var(--main-5);
+            scale: 1;
+        }
+
+        15% {
+            fill: var(--main-dark-color-2);
+            scale: 1.07;
+        }
+
+        18% {
+            fill: var(--main-5);
+            scale: 1;
+        }
+    }
+
     #screenshot-displayer {
         position: relative;
         height: 100%;
@@ -167,6 +230,12 @@
         z-index: var(--z-index-1);
     }
 
+    #mobile-view-wrapper.single-mode-display {
+        left: -5%;
+        transform-origin: center;
+        transform: translateX( 50%);
+    }
+
     #desktop-view-wrapper {
         position: absolute;
         bottom:  5%;
@@ -175,17 +244,26 @@
         z-index: var(--z-index-2);
     }
 
+    #desktop-view-wrapper.single-mode-display {
+        left: -25%;
+        bottom: 50%;
+        transform-origin: center;
+        transform: translate(50%, 50%);
+    }
+
     #mobile-image-display {
         clip-path: inset(0 0 0 0 round 40px 40px 40px 40px);
     }
 
-    path#cellphone-bg {
+    path#cellphone-bg, path#desktop-bg {
         fill: var(--grey-9);
         stroke: none;
     }
 
     .device-body {
         fill: var(--grey-9);
+        stroke: var(--grey-8);
+        stroke-width: 1.2px;
         filter: brightness(1.04);
     }
 
@@ -199,11 +277,17 @@
             transform-box: fill-box;
             transform-origin: center;
             transition: all .2s ease-in-out;
+            animation-name: blink-buttons-color;
+            animation-duration: 6.5s;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            animation-delay: 1s;
         }
 
         .action-btn:hover {
             fill: var(--main-dark-color-4);
             scale: 1.1;
+            animation: none;
         }
     }
 

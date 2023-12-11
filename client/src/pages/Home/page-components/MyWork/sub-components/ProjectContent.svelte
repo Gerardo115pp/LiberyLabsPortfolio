@@ -25,8 +25,6 @@
     <div id="project-description-wrapper">
         <TaggedText tag_name="article">
             {@html project.description}
-            <!-- <ps class="project-description">
-            </ps> -->
         </TaggedText>
     </div>
     <div id="bottom-content-wrapper">
@@ -80,35 +78,52 @@
         
     } */
 
-    :global(#project-description-wrapper article) {
-        display: flex;
-        flex-direction: column;
-        max-height: calc(1.1 * var(--vspacing-6));
-        gap: var(--vspacing-2);
-        overflow: auto;
-    }
+    
+    /*=============================================
+    =            Project description            =
+    =============================================*/
+    
+        :global(#project-description-wrapper article) {
+            display: flex;
+            flex-direction: column;
+            max-height: calc(1.1 * var(--vspacing-6));
+            gap: var(--vspacing-3);
+            overflow: auto;
+        }
 
-    :global(#project-description-wrapper article::-webkit-scrollbar) {
-        color: var(--grey-5);
-        width: var(--vspacing-1);
-        opacity: .1 !important;
-    }
+        :global(#project-description-wrapper article::-webkit-scrollbar) {
+            color: var(--grey-5);
+            width: var(--vspacing-1);
+            opacity: .1 !important;
+        }
 
-    :global(#project-description-wrapper article::-webkit-scrollbar-thumb) {
-        background: var(--grey-5);
-        border-radius: calc(.27777 * var(--border-radius-2));
-        opacity: .1;
-    }
+        :global(#project-description-wrapper article::-webkit-scrollbar-thumb) {
+            background: var(--grey-5);
+            border-radius: calc(.27777 * var(--border-radius-2));
+            opacity: .1;
+        }
 
-    :global(#project-description-wrapper article::-webkit-scrollbar-track) {
-        background: transparent;
-        margin-right: var(--vspacing-1);
-        padding: var(--vspacing-1);
-    }    
+        :global(#project-description-wrapper article::-webkit-scrollbar-track) {
+            background: transparent;
+            margin-right: var(--vspacing-1);
+            padding: var(--vspacing-1);
+        }    
 
-    :global(#project-description-wrapper article strong) {
-        color: var(--main);
-    }
+        :global(#project-description-wrapper article .content-group) {
+            display: flex;
+            flex-direction: column;
+            gap: var(--vspacing-2);
+        }
+
+        :global(#project-description-wrapper article strong) {
+            color: var(--main);
+        }
+    
+    
+    /*=====  End of Project description  ======*/
+    
+    
+
 
     #bottom-content-wrapper {
         display: flex;
@@ -118,7 +133,7 @@
 
     #tech-stack {
         display: flex;
-        width: calc(var(--vspacing-6) * 1.1);
+        width: calc(var(--vspacing-6) * 1.5);
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: flex-start;
