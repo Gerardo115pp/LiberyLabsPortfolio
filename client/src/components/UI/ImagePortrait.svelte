@@ -9,7 +9,7 @@
 
 <style>
     .image-portrait-wrapper{
-        width: 41.50%;
+        width: 51.50%;
         height: max-content;
         position: relative;
     }
