@@ -15,8 +15,9 @@ const config = {
 		port: 5005,
 		hot: true,
 		https: {
-			cert: fs.readFileSync('/home/el_maligno/local_domain_certificates/developer-libery-labs.com/developer-libery-labs.com.pem'),
-			key: fs.readFileSync('/home/el_maligno/local_domain_certificates/developer-libery-labs.com/developer-libery-labs.com-key.pem'),		},
+			cert: fs.readFileSync(process.env.SSL_CERT_PATH),
+			key: fs.readFileSync(process.env.SSL_KEY_PATH),		
+		},
 		static:{
 			directory: path.join(__dirname, 'public')
 		},
