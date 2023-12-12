@@ -15,8 +15,8 @@ const config = {
 		port: 5005,
 		hot: true,
 		https: {
-			cert: fs.readFileSync(process.env.SSL_CERT_PATH),
-			key: fs.readFileSync(process.env.SSL_KEY_PATH),		
+			cert: fs.readFileSync(process.env.SSL_CERT_PATH || '/dev/null'),
+			key: fs.readFileSync(process.env.SSL_KEY_PATH || '/dev/null'),		
 		},
 		static:{
 			directory: path.join(__dirname, 'public')
