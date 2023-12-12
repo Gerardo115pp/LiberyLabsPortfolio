@@ -51,9 +51,14 @@
 </script>
 
 <div id="projects-carousel-wrapper">
-    <div id="pcw-projects-container" class:debug={false} style:justify-content={projects.length > 7 ? 'flex-start' : 'center'}>
+    <div 
+        id="pcw-projects-container" 
+        class:debug={false} 
+        style:justify-content={projects.length > 7 ? 'flex-start' : 'center'}
+        style:grid-template-columns="{projects.length}fr"
+    >
         {#each projects as project, h}
-            <div id="pcw-pc-project-{h}" on:click={() => selectProject(h)} class="pcw-project-item" style:position="relative">
+            <div style:grid-column="{h+1} / span 1" id="pcw-pc-project-{h}" on:click={() => selectProject(h)} class="pcw-project-item" style:position="relative">
                 <span class="pcw-pi-name">{project.name}</span>
                 <CarouselItemCorners />
             </div>
@@ -67,6 +72,8 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        container-type: size;
+        container-name: project-carousel;
         width: 100%;
         height: calc(var(--vspacing-5) * 1.6844);
         border-top: 3px dashed var(--danger-9);
@@ -74,13 +81,15 @@
     }
 
     #pcw-projects-container {
-        --project-item-width: calc(var(--vspacing-6) * 0.9414);
+        /* --project-item-width: calc(var(--vspacing-6) * 0.9414); */
+        --project-item-width: 40cqw;
 
-        display: flex;
+        display: grid;
         height: 100%;
-        width: var(--page-content-width);
-        overflow: hidden;
-        flex-wrap: nowrap;
+        grid-template-rows: 1fr;
+        grid-template-columns: auto;
+        grid-auto-columns: var(--project-item-width);
+        width: max-content;
         scroll-behavior: smooth;
         gap: 0px;
     }
@@ -117,11 +126,10 @@
     
     @media (max-width: 768px) {
         #projects-carousel-wrapper {
-            height: max-content;
-        }
-
-        #pcw-projects-container {
-            overflow: visible;
+            height: calc(var(--vspacing-4) * 2.2844);
+            justify-content: flex-start;
+            align-items: flex-start;
+            overflow-y: auto;
         }
 
         .pcw-project-item {
