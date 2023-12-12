@@ -239,8 +239,8 @@
     }
 
     #mobile-view-wrapper svg {
-        max-width: 417.608px;
-        max-height: 847px;
+        max-width: 319px;
+        max-height: 647px;
     }
 
     #desktop-view-wrapper {
@@ -260,8 +260,8 @@
     }
 
     #desktop-view-wrapper svg {
-        max-width: 728.23px;
-        max-height: 512px;
+        max-width: 522px;
+        max-height: 367px;
     }
 
     #mobile-image-display {

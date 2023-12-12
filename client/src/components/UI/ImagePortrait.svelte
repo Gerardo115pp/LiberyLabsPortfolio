@@ -34,4 +34,10 @@
         transform: rotate(0.936deg);
         z-index: 2;
     }
+
+    @media screen and (max-width: 768px) {
+        .image-portrait-wrapper {
+            width: 90%;
+        }
+    }
 </style>
