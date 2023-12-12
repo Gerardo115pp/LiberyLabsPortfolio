@@ -117,12 +117,12 @@
     function getDisplaySizes() {
         const display_sizes = {
             desktop_display: {
-                w: 522,
-                h: 367
+                w: 74.358,
+                h: 49.864
             },
             mobile_display: {
-                w: 319,
-                h: 647
+                w: 45.441,
+                h: 87.907
             }
         }
 
@@ -147,11 +147,11 @@
     }
 </script>
 
-<div id="screenshot-displayer"  class:debug={false}>
+<div id="screenshot-displayer"  class:adebug={false}>
     <div id="desktop-view-wrapper" class:single-mode-display={!has_desktop_mobile}>
         <svg 
-            width="{has_desktop_mobile ? svg_sizes.desktop_display.w : (svg_sizes.desktop_display.w * 1.3)}"
-            height="{has_desktop_mobile ? svg_sizes.desktop_display.h : (svg_sizes.desktop_display.h * 1.3)}"
+            style:width="{has_desktop_mobile ? svg_sizes.desktop_display.w : (svg_sizes.desktop_display.w * 1.3)}cqw"
+            style:height="{has_desktop_mobile ? svg_sizes.desktop_display.h : (svg_sizes.desktop_display.h * 1.3)}cqh"
             viewBox="0 0 522 367"
             fill="none"
         >
@@ -163,7 +163,7 @@
         </svg>    
     </div>
     <div id="mobile-view-wrapper" class:single-mode-display={!has_desktop_mobile}>
-        <svg width="{svg_sizes.mobile_display.w}" height="{svg_sizes.mobile_display.h}" viewBox="0 0 319 647" fill="none">
+        <svg style:width="{svg_sizes.mobile_display.w}cqw" style:height="{svg_sizes.mobile_display.h}cqh" viewBox="0 0 319 647" fill="none">
             <path id="cellphone-bg" d="M10 60Q0 0 50 10H269Q319 0 309 60V587Q319 647 269 637H50Q0 647 10 587Z"></path>
             <image bind:this={mobile_image_display} x="10" y="10" id="mobile-image-display" width="300" height="627"/>
             <path class="device-body" d="M283.293 0.729004H40.1346C40.1346 0.729004 8.27126 4.57248 2.65857 37.3335V61.7365L3.53011 608.19C3.53011 608.19 3.53011 641.308 41.0062 646.537H282.805C282.805 646.537 315.54 643.923 318.155 609.061V37.8477C318.155 37.8477 317.283 8.57283 283.293 0.729004ZM274.142 632.157H45.7647C45.7647 632.157 22.2681 627.381 17.9105 604.494V36.0262C17.9105 36.0262 17.9105 19.467 37.0842 15.1094H79.6936C79.6936 15.1094 84.1472 14.2378 84.1472 19.467C84.1472 24.6962 85.0187 28.1824 85.0187 28.1824C85.0187 28.1824 88.5049 36.8978 97.2202 37.7693H223.305C223.305 37.7693 233.18 36.0262 234.923 28.1824C236.666 20.3386 235.794 19.467 235.794 18.5955C235.794 17.724 236.666 15.1094 239.281 15.1094C241.895 15.1094 283.346 15.0571 283.346 15.0571C283.346 15.0571 301.16 16.8524 302.903 35.1547C304.646 53.4569 302.903 602.525 302.903 602.525C302.903 602.525 304.646 623.442 274.142 632.157Z"/>
@@ -218,6 +218,7 @@
     }
 
     #screenshot-displayer {
+        container-type: size;
         position: relative;
         height: 100%;
     }
@@ -226,7 +227,8 @@
         position: absolute;
         top: 0;
         left: 65%;
-        width: 100%;
+        width: max-content;
+        height: max-content;
         z-index: var(--z-index-1);
     }
 
@@ -236,11 +238,17 @@
         transform: translateX( 50%);
     }
 
+    #mobile-view-wrapper svg {
+        max-width: 319px;
+        max-height: 647px;
+    }
+
     #desktop-view-wrapper {
         position: absolute;
         bottom:  5%;
         left: 0%;
-        width: 100%;
+        width: max-content;
+        height: max-content;
         z-index: var(--z-index-2);
     }
 
@@ -249,6 +257,11 @@
         bottom: 50%;
         transform-origin: center;
         transform: translate(50%, 50%);
+    }
+
+    #desktop-view-wrapper svg {
+        max-width: 522px;
+        max-height: 367px;
     }
 
     #mobile-image-display {

@@ -214,5 +214,37 @@
     /*=====  End of Mobile  ======*/
     
     
+    /*=============================================
+    =            Container querys            =
+    =============================================*/
+    
+    @container llp-pc-left (max-width: 1366px) {
+        :global(#project-description-wrapper article) {
+            max-height: calc(1.3 * var(--vspacing-5));
+        }
+
+        :global(#project-description-wrapper article p) {
+            font-size: var(--font-size-2);
+        }
+
+        #bottom-content-wrapper {
+            flex-direction: column;
+            row-gap: var(--vspacing-2);
+        }
+
+        #tech-stack {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .tech-stack-item {
+            font-size: var(--font-size-2);
+        }
+    }
+    
+    /*=====  End of Container querys  ======*/
+    
+    
+    
 
 </style>

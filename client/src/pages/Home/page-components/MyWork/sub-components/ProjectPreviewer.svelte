@@ -46,13 +46,15 @@
 
     #llp-pc-left {
         display: flex;
+        container-type: size;
+        container-name: llp-pc-left;
         flex-direction: column;
         grid-column: 1 / span 6;
         row-gap: var(--vspacing-3);
     }
 
     #llp-pc-right {
-        grid-column: 7 / span 5;
+        grid-column: 7 / span 6;
         height: 100%;
     }
 

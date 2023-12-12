@@ -2,6 +2,7 @@
 const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const webpack  = require('webpack');
+const fs = require('fs');
 
 const config = {
 	entry: './src/index.js',
@@ -13,12 +14,13 @@ const config = {
 		host: "192.168.0.140",
 		port: 5005,
 		hot: true,
+		https: {
+			cert: fs.readFileSync('/home/el_maligno/local_domain_certificates/developer-libery-labs.com/developer-libery-labs.com.pem'),
+			key: fs.readFileSync('/home/el_maligno/local_domain_certificates/developer-libery-labs.com/developer-libery-labs.com-key.pem'),		},
 		static:{
 			directory: path.join(__dirname, 'public')
 		},
-		// allowedHosts: [
-		// 	'developer-libery-labs.com'
-		// ],
+		allowedHosts: 'all',
 		hot: true, // this
 		historyApiFallback: true
 	},

@@ -26,9 +26,11 @@ export const logout = () => {
 
 export const isMobile = () => {
     let is_mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    // console.log(`is mobile detected by user agent: ${is_mobile} because ${navigator.userAgent}`);
     
     if (!is_mobile && window.innerWidth < MOBILE_BREAKPOINT) {
         is_mobile = true;
+        // console.log(`is mobile detected by viewport width: ${is_mobile} because ${window.innerWidth}`);
     }
     
     return is_mobile;
