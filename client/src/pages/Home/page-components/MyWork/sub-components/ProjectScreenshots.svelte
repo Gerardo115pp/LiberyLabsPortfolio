@@ -239,8 +239,8 @@
     }
 
     #mobile-view-wrapper svg {
-        max-width: 319px;
-        max-height: 647px;
+        max-width: 417.608px;
+        max-height: 847px;
     }
 
     #desktop-view-wrapper {
@@ -260,8 +260,8 @@
     }
 
     #desktop-view-wrapper svg {
-        max-width: 522px;
-        max-height: 367px;
+        max-width: 728.23px;
+        max-height: 512px;
     }
 
     #mobile-image-display {
@@ -317,6 +317,16 @@
             #mobile-view-wrapper {
                 left: 45%;
                 top: 0%;
+            }
+
+            #desktop-view-wrapper.single-mode-display {
+                left: 0%;
+                transform: translate(0%, 50%);   
+            }
+
+            #mobile-view-wrapper.single-mode-display {
+                left: 50%;
+                transform: translateX(-50%);
             }
         }
     

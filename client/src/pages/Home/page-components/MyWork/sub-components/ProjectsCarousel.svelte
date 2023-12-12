@@ -81,8 +81,7 @@
     }
 
     #pcw-projects-container {
-        /* --project-item-width: calc(var(--vspacing-6) * 0.9414); */
-        --project-item-width: 40cqw;
+        --project-item-width: calc(var(--vspacing-6) * 0.9414);
 
         display: grid;
         height: 100%;
@@ -130,6 +129,10 @@
             justify-content: flex-start;
             align-items: flex-start;
             overflow-y: auto;
+        }
+
+        #pcw-projects-container {
+            --project-item-width: 40cqw;
         }
 
         .pcw-project-item {

@@ -218,7 +218,7 @@
     =            Container querys            =
     =============================================*/
     
-    @container llp-pc-left (max-width: 1366px) {
+    @container llp-pc-left (max-width: 810px) {
         :global(#project-description-wrapper article) {
             max-height: calc(1.3 * var(--vspacing-5));
         }
