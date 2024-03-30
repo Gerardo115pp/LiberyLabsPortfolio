@@ -4,7 +4,7 @@
 
 
 <div class="chat-bg-star">
-    <svg width="{layout_properties.IS_MOBILE ? layout_properties.VIEWPORT_WIDTH * .3 : 355}" height="{layout_properties.IS_MOBILE ? (layout_properties.VIEWPORT_WIDTH * .3) * 0.940 : 334}" viewBox="0 0 355 334">
+    <svg width="{$layout_properties.IS_MOBILE ? $layout_properties.VIEWPORT_WIDTH * .3 : 355}" height="{$layout_properties.IS_MOBILE ? ($layout_properties.VIEWPORT_WIDTH * .3) * 0.940 : 334}" viewBox="0 0 355 334">
         <path class="dashed-arista" d="M180.344 165.358L223.772 96.3071L229.588 219.714L180.344 165.358Z" />
         <path class="dashed-arista" d="M128.996 225.124L176.322 165.357H180.345L229.589 219.713L229.64 220.838L183.361 212.764L177.825 212.435L128.996 225.124Z" />
         <path class="dashed-arista" d="M132.013 93.835L176.322 165.358L128.996 225.125L130.645 182.133L132.013 93.835Z" />

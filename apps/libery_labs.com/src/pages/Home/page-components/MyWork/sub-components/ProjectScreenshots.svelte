@@ -126,18 +126,18 @@
             }
         }
 
-        if (display_sizes.desktop_display.w >= layout_properties.VIEWPORT_WIDTH || display_sizes.desktop_display.h >= layout_properties.VIEWPORT_HEIGHT) {
+        if (display_sizes.desktop_display.w >= $layout_properties.VIEWPORT_WIDTH || display_sizes.desktop_display.h >= $layout_properties.VIEWPORT_HEIGHT) {
             const wh_ratio = display_sizes.desktop_display.w / display_sizes.desktop_display.h;
-            display_sizes.desktop_display.w = layout_properties.VIEWPORT_WIDTH * 0.7;
+            display_sizes.desktop_display.w = $layout_properties.VIEWPORT_WIDTH * 0.7;
             display_sizes.desktop_display.h = display_sizes.desktop_display.w / wh_ratio;
         }
 
         console.log(`mobile h: ${display_sizes.mobile_display.h} | desktop h: ${display_sizes.desktop_display.h}`)
 
-        if (display_sizes.mobile_display.h > (3 * display_sizes.desktop_display.h) || display_sizes.mobile_display.w >= layout_properties.VIEWPORT_WIDTH || display_sizes.mobile_display.h >= layout_properties.VIEWPORT_HEIGHT) {
+        if (display_sizes.mobile_display.h > (3 * display_sizes.desktop_display.h) || display_sizes.mobile_display.w >= $layout_properties.VIEWPORT_WIDTH || display_sizes.mobile_display.h >= $layout_properties.VIEWPORT_HEIGHT) {
             console.log('mobile display too big')
             const wh_ratio = display_sizes.mobile_display.w / display_sizes.mobile_display.h;
-            display_sizes.mobile_display.w = layout_properties.VIEWPORT_WIDTH * 0.5;
+            display_sizes.mobile_display.w = $layout_properties.VIEWPORT_WIDTH * 0.5;
             display_sizes.mobile_display.h = display_sizes.mobile_display.w / wh_ratio;
         }
 
@@ -159,7 +159,7 @@
             <image bind:this={desktop_image_display} x="10" id="desktop-image-display" width="500" height="267"/>
             <path class="device-body" d="M334.154 366.729H188.545C188.545 366.729 187.752 355.193 213.102 344.472C238.442 333.761 232.9 282.653 232.9 282.653H289.809C289.809 282.653 284.258 333.761 309.607 344.472C334.947 355.193 334.154 366.729 334.154 366.729Z"/>
             <path class="device-body" d="M511.492 0.729004H11.2077C5.51417 0.729004 0.845276 5.16188 0.845276 10.5778V279.398C0.845276 284.813 5.51417 289.246 11.2077 289.246H511.483C517.185 289.246 521.845 284.813 521.845 279.398V10.5778C521.845 5.16188 517.176 0.729004 511.483 0.729004H511.492ZM504.382 247.616C504.382 253.737 499.57 258.745 493.689 258.745H29.6338C23.7531 258.745 18.9417 253.737 18.9417 247.616V32.3156C18.9417 26.1949 23.7531 21.187 29.6338 21.187H493.689C499.57 21.187 504.382 26.1949 504.382 32.3156V247.616Z"/>
-            <path on:click={() => advanceDesktopImage(false)} class="device-button next-btn action-btn" d="M254.204 268.167L262.57 283.255L270.946 268.167H254.204Z"/>
+            <path tabindex="0" role="button" on:click={() => advanceDesktopImage(false)} class="device-button next-btn action-btn" d="M254.204 268.167L262.57 283.255L270.946 268.167H254.204Z"/>
         </svg>    
     </div>
     <div id="mobile-view-wrapper" class:single-mode-display={!has_desktop_mobile}>
@@ -168,8 +168,8 @@
             <image bind:this={mobile_image_display} x="10" y="10" id="mobile-image-display" width="300" height="627"/>
             <path class="device-body" d="M283.293 0.729004H40.1346C40.1346 0.729004 8.27126 4.57248 2.65857 37.3335V61.7365L3.53011 608.19C3.53011 608.19 3.53011 641.308 41.0062 646.537H282.805C282.805 646.537 315.54 643.923 318.155 609.061V37.8477C318.155 37.8477 317.283 8.57283 283.293 0.729004ZM274.142 632.157H45.7647C45.7647 632.157 22.2681 627.381 17.9105 604.494V36.0262C17.9105 36.0262 17.9105 19.467 37.0842 15.1094H79.6936C79.6936 15.1094 84.1472 14.2378 84.1472 19.467C84.1472 24.6962 85.0187 28.1824 85.0187 28.1824C85.0187 28.1824 88.5049 36.8978 97.2202 37.7693H223.305C223.305 37.7693 233.18 36.0262 234.923 28.1824C236.666 20.3386 235.794 19.467 235.794 18.5955C235.794 17.724 236.666 15.1094 239.281 15.1094C241.895 15.1094 283.346 15.0571 283.346 15.0571C283.346 15.0571 301.16 16.8524 302.903 35.1547C304.646 53.4569 302.903 602.525 302.903 602.525C302.903 602.525 304.646 623.442 274.142 632.157Z"/>
             <path class="device-button" d="M5.27316 87.8827C5.27316 86.4387 4.10256 85.2681 2.65855 85.2681C1.21455 85.2681 0.0439453 86.4387 0.0439453 87.8827V109.671C0.0439453 111.115 1.21455 112.286 2.65855 112.286C4.10256 112.286 5.27316 111.115 5.27316 109.671V87.8827Z"/>
-            <path on:click={() => advanceMobileImage(false)} class="device-button next-btn action-btn" d="M5.27316 134.074C5.27316 132.63 4.10256 131.459 2.65855 131.459C1.21455 131.459 0.0439453 132.63 0.0439453 134.074V178.522C0.0439453 179.966 1.21455 181.137 2.65855 181.137C4.10256 181.137 5.27316 179.966 5.27316 178.522V134.074Z"/>
-            <path on:click={() => advanceMobileImage(true)} class="device-button action-btn" d="M5.27316 195.081C5.27316 193.637 4.10256 192.467 2.65855 192.467C1.21455 192.467 0.0439453 193.637 0.0439453 195.081V237.787C0.0439453 239.231 1.21455 240.401 2.65855 240.401C4.10256 240.401 5.27316 239.231 5.27316 237.787V195.081Z"/>
+            <path tabindex="0" role="button" on:click={() => advanceMobileImage(false)} class="device-button next-btn action-btn" d="M5.27316 134.074C5.27316 132.63 4.10256 131.459 2.65855 131.459C1.21455 131.459 0.0439453 132.63 0.0439453 134.074V178.522C0.0439453 179.966 1.21455 181.137 2.65855 181.137C4.10256 181.137 5.27316 179.966 5.27316 178.522V134.074Z"/>
+            <path tabindex="0" role="button" on:click={() => advanceMobileImage(true)} class="device-button action-btn" d="M5.27316 195.081C5.27316 193.637 4.10256 192.467 2.65855 192.467C1.21455 192.467 0.0439453 193.637 0.0439453 195.081V237.787C0.0439453 239.231 1.21455 240.401 2.65855 240.401C4.10256 240.401 5.27316 239.231 5.27316 237.787V195.081Z"/>
             <path class="device-button" d="M128.404 30.0822C132.019 30.0822 134.949 27.1518 134.949 23.5369C134.949 19.9221 132.019 16.9917 128.404 16.9917C124.789 16.9917 121.859 19.9221 121.859 23.5369C121.859 27.1518 124.789 30.0822 128.404 30.0822Z"/>
             <path class="device-button" d="M104.001 30.1872C107.568 30.1872 110.459 27.2958 110.459 23.7291C110.459 20.1624 107.568 17.271 104.001 17.271C100.434 17.271 97.5427 20.1624 97.5427 23.7291C97.5427 27.2958 100.434 30.1872 104.001 30.1872Z"/>
             <path class="device-button" d="M189.734 27.5724C191.77 27.5724 193.42 25.9219 193.42 23.8858C193.42 21.8498 191.77 20.1992 189.734 20.1992C187.698 20.1992 186.047 21.8498 186.047 23.8858C186.047 25.9219 187.698 27.5724 189.734 27.5724Z"/>

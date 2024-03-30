@@ -15,10 +15,10 @@
     <div class="background-wrapper">
         <LineSymbolsBg
             line_count={15}
-            x_base={layout_properties.IS_MOBILE ? 450 : 1300}
-            y_base={layout_properties.IS_MOBILE ? 340 : 120}
-            svg_width={layout_properties.IS_MOBILE ? innerWidth + 120 : innerWidth}
-            limit_height={!layout_properties.IS_MOBILE}
+            x_base={$layout_properties.IS_MOBILE ? 450 : 1300}
+            y_base={$layout_properties.IS_MOBILE ? 340 : 120}
+            svg_width={$layout_properties.IS_MOBILE ? innerWidth + 120 : innerWidth}
+            limit_height={!$layout_properties.IS_MOBILE}
             step={0.026}
         />
     </div>

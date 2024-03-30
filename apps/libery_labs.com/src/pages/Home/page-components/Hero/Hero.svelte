@@ -41,11 +41,11 @@
     <div class="background-wrapper full-vw">
         {#if browser}
              <LineSymbolsBg
-                 line_count={layout_properties.IS_MOBILE ? 23 : 10}
-                 step={ layout_properties.IS_MOBILE ? 0.028 : 0.026}
-                 x_base={layout_properties.IS_MOBILE ? 50 : 1400}
-                 y_base={layout_properties.IS_MOBILE ? 680 : 310}
-                 svg_width={layout_properties.IS_MOBILE ? innerWidth : innerWidth + 120}
+                 line_count={$layout_properties.IS_MOBILE ? 23 : 10}
+                 step={ $layout_properties.IS_MOBILE ? 0.028 : 0.026}
+                 x_base={$layout_properties.IS_MOBILE ? 50 : 1400}
+                 y_base={$layout_properties.IS_MOBILE ? 680 : 310}
+                 svg_width={$layout_properties.IS_MOBILE ? innerWidth : innerWidth + 120}
              />
         {/if}
     </div>
@@ -66,7 +66,7 @@
                 </TaggedText>
             </div>
         </div>
-        <div id="cta-wrapper" class:hide-on-mobile={layout_properties.IS_MOBILE}>
+        <div id="cta-wrapper" class:hide-on-mobile={$layout_properties.IS_MOBILE}>
             <div class="button-1-wrapper">
                 <button on:click={() => scrollToSection(HOME_SECTIONS.PORTFOLIO)} class="button-1">Check my work</button>
             </div>

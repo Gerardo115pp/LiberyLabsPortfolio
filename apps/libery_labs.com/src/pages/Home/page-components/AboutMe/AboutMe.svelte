@@ -4,7 +4,6 @@
     import { SECTIONS as HOME_SECTIONS } from "@pages/Home/sections";
     import ImagePortrait from "@components/UI/ImagePortrait.svelte";
     import LineRect from "@components/UI/LineRect.svelte";
-    import { layout_properties } from "@stores/layout";
     import TechStack from "./tech_stack.svelte";
     import AInfoArea from "./AInfoArea.svelte";
     import { fly } from "svelte/transition";

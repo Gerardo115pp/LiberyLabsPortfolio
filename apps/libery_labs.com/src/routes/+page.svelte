@@ -1,7 +1,6 @@
 <script>
     import Hero from "@pages/Home/page-components/Hero/Hero.svelte";
     import { onMount } from "svelte";
-    import { defineLayout } from "@stores/layout";
     import { recaptcha_pk } from "@stores/env";
     import AboutMe from "@pages/Home/page-components/AboutMe/AboutMe.svelte";
     import MyServices from "@pages/Home/page-components/MyServices/MyServices.svelte";
@@ -23,7 +22,6 @@
     
 
     onMount(() => {
-        defineLayout();
         loadRecaptcha();
     });
     

@@ -67,7 +67,7 @@
 
 <div id="writer-bar" class:big-mode={$is_big_mode_enabled} class:debug={false}>
     <div id="sender-wrapper">
-        <div id="wb-sw-textarea-wrapper" class:hide={layout_properties.IS_MOBILE && !$is_big_mode_enabled}>
+        <div id="wb-sw-textarea-wrapper" class:hide={$layout_properties.IS_MOBILE && !$is_big_mode_enabled}>
             <textarea 
                 aria-label="Write any doubts you have about my services and my AI assistant will clear them for you. press enter to send the message"
                 data-name="message-bar"
@@ -84,11 +84,11 @@
                 ({current_message.length}/{$max_message_length})
             </span>
         </div>
-        <div id="sender-btn" class:hide={!layout_properties.IS_MOBILE} class="button-1-wrapper">
+        <div id="sender-btn" class:hide={!$layout_properties.IS_MOBILE} class="button-1-wrapper">
             <button on:click={handleBigMode} class="button-1">{ $is_big_mode_enabled ? 'close chat' : 'open chat'}</button>
         </div>
     </div>
-    {#if !layout_properties.IS_MOBILE || $is_big_mode_enabled}
+    {#if !$layout_properties.IS_MOBILE || $is_big_mode_enabled}
          <p id="grecaptcha-policy">
              This component is protected by reCAPTCHA and the Google
              <a href="https://policies.google.com/privacy">Privacy Policy</a> and

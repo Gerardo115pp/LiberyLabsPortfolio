@@ -2,7 +2,6 @@
     import { onMount } from "svelte";
     import { ProjectListItem } from "@models/Project";
     import { createEventDispatcher } from "svelte";
-    import { layout_properties } from "@stores/layout";
     import CarouselItemCorners from "./CarouselItemCorners.svelte";
 
     onMount(() => {
@@ -58,7 +57,7 @@
         style:grid-template-columns="{projects.length}fr"
     >
         {#each projects as project, h}
-            <div style:grid-column="{h+1} / span 1" id="pcw-pc-project-{h}" on:click={() => selectProject(h)} class="pcw-project-item" style:position="relative">
+            <div tabindex="0" role="button" style:grid-column="{h+1} / span 1" id="pcw-pc-project-{h}" on:click={() => selectProject(h)} class="pcw-project-item" style:position="relative">
                 <span class="pcw-pi-name">{project.name}</span>
                 <CarouselItemCorners />
             </div>

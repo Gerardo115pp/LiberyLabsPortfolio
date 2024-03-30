@@ -4,7 +4,7 @@
     export let spacing = 24;
     export let color="var(--grey-5)";
 
-    const view_box = layout_properties.IS_MOBILE ? "0 0 500 1000" : "0 0 1000 500";
+    const view_box = $layout_properties.IS_MOBILE ? "0 0 500 1000" : "0 0 1000 500";
 </script>
 
 <svg id="dot-grid-element" viewBox="{view_box}">

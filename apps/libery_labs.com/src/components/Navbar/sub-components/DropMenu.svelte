@@ -33,7 +33,7 @@
 <div id="submenu-wrapper" style:animation-duration="{appearance_animation_duration}ms" style:animation-delay="{appearance_animation_delay}ms">
     <ul id="submenu">
         {#each sections as s, h}
-             <li in:slide={{axis: 'y', delay: (appearance_animation_delay+appearance_animation_duration) + (100*h), duration: 300}} class="submenu-item">
+             <li in:slide|global={{axis: 'y', delay: (appearance_animation_delay+appearance_animation_duration) + (100*h), duration: 300}} class="submenu-item">
                 <a on:click={clickAnchorHandler} href="{s.href}">
                     {s.name}
                 </a>

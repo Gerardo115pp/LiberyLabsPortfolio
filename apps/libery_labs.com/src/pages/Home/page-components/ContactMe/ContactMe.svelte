@@ -65,11 +65,11 @@
                 headline_color="var(--grey-1)"
                 headline_text="Like what you see?"
                 text_transform="none"
-                forced_font_size={layout_properties.IS_MOBILE ? "calc(var(--font-size-h2) * 1.2)" : "calc(var(--font-size-h1)*1)"}
+                forced_font_size={$layout_properties.IS_MOBILE ? "calc(var(--font-size-h2) * 1.2)" : "calc(var(--font-size-h1)*1)"}
             />
         </div>
         <div id="cms-cc-bottom-content">
-            <div id="cms-cc-bc-cta" class:hide={layout_properties.IS_MOBILE}>
+            <div id="cms-cc-bc-cta" class:hide={$layout_properties.IS_MOBILE}>
                 <LiberyHeadline headline_tag="h2" headline_text="Let's Talk" text_transform="none"/>
             </div>
             <div id="cms-cc-bc-cta-btn" class="button-1-wrapper">

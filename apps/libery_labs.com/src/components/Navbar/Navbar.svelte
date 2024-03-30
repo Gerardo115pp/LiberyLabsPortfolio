@@ -59,7 +59,7 @@
         </div>
         <div id="lln-cta">
             <button title="Send me a message" on:click={() => show_contact_form.set(true)} id="cta">
-                {#if !layout_properties.IS_MOBILE}
+                {#if !$layout_properties.IS_MOBILE}
                     <strong class="highlight-text--CTA">Get in touch</strong>
                 {:else}
                     <svg id="cta-mobile-icon" viewBox="0 0 100 70">

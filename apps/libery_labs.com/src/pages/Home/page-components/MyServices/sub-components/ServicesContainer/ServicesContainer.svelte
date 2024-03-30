@@ -33,7 +33,7 @@
     </div>
     <div id="dot-grid-wrapper">
         <DotGridBg
-            spacing={ layout_properties.IS_MOBILE ? 20 : 24 }
+            spacing={ $layout_properties.IS_MOBILE ? 20 : 24 }
         />
     </div>
 </section>

@@ -1,5 +1,4 @@
 <script>
-    import { layout_properties } from "@stores/layout";
     import { token as chat_token, is_available, messages, is_big_mode_enabled } from "@stores/chat";
     import { ChatDialer } from "@models/Chat";
     import ChatMessages from "./sub-components/ChatMessages.svelte";

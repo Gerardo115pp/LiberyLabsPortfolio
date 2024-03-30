@@ -7,9 +7,9 @@
     import { onMount } from "svelte";
     
 
-    const star_x_offset = layout_properties.IS_MOBILE ? 44 : 74; // px
-    const star_y_offset = layout_properties.IS_MOBILE ? 0 : -17; // px
-    const stars_separation = layout_properties.IS_MOBILE ? 12 : 37; // px
+    const star_x_offset = $layout_properties.IS_MOBILE ? 44 : 74; // px
+    const star_y_offset = $layout_properties.IS_MOBILE ? 0 : -17; // px
+    const stars_separation = $layout_properties.IS_MOBILE ? 12 : 37; // px
 
     onMount(() => {
         height_store.set(star_height);

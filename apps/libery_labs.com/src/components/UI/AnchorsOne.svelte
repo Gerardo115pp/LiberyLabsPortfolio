@@ -11,7 +11,7 @@
     let x_offset = control_point_offset;
     let y_offset = (control_point_offset * svg_height_width_ratio) / 2;
 
-    const central_square_size = layout_properties.IS_MOBILE ? 9 : 6;
+    const central_square_size = $layout_properties.IS_MOBILE ? 9 : 6;
 
     /**
      * @typedef {Object} ControlPointDifference

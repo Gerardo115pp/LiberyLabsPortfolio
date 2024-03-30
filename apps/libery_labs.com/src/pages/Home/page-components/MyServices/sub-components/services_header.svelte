@@ -9,7 +9,7 @@
     <div id="white-star-wrapper">
         <LiberyBorderStar />
     </div>
-    <LiberyHeadline animated={false} forced_font_size="{layout_properties.IS_MOBILE ? 'calc(var(--font-size-h2) * 1.03)' : 'var(--font-size-h1)'}" headline_text="what can i craft for you?" headline_color="var(--grey-1)" text_transform="lowercase" />
+    <LiberyHeadline animated={false} forced_font_size="{$layout_properties.IS_MOBILE ? 'calc(var(--font-size-h2) * 1.03)' : 'var(--font-size-h1)'}" headline_text="what can i craft for you?" headline_color="var(--grey-1)" text_transform="lowercase" />
 </header>    
     
 <style>
