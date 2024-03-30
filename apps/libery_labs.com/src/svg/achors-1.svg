@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="anchor-symbol" viewBox="0 0 332.71 83.55">
+  <defs>
+    <style>
+      .anchors-1-cls-1 {
+        fill: #131313;
+      }
+
+      .anchors-1-cls-2 {
+        fill: none;
+        stroke: #131313;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <g id="Anchor-element">
+    <path class="anchors-1-cls-2" d="m.47.16s26.67,79.41,129.19,50.37,175.12-14.99,202.67,18.37"/>
+    <rect class="anchors-1-cls-2" x="130.66" y="48.82" width="2.29" height="2.29" transform="translate(-8.87 40.97) rotate(-17.1)"/>
+    <line class="anchors-1-cls-2" x1="86.25" y1="81.94" x2="179.81" y2="16.38"/>
+    <circle class="anchors-1-cls-1" cx="86.53" cy="81.99" r="1.56"/>
+    <circle class="anchors-1-cls-1" cx="180.19" cy="16.11" r="1.56"/>
+  </g>
+</svg>

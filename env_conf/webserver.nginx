@@ -1,0 +1,53 @@
+server {
+    listen 443;
+    server_name developer-libery-labs.com;
+
+    ssl_certificate /home/el_maligno/local_domain_certificates/developer-libery-labs.com/developer-libery-labs.com.pem;
+    ssl_certificate_key /home/el_maligno/local_domain_certificates/developer-libery-labs.com/developer-libery-labs.com-key.pem;
+
+    error_log /var/log/nginx/developer-libery-labs.com.error.log warn;
+
+    location /libery-portfolio/ {
+        proxy_redirect off;
+        proxy_set_header Host $host;
+
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, DELETE, PATCH, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization';
+            add_header 'Access-Control-Allow-Origin' '*' always;
+            return 200;
+        }
+
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_method $request_method;
+
+        if ($request_method != 'OPTIONS') {
+            rewrite ^/libery-portfolio/(.*)$ /$1 break;
+            proxy_pass http://localhost:2023;
+        }
+    }
+ 
+    location /resources/ {
+        root /var/www/libery-labs.com/resources;
+        rewrite ^/resources/(.*)$ /$1 break;
+        try_files $uri $uri/ =404;
+    }
+    
+    location / {
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_method $request_method;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_pass https://developer-libery-labs.com:13001;
+    }
+}
+
+server {
+    listen 80;
+    server_name developer-libery-labs.com;
+
+    location / {
+        return 301 https://developer-libery-labs.com$request_uri;
+    }
+}
