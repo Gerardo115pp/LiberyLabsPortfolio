@@ -5,9 +5,13 @@
     import AboutMe from "@pages/Home/page-components/AboutMe/AboutMe.svelte";
     import MyServices from "@pages/Home/page-components/MyServices/MyServices.svelte";
     import NoBoundaries from "@pages/Home/page-components/NoBoundaries/NoBoundaries.svelte";
+    import Chat from "@components/Chat/Chat.svelte";
+    import ContactForm from "@components/Popups/ContactForm.svelte";
     import MyWork from "@pages/Home/page-components/MyWork/MyWork.svelte";
     import BottomContent from "@pages/Home/page-components/BottomContent/BottomContent.svelte";
     import { writable } from "svelte/store";
+    import { is_big_mode_enabled } from "@stores/chat";
+    import { layout_properties } from "@stores/layout";
 
 
     
@@ -47,35 +51,42 @@
 
 </script>
 
-<main id="home-page">
-    <section id="hero-section" class="page-section">
-        <div class="section-content">
-            <Hero />
-        </div>
-    </section>
-    <section id="about-me-section" class="page-section">
-        <div class="section-content" >
-            <AboutMe />
-        </div>
-    </section>
-    <section id="tech-stack-section" class="page-section">
-        <div class="section-content">
-            <MyServices />
-        </div>
-    </section>
-    <section id="broke-text-section" class="page-section" style:overflow="visible">
-        <div class="section-content">
-            <NoBoundaries />
-        </div>
-    </section>
-    <section id="recent-work-section" class="page-section">
-        <div class="section-content">
-            <MyWork />
-        </div>
-    </section>
-    <!--vvv Contact, Chat section and Footer vvv-->
-    <BottomContent /> 
-</main>
+
+<div id="content-wrapper">
+    <ContactForm />
+    {#if $is_big_mode_enabled && $layout_properties.IS_MOBILE}
+        <Chat />
+    {/if}
+    <main id="home-page">
+        <section id="hero-section" class="page-section">
+            <div class="section-content">
+                <Hero />
+            </div>
+        </section>
+        <section id="about-me-section" class="page-section">
+            <div class="section-content" >
+                <AboutMe />
+            </div>
+        </section>
+        <section id="tech-stack-section" class="page-section">
+            <div class="section-content">
+                <MyServices />
+            </div>
+        </section>
+        <section id="broke-text-section" class="page-section" style:overflow="visible">
+            <div class="section-content">
+                <NoBoundaries />
+            </div>
+        </section>
+        <section id="recent-work-section" class="page-section">
+            <div class="section-content">
+                <MyWork />
+            </div>
+        </section>
+        <!--vvv Contact, Chat section and Footer vvv-->
+        <BottomContent /> 
+    </main>
+</div>
 
 <style>
     /* * {
