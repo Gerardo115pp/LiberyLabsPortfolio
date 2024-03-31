@@ -1,3 +1,7 @@
+upstream php-fpm-libery-labs {
+    server localhost:8082; # or the same port u used for wordpress on the docker compose configuration
+}
+
 server {
     listen 443;
     server_name developer-libery-labs.com;
@@ -31,6 +35,16 @@ server {
         root /var/www/libery-labs.com/resources;
         rewrite ^/resources/(.*)$ /$1 break;
         try_files $uri $uri/ =404;
+    }
+
+    location /wordpress {
+        proxy_redirect ~^https://developer-libery-labs.com/wordpress/$ https://developer-libery-labs.com/;
+        add_header debug-uri $uri always;   
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_pass http://php-fpm-libery-labs;
     }
     
     location / {
