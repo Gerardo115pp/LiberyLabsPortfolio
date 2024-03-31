@@ -1,12 +1,23 @@
 <?php
 /**
- * Twenty Twenty-Four functions and definitions
+ * Libery Labs functions and definitions
  *
  * @link https://developer.wordpress.org/themes/basics/theme-functions/
  *
  * @package Twenty Twenty-Four
  * @since Twenty Twenty-Four 1.0
  */
+
+/**
+ * Redirect to home page if the request URI is not /wordpress or is exactly /wordpress/
+ */
+
+
+if (!str_starts_with($_SERVER['REQUEST_URI'], '/wordpress') || $_SERVER['REQUEST_URI'] === '/wordpress/') {
+	header("X-Redirect-By: PHP santa_elena_theme/functions.php");
+	header('Location: /', true);
+	exit;
+}
 
 /**
  * Register block styles.

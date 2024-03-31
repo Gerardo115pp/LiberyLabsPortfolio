@@ -46,6 +46,10 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_pass http://php-fpm-libery-labs;
     }
+
+    location = /wordpress {
+        try_files $uri $uri/ /;
+    }
     
     location / {
         proxy_set_header Host $host;
